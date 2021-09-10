@@ -37,7 +37,7 @@ namespace com::saxbophone::sxpsxfp {
          * @warning Don't use this for converting plain integers into Fixed
          * @see Fixed::from_integer
          */
-        constexpr Fixed(UnderlyingType raw_value);
+        constexpr Fixed(UnderlyingType raw_value) {}
         /**
          * @brief Implicit converting constructor from float/double
          * @details Creates a Fixed instance with the nearest fixed-point value
