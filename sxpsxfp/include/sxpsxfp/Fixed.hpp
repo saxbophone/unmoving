@@ -65,6 +65,58 @@ namespace com::saxbophone::sxpsxfp {
          * of this Fixed type, the results should be exact.
          */
         constexpr operator float() const;
+        /**
+         * @brief Prefix increment operator
+         */
+        constexpr Fixed& operator++();
+        /**
+         * @brief Prefix decrement operator
+         */
+        constexpr Fixed& operator--();
+        /**
+         * @brief Postfix increment operator
+         */
+        constexpr Fixed operator++(int);
+        /**
+         * @brief Postfix decrement operator
+         */
+        constexpr Fixed operator--(int);
+        /**
+         * @brief Compound assignment addition operator
+         */
+        constexpr Fixed& operator +=(const Fixed& rhs);
+        /**
+         * @brief Compound assignment subtraction operator
+         */
+        constexpr Fixed& operator -=(const Fixed& rhs);
+        /**
+         * @brief Compound assignment multiplication operator
+         */
+        constexpr Fixed& operator *=(const Fixed& rhs);
+        /**
+         * @brief Compound assignment division operator
+         */
+        constexpr Fixed& operator /=(const Fixed& rhs);
+        /**
+         * @brief Unary minus (negation) operator
+         */
+        constexpr Fixed& operator-();
+        /**
+         * @brief Addition operator
+         */
+        constexpr friend Fixed operator+(Fixed lhs, const Fixed& rhs);
+        /**
+         * @brief Subtraction operator
+         */
+        constexpr friend Fixed operator-(Fixed lhs, const Fixed& rhs);
+        /**
+         * @brief Multiplication operator
+         */
+        constexpr friend Fixed operator*(Fixed lhs, const Fixed& rhs);
+        /**
+         * @brief Division operator
+         */
+        constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs);
 
     private:
         static constexpr const UnderlyingType ONE = 4096;
