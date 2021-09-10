@@ -68,7 +68,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Defaulted three-way comparison operator
          */
-        friend auto operator<=>(const Fixed&, const Fixed&) = default;
+        friend auto operator<=>(const Fixed&, const Fixed&);
         /**
          * @brief Prefix increment operator
          */
