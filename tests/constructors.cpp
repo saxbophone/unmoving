@@ -43,3 +43,17 @@ TEST_CASE("Creation from integer value") {
     Fixed var = Fixed::from_integer(32);
     SUCCEED();
 }
+
+// Now for some more advanced stuff
+
+TEST_CASE("Assignment operator can be called") {
+    Fixed foo, bar;
+    foo = bar;
+    SUCCEED();
+}
+
+TEST_CASE("Copy constructor can be called") {
+    Fixed foo;
+    Fixed bar = foo;
+    SUCCEED();
+}
