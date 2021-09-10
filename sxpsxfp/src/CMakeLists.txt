@@ -2,7 +2,7 @@
 target_sources(
     sxpsxfp
         PRIVATE
-            SxPsxFp.cpp
+            Fixed.cpp
 )
 # sub-namespace source directories
 # NOTE: none yet!
