@@ -66,6 +66,10 @@ namespace com::saxbophone::sxpsxfp {
          */
         constexpr operator float() const;
         /**
+         * @brief Defaulted three-way comparison operator
+         */
+        friend auto operator<=>(const Fixed&, const Fixed&) = default;
+        /**
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++();
