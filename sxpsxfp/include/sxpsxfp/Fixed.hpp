@@ -100,9 +100,17 @@ namespace com::saxbophone::sxpsxfp {
          */
         constexpr Fixed& operator *=(const Fixed& rhs);
         /**
+         * @brief Compound assignment integer multiplication operator
+         */
+        constexpr Fixed& operator *=(const UnderlyingType& rhs);
+        /**
          * @brief Compound assignment division operator
          */
         constexpr Fixed& operator /=(const Fixed& rhs);
+        /**
+         * @brief Compound assignment integer division operator
+         */
+        constexpr Fixed& operator /=(const UnderlyingType& rhs);
         /**
          * @brief Unary minus (negation) operator
          */
@@ -120,9 +128,17 @@ namespace com::saxbophone::sxpsxfp {
          */
         constexpr friend Fixed operator*(Fixed lhs, const Fixed& rhs);
         /**
+         * @brief Integer multiplication operator
+         */
+        constexpr friend Fixed operator*(Fixed lhs, const UnderlyingType& rhs);
+        /**
          * @brief Division operator
          */
         constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs);
+        /**
+         * @brief Integer division operator
+         */
+        constexpr friend Fixed operator/(Fixed lhs, const UnderlyingType& rhs);
 
     private:
         static constexpr const UnderlyingType ONE = 4096;
