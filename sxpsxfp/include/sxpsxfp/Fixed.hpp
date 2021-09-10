@@ -83,24 +83,18 @@ namespace com::saxbophone::sxpsxfp {
         constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs) {
             return {};
         }
-        // constexpr bool operator<(const Fixed& rhs) const {
-        //     return {};
-        // }
-        // constexpr bool operator>(const Fixed& rhs) const {
-        //     return {};
-        // }
-        // /**
-        //  * @brief Compare a Fixed instance with UnderlyingType for equality
-        //  */
-        // constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
-        //     return false;
-        // }
-        // /**
-        //  * @brief Compare a value of UnderlyingType with a Fixed instance for equality
-        //  */
-        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-        //     return false;
-        // }
+        /**
+         * @brief Compare a Fixed instance with UnderlyingType for equality
+         */
+        constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
+            return {};
+        }
+        /**
+         * @brief Compare a value of UnderlyingType with a Fixed instance for equality
+         */
+        constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+            return {};
+        }
         // constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs);
         // constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs);
         // /**

@@ -16,33 +16,33 @@ TEST_CASE("Fixed != Fixed") {
     SUCCEED();
 }
 
-// TEST_CASE("Fixed == UnderlyingType") {
-//     Fixed foo;
-//     Fixed::UnderlyingType bar;
-//     bool equal = foo == bar;
-//     SUCCEED();
-// }
+TEST_CASE("Fixed == UnderlyingType") {
+    Fixed foo;
+    Fixed::UnderlyingType bar;
+    bool equal = foo == bar;
+    SUCCEED();
+}
 
-// TEST_CASE("Fixed != UnderlyingType") {
-//     Fixed foo;
-//     Fixed::UnderlyingType bar;
-//     bool unequal = foo != bar;
-//     SUCCEED();
-// }
+TEST_CASE("Fixed != UnderlyingType") {
+    Fixed foo;
+    Fixed::UnderlyingType bar;
+    bool unequal = foo != bar;
+    SUCCEED();
+}
 
-// TEST_CASE("UnderlyingType == Fixed") {
-//     Fixed foo;
-//     Fixed::UnderlyingType bar;
-//     bool equal = bar == foo;
-//     SUCCEED();
-// }
+TEST_CASE("UnderlyingType == Fixed") {
+    Fixed foo;
+    Fixed::UnderlyingType bar;
+    bool equal = bar == foo;
+    SUCCEED();
+}
 
-// TEST_CASE("UnderlyingType != Fixed") {
-//     Fixed foo;
-//     Fixed::UnderlyingType bar;
-//     bool unequal = bar != foo;
-//     SUCCEED();
-// }
+TEST_CASE("UnderlyingType != Fixed") {
+    Fixed foo;
+    Fixed::UnderlyingType bar;
+    bool unequal = bar != foo;
+    SUCCEED();
+}
 
 TEST_CASE("Fixed < Fixed") {
     Fixed foo, bar;
