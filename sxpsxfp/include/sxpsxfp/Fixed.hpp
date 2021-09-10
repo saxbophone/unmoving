@@ -29,7 +29,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Default constructor, creates a Fixed instance with value 0.0
          */
-        constexpr Fixed();
+        constexpr Fixed() {}
         /**
          * @brief Implicit converting constructor from fixed-point integer
          * @details Creates a Fixed instance wrapping a raw fixed-point integer,
@@ -68,7 +68,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Defaulted three-way comparison operator
          */
-        friend auto operator<=>(const Fixed&, const Fixed&);
+        constexpr friend auto operator<=>(const Fixed&, const Fixed&);
         /**
          * @brief Prefix increment operator
          */
