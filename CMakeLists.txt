@@ -126,6 +126,7 @@ else() # GCC/Clang warning option
         enable_cxx_compiler_flag_if_supported("-Wno-error=unused-variable")
         enable_cxx_compiler_flag_if_supported("-Wno-error=unused-parameter")
         enable_cxx_compiler_flag_if_supported("-Wno-error=unused-private-field")
+        enable_cxx_compiler_flag_if_supported("-Wno-error=unused-but-set-variable")
     endif()
 endif()
 

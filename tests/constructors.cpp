@@ -8,3 +8,13 @@ TEST_CASE("Default constructor can be called") {
     Fixed foo;
     SUCCEED();
 }
+
+TEST_CASE("Implicit conversion from fixed-point integer") {
+    Fixed var = 32;
+    SUCCEED();
+}
+
+TEST_CASE("Explicit conversion from fixed-point integer") {
+    Fixed var(32);
+    SUCCEED();
+}
