@@ -10,8 +10,14 @@ target_sources(
     tests
     PRIVATE
         main.cpp
+        addition.cpp
+        casting.cpp
+        comparisons.cpp
         constructors.cpp
-        placeholder.cpp
+        division.cpp
+        multiplication.cpp
+        subtraction.cpp
+        unary_operations.cpp
 )
 target_link_libraries(
     tests

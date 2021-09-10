@@ -4,6 +4,6 @@
 
 using namespace com::saxbophone::sxpsxfp;
 // placeholder test case
-TEST_CASE("Library works") {
-    SUCCEED();
+TEST_CASE("Unary Operations Placeholder") {
+    FAIL("No tests implemented");
 }
