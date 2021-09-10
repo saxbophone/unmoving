@@ -38,3 +38,8 @@ TEST_CASE("Explicit conversion from double") {
     Fixed var(32.0);
     SUCCEED();
 }
+
+TEST_CASE("Creation from integer value") {
+    Fixed var = Fixed::from_integer(32);
+    SUCCEED();
+}

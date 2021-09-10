@@ -53,7 +53,9 @@ namespace com::saxbophone::sxpsxfp {
          * @warning Don't use this for converting raw fixed-point integers to Fixed
          * @see Fixed::Fixed UnderlyingType
          */
-        static constexpr Fixed from_integer(int value);
+        static constexpr Fixed from_integer(int value) {
+            return {};
+        }
         /**
          * @brief Implicit cast operator to underlying type
          */
