@@ -34,7 +34,7 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Implicit converting constructor from fixed-point integer
          * @details Creates a Fixed instance wrapping a raw fixed-point integer,
          * of the kind used by the PlayStation SDK functions.
-         * @warn Don't use this for converting plain integers into Fixed
+         * @warning Don't use this for converting plain integers into Fixed
          * @see Fixed::from_integer
          */
         constexpr Fixed(UnderlyingType raw_value);
@@ -42,7 +42,7 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Implicit converting constructor from float/double
          * @details Creates a Fixed instance with the nearest fixed-point value
          * to the given floating point value. This loses precision!
-         * @warn Not recommended to use this outside of constexpr contexts
+         * @warning Not recommended to use this outside of constexpr contexts
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          */
@@ -50,7 +50,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @returns a Fixed instance representing the closest fixed-point value
          * to the given integer value.
-         * @warn Don't use this for converting raw fixed-point integers to Fixed
+         * @warning Don't use this for converting raw fixed-point integers to Fixed
          * @see Fixed::Fixed UnderlyingType
          */
         static constexpr Fixed from_integer(int value);
