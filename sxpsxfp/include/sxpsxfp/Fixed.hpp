@@ -29,9 +29,46 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Default constructor, creates a Fixed instance with value 0.0
          */
-        Fixed();
+        constexpr Fixed();
+        /**
+         * @brief Implicit converting constructor from fixed-point integer
+         * @details Creates a Fixed instance wrapping a raw fixed-point integer,
+         * of the kind used by the PlayStation SDK functions.
+         * @warn Don't use this for converting plain integers into Fixed
+         * @see Fixed::from_integer
+         */
+        constexpr Fixed(UnderlyingType raw_value);
+        /**
+         * @brief Implicit converting constructor from float/double
+         * @details Creates a Fixed instance with the nearest fixed-point value
+         * to the given floating point value. This loses precision!
+         * @warn Not recommended to use this outside of constexpr contexts
+         * where avoidable on the PlayStation, as the console has no hardware
+         * floating point support, so slow software floats will be used.
+         */
+        constexpr Fixed(double value);
+        /**
+         * @returns a Fixed instance representing the closest fixed-point value
+         * to the given integer value.
+         * @warn Don't use this for converting raw fixed-point integers to Fixed
+         * @see Fixed::Fixed UnderlyingType
+         */
+        static constexpr Fixed from_integer(int value);
+        /**
+         * @brief Implicit cast operator to underlying type
+         */
+        constexpr operator UnderlyingType() const;
+        /**
+         * @brief Implicit cast operator to float/double
+         * @details Returns closest floating point value to this fixed-point
+         * value. As the precision of single-precision IEEE floats is twice that
+         * of this Fixed type, the results should be exact.
+         */
+        constexpr operator float() const;
 
     private:
+        static constexpr const UnderlyingType ONE = 4096;
+
         UnderlyingType _raw_value;
     };
 }
