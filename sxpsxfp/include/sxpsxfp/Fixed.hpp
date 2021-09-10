@@ -68,9 +68,49 @@ namespace com::saxbophone::sxpsxfp {
          */
         constexpr operator float() const;
         /**
-         * @brief Defaulted three-way comparison operator
+         * @brief Compare two Fixed instances for equality
          */
-        constexpr friend auto operator<=>(const Fixed&, const Fixed&);
+        constexpr friend bool operator==(const Fixed& lhs, const Fixed& rhs) = default;
+        /**
+         * @brief Check if one Fixed instance is less than another
+         */
+        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
+            return {};
+        }
+        /**
+         * @brief Check if one Fixed instance is greater than another
+         */
+        constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs) {
+            return {};
+        }
+        // constexpr bool operator<(const Fixed& rhs) const {
+        //     return {};
+        // }
+        // constexpr bool operator>(const Fixed& rhs) const {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Compare a Fixed instance with UnderlyingType for equality
+        //  */
+        // constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return false;
+        // }
+        // /**
+        //  * @brief Compare a value of UnderlyingType with a Fixed instance for equality
+        //  */
+        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return false;
+        // }
+        // constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs);
+        // constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs);
+        // /**
+        //  * @brief Check if a Fixed instance is less than a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs);
+        // /**
+        //  * @brief Check if a Fixed instance is greater than a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator>(const Fixed& lhs, const UnderlyingType& rhs);
         /**
          * @brief Prefix increment operator
          */
