@@ -18,3 +18,23 @@ TEST_CASE("Explicit conversion from fixed-point integer") {
     Fixed var(32);
     SUCCEED();
 }
+
+TEST_CASE("Implicit conversion from float") {
+    Fixed var = 32.0f;
+    SUCCEED();
+}
+
+TEST_CASE("Implicit conversion from double") {
+    Fixed var = 32.0;
+    SUCCEED();
+}
+
+TEST_CASE("Explicit conversion from float") {
+    Fixed var(32.0f);
+    SUCCEED();
+}
+
+TEST_CASE("Explicit conversion from double") {
+    Fixed var(32.0);
+    SUCCEED();
+}

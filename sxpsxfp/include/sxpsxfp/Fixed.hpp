@@ -46,7 +46,7 @@ namespace com::saxbophone::sxpsxfp {
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          */
-        constexpr Fixed(double value);
+        constexpr Fixed(double value) {}
         /**
          * @returns a Fixed instance representing the closest fixed-point value
          * to the given integer value.
