@@ -6,12 +6,17 @@ CPMFindPackage(
 )
 
 add_executable(tests)
-target_sources(tests PRIVATE main.cpp example.cpp)
+target_sources(
+    tests
+    PRIVATE
+        main.cpp
+        placeholder.cpp
+)
 target_link_libraries(
     tests
     PRIVATE
-        project-compiler-options  # tests use same compiler options as main project
-        project
+        sxpsxfp-compiler-options  # tests use same compiler options as main project
+        sxpsxfp
         Catch2::Catch2             # unit testing framework
 )
 

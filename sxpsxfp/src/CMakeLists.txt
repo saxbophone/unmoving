@@ -1,9 +1,8 @@
 # top-level namespace source files
 target_sources(
-    project
+    sxpsxfp
         PRIVATE
-            Private.cpp
-            Public.cpp
+            SxPsxFp.cpp
 )
 # sub-namespace source directories
 # NOTE: none yet!

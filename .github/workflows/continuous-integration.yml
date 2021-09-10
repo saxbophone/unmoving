@@ -8,12 +8,19 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  build:
+  test-docs-build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Doxygen Docs
+        uses: mattnotmitt/doxygen-action@v1.3.3
+
+  continuous-integration:
     runs-on: ${{ matrix.os }}
     env:
       BUILD_TYPE: Debug
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [macos-10.15, ubuntu-20.04]
         cxx: [g++-10, clang++]
