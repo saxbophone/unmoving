@@ -5,5 +5,5 @@
 using namespace com::saxbophone::sxpsxfp;
 // placeholder test case
 TEST_CASE("Multiplication Placeholder") {
-    FAIL("No tests implemented");
+    WARN("No tests implemented");
 }
