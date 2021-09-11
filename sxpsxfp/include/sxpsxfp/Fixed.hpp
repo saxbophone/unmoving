@@ -103,12 +103,12 @@ namespace com::saxbophone::sxpsxfp {
         constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
             return {};
         }
-        // /**
-        //  * @brief Check if a Fixed instance is less than a value of UnderlyingType
-        //  */
-        // constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
-        //     return {};
-        // }
+        /**
+         * @brief Check if a Fixed instance is less than a value of UnderlyingType
+         */
+        constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
+            return {};
+        }
         // /**
         //  * @brief Check if a Fixed instance is greater than a value of UnderlyingType
         //  */
