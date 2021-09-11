@@ -3,7 +3,17 @@
 #include <sxpsxfp/Fixed.hpp>
 
 using namespace com::saxbophone::sxpsxfp;
-// placeholder test case
-TEST_CASE("Addition Placeholder") {
-    WARN("No tests implemented");
+
+TEST_CASE("Fixed += Fixed") {
+    Fixed foo;
+    Fixed bar;
+    foo += bar;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed + Fixed") {
+    Fixed foo;
+    Fixed bar;
+    Fixed baz = foo + bar;
+    SUCCEED();
 }
