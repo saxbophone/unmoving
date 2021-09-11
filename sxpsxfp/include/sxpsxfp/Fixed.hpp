@@ -195,8 +195,6 @@ namespace com::saxbophone::sxpsxfp {
         constexpr friend Fixed operator/(Fixed lhs, const UnderlyingType& rhs);
 
     private:
-        static constexpr const UnderlyingType ONE = 4096;
-
         UnderlyingType _raw_value;
     };
 }
