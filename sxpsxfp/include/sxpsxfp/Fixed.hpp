@@ -120,6 +120,18 @@ namespace com::saxbophone::sxpsxfp {
             return {};
         }
         /**
+         * @brief Compare two Fixed instances for less than or equals
+         */
+        constexpr friend bool operator<=(const Fixed& lhs, const Fixed& rhs) {
+            return {};
+        }
+        /**
+         * @brief Compare two Fixed instances for greater than or equals
+         */
+        constexpr friend bool operator>=(const Fixed& lhs, const Fixed& rhs) {
+            return {};
+        }
+        /**
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++();

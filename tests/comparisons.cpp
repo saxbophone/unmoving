@@ -83,3 +83,15 @@ TEST_CASE("UnderlyingType > Fixed") {
     bool greater = bar > foo;
     SUCCEED();
 }
+
+TEST_CASE("Fixed <= Fixed") {
+    Fixed foo, bar;
+    bool less = foo <= bar;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed >= Fixed") {
+    Fixed foo, bar;
+    bool greater = foo >= bar;
+    SUCCEED();
+}
