@@ -92,9 +92,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compare a value of UnderlyingType with a Fixed instance for equality
          */
-        constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
         /**
          * @brief Check if a Fixed instance is less than a value of UnderlyingType
          */
