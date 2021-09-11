@@ -154,11 +154,15 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compound assignment multiplication operator
          */
-        constexpr Fixed& operator *=(const Fixed& rhs);
+        constexpr Fixed& operator *=(const Fixed& rhs) {
+            return *this;
+        }
         /**
          * @brief Compound assignment integer multiplication operator
          */
-        constexpr Fixed& operator *=(const UnderlyingType& rhs);
+        constexpr Fixed& operator *=(const UnderlyingType& rhs) {
+            return *this;
+        }
         /**
          * @brief Compound assignment division operator
          */
@@ -188,11 +192,15 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Multiplication operator
          */
-        constexpr friend Fixed operator*(Fixed lhs, const Fixed& rhs);
+        constexpr friend Fixed operator*(Fixed lhs, const Fixed& rhs) {
+            return {};
+        }
         /**
          * @brief Integer multiplication operator
          */
-        constexpr friend Fixed operator*(Fixed lhs, const UnderlyingType& rhs);
+        constexpr friend Fixed operator*(Fixed lhs, const UnderlyingType& rhs) {
+            return {};
+        }
         /**
          * @brief Division operator
          */
