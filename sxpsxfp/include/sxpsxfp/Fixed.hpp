@@ -91,10 +91,12 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Compare a value of UnderlyingType with a Fixed instance for equality
+         * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
+         * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
          */
-        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-        //     return {};
-        // }
+        constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+            return {};
+        }
         /**
          * @brief Check if a Fixed instance is less than a value of UnderlyingType
          */
