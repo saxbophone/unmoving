@@ -59,7 +59,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Implicit cast operator to underlying type
          */
-        constexpr operator UnderlyingType() const;
+        constexpr operator UnderlyingType() const {
+            return {};
+        }
         /**
          * @brief Explicit cast operator to float/double
          * @details Returns closest floating point value to this fixed-point
@@ -78,89 +80,85 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Check if one Fixed instance is less than another
          */
-        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) = default;
         /**
          * @brief Check if one Fixed instance is greater than another
          */
-        constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator>(const Fixed& lhs, const Fixed& rhs) = default;
         /**
          * @brief Compare a Fixed instance with UnderlyingType for equality
          */
-        constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
-        /**
-         * @brief Compare a value of UnderlyingType with a Fixed instance for equality
-         * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
-         * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
-         */
-        constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if a Fixed instance is less than a value of UnderlyingType
-         */
-        constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if a Fixed instance is greater than a value of UnderlyingType
-         */
-        constexpr friend bool operator>(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if value of UnderlyingType is less than a Fixed instance
-         */
-        constexpr friend bool operator<(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if value of UnderlyingType is greater than a Fixed instance
-         */
-        constexpr friend bool operator>(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Compare two Fixed instances for less than or equals
-         */
-        constexpr friend bool operator<=(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Compare two Fixed instances for greater than or equals
-         */
-        constexpr friend bool operator>=(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if a Fixed instance is less than or equal to a value of UnderlyingType
-         */
-        constexpr friend bool operator<=(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if a Fixed instance is greater than or equal to a value of UnderlyingType
-         */
-        constexpr friend bool operator>=(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if value of UnderlyingType is less than or equal to a Fixed instance
-         */
-        constexpr friend bool operator<=(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
-        /**
-         * @brief Check if value of UnderlyingType is greater than or equal to a Fixed instance
-         */
-        constexpr friend bool operator>=(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Compare a value of UnderlyingType with a Fixed instance for equality
+        //  * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
+        //  * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
+        //  */
+        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if a Fixed instance is less than a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if a Fixed instance is greater than a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator>(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if value of UnderlyingType is less than a Fixed instance
+        //  */
+        // constexpr friend bool operator<(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if value of UnderlyingType is greater than a Fixed instance
+        //  */
+        // constexpr friend bool operator>(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Compare two Fixed instances for less than or equals
+        //  */
+        // constexpr friend bool operator<=(const Fixed& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Compare two Fixed instances for greater than or equals
+        //  */
+        // constexpr friend bool operator>=(const Fixed& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if a Fixed instance is less than or equal to a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator<=(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if a Fixed instance is greater than or equal to a value of UnderlyingType
+        //  */
+        // constexpr friend bool operator>=(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if value of UnderlyingType is less than or equal to a Fixed instance
+        //  */
+        // constexpr friend bool operator<=(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
+        // /**
+        //  * @brief Check if value of UnderlyingType is greater than or equal to a Fixed instance
+        //  */
+        // constexpr friend bool operator>=(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
         /**
          * @brief Prefix increment operator
          */
