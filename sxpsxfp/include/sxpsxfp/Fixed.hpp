@@ -57,30 +57,6 @@ namespace com::saxbophone::sxpsxfp {
             return {};
         }
         /**
-         * @brief User-defined literal for Fixed objects with fractional parts
-         *
-         * @b Usage:
-         * @code
-         * Fixed full = 123.45_fx;
-         * Fixed fractional = .45_fx;
-         * @endcode
-         */
-        constexpr friend Fixed operator"" _fx(long double literal);
-        /**
-         * @brief User-defined literal for Fixed objects without fractional parts
-         *
-         * @b Usage:
-         * @code
-         * Fixed integral = 123_fx;
-         * @endcode
-         * @warning Use this to initialise Fixed objects when the intention is
-         * to hold the same value as the integer. Use regular integer literals
-         * when the intention is to interpret the integer as a fixed-point value
-         * (this is the fixed-point equivalent of initialising a float from raw
-         * memory values).
-         */
-        constexpr friend Fixed operator"" _fx(unsigned long long int literal);
-        /**
          * @brief Implicit cast operator to underlying type
          */
         constexpr operator UnderlyingType() const {
@@ -245,6 +221,35 @@ namespace com::saxbophone::sxpsxfp {
     private:
         UnderlyingType _raw_value;
     };
+
+    /**
+     * @brief User-defined literal for Fixed objects with fractional parts
+     *
+     * @b Usage:
+     * @code
+     * Fixed full = 123.45_fx;
+     * Fixed fractional = .45_fx;
+     * @endcode
+     */
+    constexpr Fixed operator"" _fx(long double literal) {
+        return {};
+    }
+    /**
+     * @brief User-defined literal for Fixed objects without fractional parts
+     *
+     * @b Usage:
+     * @code
+     * Fixed integral = 123_fx;
+     * @endcode
+     * @warning Use this to initialise Fixed objects when the intention is
+     * to hold the same value as the integer. Use regular integer literals
+     * when the intention is to interpret the integer as a fixed-point value
+     * (this is the fixed-point equivalent of initialising a float from raw
+     * memory values).
+     */
+    constexpr Fixed operator"" _fx(unsigned long long int literal) {
+        return {};
+    }
 }
 
 #endif // include guard

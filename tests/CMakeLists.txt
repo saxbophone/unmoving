@@ -18,6 +18,7 @@ target_sources(
         multiplication.cpp
         subtraction.cpp
         unary_operations.cpp
+        user_defined_literals.cpp
 )
 target_link_libraries(
     tests
