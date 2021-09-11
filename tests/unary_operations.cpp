@@ -3,7 +3,33 @@
 #include <sxpsxfp/Fixed.hpp>
 
 using namespace com::saxbophone::sxpsxfp;
-// placeholder test case
-TEST_CASE("Unary Operations Placeholder") {
-    WARN("No tests implemented");
+
+TEST_CASE("Fixed prefix increment") {
+    Fixed foo;
+    Fixed bar = ++foo;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed postfix increment") {
+    Fixed foo;
+    Fixed bar = foo++;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed prefix decrement") {
+    Fixed foo;
+    Fixed bar = --foo;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed postfix decrement") {
+    Fixed foo;
+    Fixed bar = foo--;
+    SUCCEED();
+}
+
+TEST_CASE("Fixed unary minus") {
+    Fixed foo;
+    Fixed bar = -foo;
+    SUCCEED();
 }

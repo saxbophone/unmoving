@@ -118,19 +118,27 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Prefix increment operator
          */
-        constexpr Fixed& operator++();
+        constexpr Fixed& operator++() {
+            return *this;
+        }
         /**
          * @brief Prefix decrement operator
          */
-        constexpr Fixed& operator--();
+        constexpr Fixed& operator--() {
+            return *this;
+        }
         /**
          * @brief Postfix increment operator
          */
-        constexpr Fixed operator++(int);
+        constexpr Fixed operator++(int) {
+            return {};
+        }
         /**
          * @brief Postfix decrement operator
          */
-        constexpr Fixed operator--(int);
+        constexpr Fixed operator--(int) {
+            return {};
+        }
         /**
          * @brief Compound assignment addition operator
          */
@@ -158,7 +166,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Unary minus (negation) operator
          */
-        constexpr Fixed operator-();
+        constexpr Fixed operator-() {
+            return {};
+        }
         /**
          * @brief Addition operator
          */
