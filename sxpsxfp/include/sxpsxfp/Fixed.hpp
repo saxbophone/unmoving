@@ -132,6 +132,30 @@ namespace com::saxbophone::sxpsxfp {
             return {};
         }
         /**
+         * @brief Check if a Fixed instance is less than or equal to a value of UnderlyingType
+         */
+        constexpr friend bool operator<=(const Fixed& lhs, const UnderlyingType& rhs) {
+            return {};
+        }
+        /**
+         * @brief Check if a Fixed instance is greater than or equal to a value of UnderlyingType
+         */
+        constexpr friend bool operator>=(const Fixed& lhs, const UnderlyingType& rhs) {
+            return {};
+        }
+        /**
+         * @brief Check if value of UnderlyingType is less than or equal to a Fixed instance
+         */
+        constexpr friend bool operator<=(const UnderlyingType& lhs, const Fixed& rhs) {
+            return {};
+        }
+        /**
+         * @brief Check if value of UnderlyingType is greater than or equal to a Fixed instance
+         */
+        constexpr friend bool operator>=(const UnderlyingType& lhs, const Fixed& rhs) {
+            return {};
+        }
+        /**
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++();
