@@ -5,7 +5,7 @@
 using namespace com::saxbophone::sxpsxfp;
 
 TEST_CASE("Default constructor can be called") {
-    Fixed foo;
+    Fixed foo = {};
     SUCCEED();
 }
 
@@ -53,7 +53,7 @@ TEST_CASE("Assignment operator can be called") {
 }
 
 TEST_CASE("Copy constructor can be called") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = foo;
     SUCCEED();
 }

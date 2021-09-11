@@ -5,15 +5,15 @@
 using namespace com::saxbophone::sxpsxfp;
 
 TEST_CASE("Fixed += Fixed") {
-    Fixed foo;
-    Fixed bar;
+    Fixed foo = {};
+    Fixed bar = {};
     foo += bar;
     SUCCEED();
 }
 
 TEST_CASE("Fixed + Fixed") {
-    Fixed foo;
-    Fixed bar;
+    Fixed foo = {};
+    Fixed bar = {};
     Fixed baz = foo + bar;
     SUCCEED();
 }

@@ -5,31 +5,31 @@
 using namespace com::saxbophone::sxpsxfp;
 
 TEST_CASE("Fixed prefix increment") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = ++foo;
     SUCCEED();
 }
 
 TEST_CASE("Fixed postfix increment") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = foo++;
     SUCCEED();
 }
 
 TEST_CASE("Fixed prefix decrement") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = --foo;
     SUCCEED();
 }
 
 TEST_CASE("Fixed postfix decrement") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = foo--;
     SUCCEED();
 }
 
 TEST_CASE("Fixed unary minus") {
-    Fixed foo;
+    Fixed foo = {};
     Fixed bar = -foo;
     SUCCEED();
 }
