@@ -90,9 +90,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compare a Fixed instance with UnderlyingType for equality
          */
-        // constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
-        //     return {};
-        // }
+        constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
+            return {};
+        }
         // /**
         //  * @brief Compare a value of UnderlyingType with a Fixed instance for equality
         //  * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
