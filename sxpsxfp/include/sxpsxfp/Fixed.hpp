@@ -80,7 +80,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Check if one Fixed instance is less than another
          */
-        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) = default;
+        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
+            return {};
+        }
         /**
          * @brief Check if one Fixed instance is greater than another
          */
