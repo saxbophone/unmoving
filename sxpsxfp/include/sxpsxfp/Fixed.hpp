@@ -158,7 +158,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Unary minus (negation) operator
          */
-        constexpr Fixed& operator-();
+        constexpr Fixed operator-();
         /**
          * @brief Addition operator
          */
