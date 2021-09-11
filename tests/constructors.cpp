@@ -57,3 +57,5 @@ TEST_CASE("Copy constructor can be called") {
     Fixed bar = foo;
     SUCCEED();
 }
+
+// TODO: Explicit copy ctor

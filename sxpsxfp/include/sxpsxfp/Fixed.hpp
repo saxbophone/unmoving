@@ -68,11 +68,15 @@ namespace com::saxbophone::sxpsxfp {
          * value. As the precision of single-precision IEEE floats is twice that
          * of this Fixed type, the results should be exact.
          */
-        explicit constexpr operator float() const;
+        explicit constexpr operator float() const {
+            return {};
+        }
         /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.
          */
-        constexpr UnderlyingType to_integer() const;
+        constexpr UnderlyingType to_integer() const {
+            return {};
+        }
         /**
          * @brief Compare two Fixed instances for equality
          */
