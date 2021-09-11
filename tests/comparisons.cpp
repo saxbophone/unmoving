@@ -70,19 +70,19 @@ TEST_CASE("Fixed > UnderlyingType") {
     SUCCEED();
 }
 
-// TEST_CASE("UnderlyingType < Fixed") {
-//     Fixed foo = {};
-//     Fixed::UnderlyingType bar = {};
-//     bool less = bar < foo;
-//     SUCCEED();
-// }
+TEST_CASE("UnderlyingType < Fixed") {
+    Fixed foo = {};
+    Fixed::UnderlyingType bar = {};
+    bool less = bar < foo;
+    SUCCEED();
+}
 
-// TEST_CASE("UnderlyingType > Fixed") {
-//     Fixed foo = {};
-//     Fixed::UnderlyingType bar = {};
-//     bool greater = bar > foo;
-//     SUCCEED();
-// }
+TEST_CASE("UnderlyingType > Fixed") {
+    Fixed foo = {};
+    Fixed::UnderlyingType bar = {};
+    bool greater = bar > foo;
+    SUCCEED();
+}
 
 TEST_CASE("Fixed <= Fixed") {
     Fixed foo = {}, bar = {};
