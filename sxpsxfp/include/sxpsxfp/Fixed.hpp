@@ -61,12 +61,16 @@ namespace com::saxbophone::sxpsxfp {
          */
         constexpr operator UnderlyingType() const;
         /**
-         * @brief Implicit cast operator to float/double
+         * @brief Explicit cast operator to float/double
          * @details Returns closest floating point value to this fixed-point
          * value. As the precision of single-precision IEEE floats is twice that
          * of this Fixed type, the results should be exact.
          */
-        constexpr operator float() const;
+        explicit constexpr operator float() const;
+        /**
+         * @returns Fixed-point value converted to integer, with fractional part truncated.
+         */
+        constexpr UnderlyingType to_integer() const;
         /**
          * @brief Compare two Fixed instances for equality
          */
