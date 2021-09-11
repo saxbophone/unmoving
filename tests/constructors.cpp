@@ -3,45 +3,46 @@
 #include <sxpsxfp/Fixed.hpp>
 
 using namespace com::saxbophone::sxpsxfp;
+using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Default constructor can be called") {
     Fixed foo = {};
-    SUCCEED();
+    REQUIRE((Underlying)foo == 0);
 }
 
 TEST_CASE("Implicit conversion from fixed-point integer") {
     Fixed var = 32;
-    SUCCEED();
+    REQUIRE((Underlying)var == 32);
 }
 
 TEST_CASE("Explicit conversion from fixed-point integer") {
     Fixed var(32);
-    SUCCEED();
+    REQUIRE((Underlying)var == 32);
 }
 
 TEST_CASE("Implicit conversion from float") {
     Fixed var = 32.0f;
-    SUCCEED();
+    REQUIRE((Underlying)var == 131'072); // 32 * 4096
 }
 
 TEST_CASE("Implicit conversion from double") {
     Fixed var = 32.0;
-    SUCCEED();
+    REQUIRE((Underlying)var == 131'072); // 32 * 4096
 }
 
 TEST_CASE("Explicit conversion from float") {
     Fixed var(32.0f);
-    SUCCEED();
+    REQUIRE((Underlying)var == 131'072); // 32 * 4096
 }
 
 TEST_CASE("Explicit conversion from double") {
     Fixed var(32.0);
-    SUCCEED();
+    REQUIRE((Underlying)var == 131'072); // 32 * 4096
 }
 
 TEST_CASE("Creation from integer value") {
     Fixed var = Fixed::from_integer(32);
-    SUCCEED();
+    REQUIRE((Underlying)var == 131'072); // 32 * 4096
 }
 
 // Now for some more advanced stuff
@@ -49,13 +50,17 @@ TEST_CASE("Creation from integer value") {
 TEST_CASE("Assignment operator can be called") {
     Fixed foo, bar;
     foo = bar;
-    SUCCEED();
+    REQUIRE((Underlying)foo == (Underlying)bar);
 }
 
 TEST_CASE("Copy constructor can be called") {
     Fixed foo = {};
     Fixed bar = foo;
-    SUCCEED();
+    REQUIRE((Underlying)foo == (Underlying)bar);
 }
 
-// TODO: Explicit copy ctor
+TEST_CASE("Explicit copy constructor can be called") {
+    Fixed foo = {};
+    Fixed bar(foo);
+    REQUIRE((Underlying)foo == (Underlying)bar);
+}

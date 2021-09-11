@@ -17,6 +17,7 @@
 
 // NOTE: Blindly assuming that the PS1 environment declares itself as a freestanding implementation for this check!
 #if __STDC_HOSTED__
+#include <cstddef>
 #include <cstdint>
 #else
 #include <sys/types.h>
@@ -29,7 +30,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Default constructor, creates a Fixed instance with value 0.0
          */
-        constexpr Fixed() {}
+        constexpr Fixed() : _raw_value(0) {}
         /**
          * @brief Implicit converting constructor from fixed-point integer
          * @details Creates a Fixed instance wrapping a raw fixed-point integer,
@@ -37,7 +38,7 @@ namespace com::saxbophone::sxpsxfp {
          * @warning Don't use this for converting plain integers into Fixed
          * @see Fixed::from_integer
          */
-        constexpr Fixed(UnderlyingType raw_value) {}
+        constexpr Fixed(UnderlyingType raw_value) : _raw_value(raw_value) {}
         /**
          * @brief Implicit converting constructor from float/double
          * @details Creates a Fixed instance with the nearest fixed-point value
@@ -46,7 +47,7 @@ namespace com::saxbophone::sxpsxfp {
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          */
-        constexpr Fixed(double value) {}
+        constexpr Fixed(double value) : Fixed((UnderlyingType)(value * Fixed::SCALE)) {}
         /**
          * @returns a Fixed instance representing the closest fixed-point value
          * to the given integer value.
@@ -54,13 +55,14 @@ namespace com::saxbophone::sxpsxfp {
          * @see Fixed::Fixed UnderlyingType
          */
         static constexpr Fixed from_integer(int value) {
-            return {};
+            // TODO: Check for overflow? No exceptions on the PS1...
+            return Fixed(value << Fixed::FRACTION_BITS);
         }
         /**
          * @brief Implicit cast operator to underlying type
          */
         constexpr operator UnderlyingType() const {
-            return {};
+            return this->_raw_value;
         }
         /**
          * @brief Explicit cast operator to float/double
@@ -219,6 +221,8 @@ namespace com::saxbophone::sxpsxfp {
         }
 
     private:
+        static constexpr size_t FRACTION_BITS = 12;
+        static constexpr UnderlyingType SCALE = 1 << FRACTION_BITS;
         UnderlyingType _raw_value;
     };
 
