@@ -76,15 +76,11 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compare two Fixed instances for equality
          */
-        constexpr friend bool operator==(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        constexpr friend bool operator==(const Fixed& lhs, const Fixed& rhs) = default;
         /**
          * @brief Check if one Fixed instance is less than another
          */
-        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) = default;
         /**
          * @brief Check if one Fixed instance is greater than another
          */
@@ -92,17 +88,17 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compare a Fixed instance with UnderlyingType for equality
          */
-        constexpr friend bool operator==(const Fixed& lhs, const Fixed::UnderlyingType& rhs) {
+        constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
             return {};
         }
-        // /**
-        //  * @brief Compare a value of UnderlyingType with a Fixed instance for equality
-        //  * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
-        //  * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
-        //  */
-        // constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-        //     return {};
-        // }
+        /**
+         * @brief Compare a value of UnderlyingType with a Fixed instance for equality
+         * @note This overload is unneeded on all compiles (including PS1 mips target) except Clang and MSVC, both of
+         * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
+         */
+        constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
+            return {};
+        }
         // /**
         //  * @brief Check if a Fixed instance is less than a value of UnderlyingType
         //  */
