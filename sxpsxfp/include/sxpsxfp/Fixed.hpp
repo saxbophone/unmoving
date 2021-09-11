@@ -166,11 +166,15 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compound assignment division operator
          */
-        constexpr Fixed& operator /=(const Fixed& rhs);
+        constexpr Fixed& operator /=(const Fixed& rhs) {
+            return *this;
+        }
         /**
          * @brief Compound assignment integer division operator
          */
-        constexpr Fixed& operator /=(const UnderlyingType& rhs);
+        constexpr Fixed& operator /=(const UnderlyingType& rhs) {
+            return *this;
+        }
         /**
          * @brief Unary minus (negation) operator
          */
@@ -204,11 +208,15 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Division operator
          */
-        constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs);
+        constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs) {
+            return {};
+        }
         /**
          * @brief Integer division operator
          */
-        constexpr friend Fixed operator/(Fixed lhs, const UnderlyingType& rhs);
+        constexpr friend Fixed operator/(Fixed lhs, const UnderlyingType& rhs) {
+            return {};
+        }
 
     private:
         UnderlyingType _raw_value;
