@@ -34,7 +34,7 @@ TEST_CASE("Can cast from and back to float") {
     );
     Fixed var = i;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((float)var == Approx(i).margin(1.0 / 4096));
+    REQUIRE((float)var == Approx(i).margin(Fixed::FRACTIONAL_STEP));
 }
 
 TEST_CASE("Can cast from and back to double") {
@@ -49,7 +49,7 @@ TEST_CASE("Can cast from and back to double") {
     );
     Fixed var = i;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)var == Approx(i).margin(1.0 / 4096));
+    REQUIRE((double)var == Approx(i).margin(Fixed::FRACTIONAL_STEP));
 }
 
 TEST_CASE("Can cast from and back to integer") {

@@ -30,7 +30,7 @@ TEST_CASE("Fixed += Fixed") {
     double foo_f = (double)foo, bar_f = (double)bar;
     foo += bar;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)foo == Approx(foo_f + bar_f).margin(1.0 / 4096));
+    REQUIRE((double)foo == Approx(foo_f + bar_f).margin(Fixed::FRACTIONAL_STEP));
 }
 
 TEST_CASE("Fixed + Fixed") {
@@ -58,5 +58,5 @@ TEST_CASE("Fixed + Fixed") {
     double foo_f = (double)foo, bar_f = (double)bar;
     Fixed baz = foo + bar;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)baz == Approx(foo_f + bar_f).margin(1.0 / 4096));
+    REQUIRE((double)baz == Approx(foo_f + bar_f).margin(Fixed::FRACTIONAL_STEP));
 }

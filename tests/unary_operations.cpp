@@ -18,8 +18,8 @@ TEST_CASE("Fixed prefix increment") {
     );
     Fixed foo(i);
     Fixed bar = ++foo;
-    REQUIRE((double)bar == ++i);
-    REQUIRE((double)foo == i); // relies upon i value changed in previous check
+    REQUIRE((double)bar == Approx(++i).margin(Fixed::FRACTIONAL_STEP));
+    REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed postfix increment") {
@@ -35,8 +35,8 @@ TEST_CASE("Fixed postfix increment") {
     );
     Fixed foo(i);
     Fixed bar = foo++;
-    REQUIRE((double)bar == i++);
-    REQUIRE((double)foo == i); // relies upon i value changed in previous check
+    REQUIRE((double)bar == Approx(i++).margin(Fixed::FRACTIONAL_STEP));
+    REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed prefix decrement") {
@@ -52,8 +52,8 @@ TEST_CASE("Fixed prefix decrement") {
     );
     Fixed foo(i);
     Fixed bar = --foo;
-    REQUIRE((double)bar == --i);
-    REQUIRE((double)foo == i); // relies upon i value changed in previous check
+    REQUIRE((double)bar == Approx(--i).margin(Fixed::FRACTIONAL_STEP));
+    REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed postfix decrement") {
@@ -69,8 +69,8 @@ TEST_CASE("Fixed postfix decrement") {
     );
     Fixed foo(i);
     Fixed bar = foo--;
-    REQUIRE((double)bar == i--);
-    REQUIRE((double)foo == i); // relies upon i value changed in previous check
+    REQUIRE((double)bar == Approx(i--).margin(Fixed::FRACTIONAL_STEP));
+    REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed unary minus") {

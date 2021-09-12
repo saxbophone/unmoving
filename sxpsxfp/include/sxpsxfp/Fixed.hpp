@@ -111,23 +111,27 @@ namespace com::saxbophone::sxpsxfp {
             return this->_raw_value;
         }
         /**
-         * @brief Explicit cast operator to float
-         * @details Returns closest floating point value to this fixed-point
-         * value. As the precision of single-precision IEEE floats is twice that
-         * of this Fixed type, the results should be exact.
-         */
-        explicit constexpr operator float() const {
-            return (float)this->_raw_value / Fixed::SCALE;
-        }
-        /**
          * @brief Explicit cast operator to double
-         * @note There's no real advantage to using this unless the result is
-         * needed as a double, as this Fixed class has half the precision of
-         * float (single-precision) as it is, so the precision of double is way
-         * beyond what is needed to represent all values.
+         * @details Returns closest floating point value to this fixed-point
+         * value.
+         * @note There is enough precision in double-precision IEEE floats to
+         * exactly represent all Fixed point values, but single-precision floats
+         * do not.
          */
         explicit constexpr operator double() const {
-            return (float)*this;
+            return (double)this->_raw_value / Fixed::SCALE;
+        }
+        /*
+         * @brief Explicit cast operator to float
+         * @details Returns closest floating point value to this fixed-point
+         * value.
+         * @warn This loses precision as single-precision floating point cannot
+         * represent all possible fixed-point values. Cast to double for an
+         * exact result.
+         */
+        explicit constexpr operator float() const {
+            // reuse cast to double and then allow it to implicitly narrow to float
+            return (double)*this;
         }
         /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.
@@ -178,14 +182,14 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++() {
-            *this += 1_fx;
+            *this += Fixed::SCALE;
             return *this;
         }
         /**
          * @brief Prefix decrement operator
          */
         constexpr Fixed& operator--() {
-            *this -= 1_fx;
+            *this -= Fixed::SCALE;
             return *this;
         }
         /**

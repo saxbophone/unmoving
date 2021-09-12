@@ -64,7 +64,7 @@ TEST_CASE("Explicit cast Fixed to double") {
     );
     Fixed foo(i);
     double bar = (double)foo;
-    REQUIRE(bar == (float)i / 4096);
+    REQUIRE(bar == (double)i / 4096);
 }
 
 TEST_CASE("Fixed.to_integer()") {
