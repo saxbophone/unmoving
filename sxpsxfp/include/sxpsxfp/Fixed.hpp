@@ -54,6 +54,13 @@ namespace com::saxbophone::sxpsxfp {
      */
     constexpr Fixed operator"" _fx(unsigned long long int literal);
 
+    /**
+     * @brief Fixed-point arithmetic value type for Sony PlayStation
+     * @details Wraps the native 32-bit integers used on the platform for fixed
+     * point arithmetic and allows arithmetic operations to be done on these
+     * instances directly, handling the additional arithmetic for emulating
+     * fixed-point internally.
+     */
     class Fixed {
     public:
         using UnderlyingType = int32_t;
@@ -73,7 +80,8 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Implicit converting constructor from fixed-point integer
          * @details Creates a Fixed instance wrapping a raw fixed-point integer,
          * of the kind used by the PlayStation SDK functions.
-         * @warning Don't use this for converting plain integers into Fixed
+         * @warning Don't use this for converting plain integers into Fixed.
+         * Use Fixed::from_integer for that.
          * @see Fixed::from_integer
          */
         constexpr Fixed(UnderlyingType raw_value) : _raw_value(raw_value) {}
@@ -100,8 +108,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @returns a Fixed instance representing the closest fixed-point value
          * to the given integer value.
-         * @warning Don't use this for converting raw fixed-point integers to Fixed
-         * @see Fixed::Fixed UnderlyingType
+         * @warning Don't use this for converting raw fixed-point integers to Fixed.
+         * Use Fixed::Fixed(UnderlyingType) for that.
+         * @see Fixed::Fixed(UnderlyingType)
          */
         static constexpr Fixed from_integer(int value) {
             // TODO: Check for overflow? No exceptions on the PS1...
