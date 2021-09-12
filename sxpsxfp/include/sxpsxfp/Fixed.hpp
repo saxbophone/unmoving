@@ -55,6 +55,14 @@ namespace com::saxbophone::sxpsxfp {
     class Fixed {
     public:
         using UnderlyingType = int32_t;
+        static constexpr size_t FRACTION_BITS = 12;
+        static constexpr size_t DECIMAL_BITS = 0;
+        static constexpr UnderlyingType SCALE = 1 << FRACTION_BITS;
+        static constexpr float FRACTIONAL_STEP = 0.0f;
+        static constexpr UnderlyingType DECIMAL_MAX = 0;
+        static constexpr UnderlyingType DECIMAL_MIN = 0;
+        static constexpr float FRACTIONAL_MAX = 0.0f;
+        static constexpr float FRACTIONAL_MIN = 0.0f;
         /**
          * @brief Default constructor, creates a Fixed instance with value 0.0
          */
@@ -280,8 +288,6 @@ namespace com::saxbophone::sxpsxfp {
         }
 
     private:
-        static constexpr size_t FRACTION_BITS = 12;
-        static constexpr UnderlyingType SCALE = 1 << FRACTION_BITS;
         UnderlyingType _raw_value;
     };
 

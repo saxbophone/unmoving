@@ -17,6 +17,7 @@ target_sources(
         division.cpp
         equivalences.cpp
         multiplication.cpp
+        static_checks.cpp
         subtraction.cpp
         unary_operations.cpp
         user_defined_literals.cpp
