@@ -34,6 +34,7 @@ namespace com::saxbophone::sxpsxfp {
      * Fixed full = 123.45_fx;
      * Fixed fractional = .45_fx;
      * @endcode
+     * @relatedalso Fixed
      */
     constexpr Fixed operator"" _fx(long double literal);
 
@@ -49,6 +50,7 @@ namespace com::saxbophone::sxpsxfp {
      * when the intention is to interpret the integer as a fixed-point value
      * (this is the fixed-point equivalent of initialising a float from raw
      * memory values).
+     * @relatedalso Fixed
      */
     constexpr Fixed operator"" _fx(unsigned long long int literal);
 
@@ -64,7 +66,7 @@ namespace com::saxbophone::sxpsxfp {
         static constexpr double FRACTIONAL_MAX = Fixed::DECIMAL_MAX + (1.0 - Fixed::FRACTIONAL_STEP);
         static constexpr double FRACTIONAL_MIN = Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP);
         /**
-         * @brief Default constructor, creates a Fixed instance with value 0.0
+         * @brief Default constructor, creates a Fixed instance with value `0.0_fx`
          */
         constexpr Fixed() : _raw_value(0) {}
         /**
@@ -78,8 +80,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Implicit converting constructor from float/double
          * @details Creates a Fixed instance with the nearest fixed-point value
-         * to the given floating point value. This loses precision!
-         * @warning Not recommended to use this outside of constexpr contexts
+         * to the given floating point value.
+         * @warning This loses precision.
+         * @note Not recommended to use this outside of constexpr contexts
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          */
@@ -112,22 +115,26 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Explicit cast operator to double
-         * @details Returns closest floating point value to this fixed-point
-         * value.
+         * @details Returns exact value of this Fixed instance as double-precision floating point
          * @note There is enough precision in double-precision IEEE floats to
-         * exactly represent all Fixed point values, but single-precision floats
-         * do not.
+         * exactly represent all Fixed point values.
+         * @note Not recommended to use this outside of constexpr contexts
+         * where avoidable on the PlayStation, as the console has no hardware
+         * floating point support, so slow software floats will be used.
          */
         explicit constexpr operator double() const {
             return (double)this->_raw_value / Fixed::SCALE;
         }
-        /*
+        /**
          * @brief Explicit cast operator to float
          * @details Returns closest floating point value to this fixed-point
          * value.
-         * @warn This loses precision as single-precision floating point cannot
+         * @warning This loses precision as single-precision floating point cannot
          * represent all possible fixed-point values. Cast to double instead
          * for an exact result.
+         * @note Not recommended to use this outside of constexpr contexts
+         * where avoidable on the PlayStation, as the console has no hardware
+         * floating point support, so slow software floats will be used.
          */
         explicit constexpr operator float() const {
             // reuse cast to double and then narrow it to float
