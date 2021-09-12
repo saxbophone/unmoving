@@ -84,6 +84,16 @@ namespace com::saxbophone::sxpsxfp {
             return (float)this->_raw_value / Fixed::SCALE;
         }
         /**
+         * @brief Explicit cast operator to double
+         * @note There's no real advantage to using this unless the result is
+         * needed as a double, as this Fixed class has half the precision of
+         * float (single-precision) as it is, so the precision of double is way
+         * beyond what is needed to represent all values.
+         */
+        explicit constexpr operator double() const {
+            return (float)*this;
+        }
+        /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.
          */
         constexpr UnderlyingType to_integer() const {
