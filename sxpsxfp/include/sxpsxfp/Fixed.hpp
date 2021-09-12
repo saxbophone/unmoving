@@ -24,6 +24,34 @@
 #endif
 
 namespace com::saxbophone::sxpsxfp {
+    class Fixed; // forward-declaration to allow declaration of user-defined literals
+
+    /**
+     * @brief User-defined literal for Fixed objects with fractional parts
+     *
+     * @b Usage:
+     * @code
+     * Fixed full = 123.45_fx;
+     * Fixed fractional = .45_fx;
+     * @endcode
+     */
+    constexpr Fixed operator"" _fx(long double literal);
+
+    /**
+     * @brief User-defined literal for Fixed objects without fractional parts
+     *
+     * @b Usage:
+     * @code
+     * Fixed integral = 123_fx;
+     * @endcode
+     * @warning Use this to initialise Fixed objects when the intention is
+     * to hold the same value as the integer. Use regular integer literals
+     * when the intention is to interpret the integer as a fixed-point value
+     * (this is the fixed-point equivalent of initialising a float from raw
+     * memory values).
+     */
+    constexpr Fixed operator"" _fx(unsigned long long int literal);
+
     class Fixed {
     public:
         using UnderlyingType = int32_t;
@@ -142,25 +170,31 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++() {
+            *this += 1_fx;
             return *this;
         }
         /**
          * @brief Prefix decrement operator
          */
         constexpr Fixed& operator--() {
+            *this -= 1_fx;
             return *this;
         }
         /**
          * @brief Postfix increment operator
          */
         constexpr Fixed operator++(int) {
-            return {};
+            Fixed old = *this; // copy old value
+            ++*this; // prefix increment
+            return old; // return old value
         }
         /**
          * @brief Postfix decrement operator
          */
         constexpr Fixed operator--(int) {
-            return {};
+            Fixed old = *this; // copy old value
+            --*this; // prefix decrement
+            return old; // return old value
         }
         /**
          * @brief Compound assignment addition operator
@@ -251,31 +285,10 @@ namespace com::saxbophone::sxpsxfp {
         UnderlyingType _raw_value;
     };
 
-    /**
-     * @brief User-defined literal for Fixed objects with fractional parts
-     *
-     * @b Usage:
-     * @code
-     * Fixed full = 123.45_fx;
-     * Fixed fractional = .45_fx;
-     * @endcode
-     */
     constexpr Fixed operator"" _fx(long double literal) {
         return Fixed((double)literal);
     }
-    /**
-     * @brief User-defined literal for Fixed objects without fractional parts
-     *
-     * @b Usage:
-     * @code
-     * Fixed integral = 123_fx;
-     * @endcode
-     * @warning Use this to initialise Fixed objects when the intention is
-     * to hold the same value as the integer. Use regular integer literals
-     * when the intention is to interpret the integer as a fixed-point value
-     * (this is the fixed-point equivalent of initialising a float from raw
-     * memory values).
-     */
+
     constexpr Fixed operator"" _fx(unsigned long long int literal) {
         return Fixed::from_integer((Fixed::UnderlyingType)literal);
     }
