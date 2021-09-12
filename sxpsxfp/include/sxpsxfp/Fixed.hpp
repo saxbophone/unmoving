@@ -203,8 +203,8 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Unary minus (negation) operator
          */
-        constexpr Fixed operator-() {
-            return {};
+        constexpr Fixed operator-() const {
+            return Fixed(-this->_raw_value);
         }
         /**
          * @brief Addition operator
