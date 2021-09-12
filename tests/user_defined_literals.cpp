@@ -12,20 +12,20 @@ using namespace com::saxbophone::sxpsxfp;
  */
 
 TEST_CASE("Full user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, float>({
+    auto literal_to_value = GENERATE(table<Fixed, double>({
         {123.45_fx, 123.45f,},
         {123.456789_fx, 123.456789f,},
         {0.317282_fx, 0.317282f,},
         {456128.33937921009_fx, 456128.33937921009f,},
     }));
     Fixed foo = std::get<Fixed>(literal_to_value);
-    CAPTURE(std::get<Fixed>(literal_to_value), std::get<float>(literal_to_value));
+    CAPTURE(std::get<Fixed>(literal_to_value), std::get<double>(literal_to_value));
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((float)foo == Approx(std::get<float>(literal_to_value)).margin(1.0 / 4096));
+    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(1.0 / 4096));
 }
 
 TEST_CASE("Fractional user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, float>({
+    auto literal_to_value = GENERATE(table<Fixed, double>({
         {.45_fx, .45f,},
         {.456789_fx, .456789f,},
         {.317282_fx, .317282f,},
@@ -33,11 +33,11 @@ TEST_CASE("Fractional user-defined literal") {
     }));
     Fixed foo = std::get<Fixed>(literal_to_value);
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((float)foo == Approx(std::get<float>(literal_to_value)).margin(1.0 / 4096));
+    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(1.0 / 4096));
 }
 
 TEST_CASE("Integral user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, float>({
+    auto literal_to_value = GENERATE(table<Fixed, double>({
         {12345_fx, 12345.0f,},
         {123456_fx, 123456.0f,},
         {317282_fx, 317282.0f,},
@@ -45,5 +45,5 @@ TEST_CASE("Integral user-defined literal") {
     }));
     Fixed foo = std::get<Fixed>(literal_to_value);
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((float)foo == Approx(std::get<float>(literal_to_value)).margin(1.0 / 4096));
+    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(1.0 / 4096));
 }

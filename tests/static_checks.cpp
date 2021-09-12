@@ -34,7 +34,7 @@ TEST_CASE("Fixed::DECIMAL_BITS == Fixed::UnderlyingType bits - Fixed::FRACTION_B
 }
 
 TEST_CASE("Fixed::FRACTIONAL_STEP == 1 / Fixed::SCALE") {
-    STATIC_REQUIRE(Fixed::FRACTIONAL_STEP == Approx(1.0f / Fixed::SCALE));
+    STATIC_REQUIRE(Fixed::FRACTIONAL_STEP == Approx(1.0 / Fixed::SCALE));
 }
 
 TEST_CASE("Fixed::DECIMAL_MAX == 2 ** Fixed::DECIMAL_BITS - 1") {
