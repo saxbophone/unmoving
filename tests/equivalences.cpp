@@ -42,8 +42,8 @@ TEST_CASE("Can cast from and back to double") {
         take(
             100,
             random(
-                -524288.9997558594f,
-                524287.9997558594f
+                -524288.9997558594,
+                524287.9997558594
             )
         )
     );
