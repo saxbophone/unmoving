@@ -261,7 +261,7 @@ namespace com::saxbophone::sxpsxfp {
      * @endcode
      */
     constexpr Fixed operator"" _fx(long double literal) {
-        return {};
+        return Fixed((double)literal);
     }
     /**
      * @brief User-defined literal for Fixed objects without fractional parts
@@ -277,7 +277,7 @@ namespace com::saxbophone::sxpsxfp {
      * memory values).
      */
     constexpr Fixed operator"" _fx(unsigned long long int literal) {
-        return {};
+        return Fixed::from_integer((Fixed::UnderlyingType)literal);
     }
 }
 
