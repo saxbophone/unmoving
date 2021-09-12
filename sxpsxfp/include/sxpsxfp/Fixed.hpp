@@ -97,7 +97,8 @@ namespace com::saxbophone::sxpsxfp {
          * @returns Fixed-point value converted to integer, with fractional part truncated.
          */
         constexpr UnderlyingType to_integer() const {
-            return {};
+            // can't use a right-shift here due to it not handling negative values properly
+            return this->_raw_value / Fixed::SCALE;
         }
         /**
          * @brief Compare two Fixed instances for equality

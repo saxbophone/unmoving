@@ -68,7 +68,16 @@ TEST_CASE("Explicit cast Fixed to double") {
 }
 
 TEST_CASE("Fixed.to_integer()") {
-    Fixed foo = {};
+    Underlying i = GENERATE(
+        take(
+            100,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Fixed foo(i);
     Underlying truncated = foo.to_integer();
-    SUCCEED();
+    REQUIRE(truncated == i / 4096);
 }
