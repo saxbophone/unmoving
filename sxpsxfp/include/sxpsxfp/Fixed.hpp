@@ -54,13 +54,7 @@ namespace com::saxbophone::sxpsxfp {
             double remainder = scaled - integral;
             // there's no rounding function in the PS1 stdlib so round manually
             if (remainder <= -0.5 or remainder >= 0.5) { // round half to even
-                /*
-                 * we can test for oddness with modulo, and as its return value
-                 * has the same sign as the dividend, we can use that as the
-                 * delta to reach the nearest even number (if already even, it
-                 * will be zero).
-                 */
-                integral += (integral % 2);
+                integral += (integral < 0 ? -1 : 1);
             }
             this->_raw_value = integral;
         }
@@ -81,13 +75,13 @@ namespace com::saxbophone::sxpsxfp {
             return this->_raw_value;
         }
         /**
-         * @brief Explicit cast operator to float/double
+         * @brief Explicit cast operator to float
          * @details Returns closest floating point value to this fixed-point
          * value. As the precision of single-precision IEEE floats is twice that
          * of this Fixed type, the results should be exact.
          */
         explicit constexpr operator float() const {
-            return {};
+            return (float)this->_raw_value / Fixed::SCALE;
         }
         /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.

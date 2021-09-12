@@ -53,9 +53,18 @@ TEST_CASE("Explicit cast Fixed to float") {
 }
 
 TEST_CASE("Explicit cast Fixed to double") {
-    Fixed foo = {};
+    Underlying i = GENERATE(
+        take(
+            100,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Fixed foo(i);
     double bar = (double)foo;
-    SUCCEED();
+    REQUIRE(bar == (float)i / 4096);
 }
 
 TEST_CASE("Fixed.to_integer()") {
