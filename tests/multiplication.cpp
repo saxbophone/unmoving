@@ -1,33 +1,52 @@
+#include <cmath>
+
 #include <catch2/catch.hpp>
 
 #include <sxpsxfp/Fixed.hpp>
 
 using namespace com::saxbophone::sxpsxfp;
+using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed *= Fixed") {
-    Fixed foo = {};
-    Fixed bar = {};
+    // max value is sqrt(max fixed point value) to prevent overflow
+    const double max_operand = std::sqrt(524287.9997558594);
+    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Fixed foo(i);
+    Fixed bar(j);
     foo *= bar;
-    SUCCEED();
+    REQUIRE((double)foo == i * j);
 }
 
 TEST_CASE("Fixed *= UnderlyingType") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
+    // max value is sqrt(max fixed point value) to prevent overflow
+    const double max_operand = std::sqrt(524287.9997558594);
+    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Underlying j = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
+    Fixed foo(i);
+    Underlying bar = j;
     foo *= bar;
-    SUCCEED();
+    REQUIRE((double)foo == i * j);
 }
 
 TEST_CASE("Fixed * Fixed") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
+    // max value is sqrt(max fixed point value) to prevent overflow
+    const double max_operand = std::sqrt(524287.9997558594);
+    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Fixed foo(i);
+    Fixed bar(j);
     Fixed baz = foo * bar;
-    SUCCEED();
+    REQUIRE((double)baz == i * j);
 }
 
 TEST_CASE("Fixed * UnderlyingType") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
+    // max value is sqrt(max fixed point value) to prevent overflow
+    const double max_operand = std::sqrt(524287.9997558594);
+    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Underlying j = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
+    Fixed foo(i);
+    Underlying bar = j;
     Fixed baz = foo * bar;
-    SUCCEED();
+    REQUIRE((double)baz == i * j);
 }
