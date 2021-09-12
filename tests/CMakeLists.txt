@@ -15,6 +15,7 @@ target_sources(
         comparisons.cpp
         constructors.cpp
         division.cpp
+        equivalences.cpp
         multiplication.cpp
         subtraction.cpp
         unary_operations.cpp
