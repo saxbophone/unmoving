@@ -56,13 +56,13 @@ namespace com::saxbophone::sxpsxfp {
     public:
         using UnderlyingType = int32_t;
         static constexpr size_t FRACTION_BITS = 12;
-        static constexpr size_t DECIMAL_BITS = 0;
-        static constexpr UnderlyingType SCALE = 1 << FRACTION_BITS;
-        static constexpr float FRACTIONAL_STEP = 0.0f;
-        static constexpr UnderlyingType DECIMAL_MAX = 0;
-        static constexpr UnderlyingType DECIMAL_MIN = 0;
-        static constexpr float FRACTIONAL_MAX = 0.0f;
-        static constexpr float FRACTIONAL_MIN = 0.0f;
+        static constexpr size_t DECIMAL_BITS = 19;
+        static constexpr UnderlyingType SCALE = 1 << Fixed::FRACTION_BITS;
+        static constexpr double FRACTIONAL_STEP = 1.0 / Fixed::SCALE;
+        static constexpr UnderlyingType DECIMAL_MAX = (1 << Fixed::DECIMAL_BITS) - 1;
+        static constexpr UnderlyingType DECIMAL_MIN = -(1 << Fixed::DECIMAL_BITS);
+        static constexpr double FRACTIONAL_MAX = Fixed::DECIMAL_MAX + (1.0 - Fixed::FRACTIONAL_STEP);
+        static constexpr double FRACTIONAL_MIN = Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP);
         /**
          * @brief Default constructor, creates a Fixed instance with value 0.0
          */
