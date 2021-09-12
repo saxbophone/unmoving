@@ -47,7 +47,23 @@ namespace com::saxbophone::sxpsxfp {
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          */
-        constexpr Fixed(double value) : Fixed((UnderlyingType)(value * Fixed::SCALE)) {}
+        constexpr Fixed(double value) {
+            double scaled = value * Fixed::SCALE;
+            // separate into integer and fraction so we can round the fraction
+            UnderlyingType integral = (UnderlyingType)scaled;
+            double remainder = scaled - integral;
+            // there's no rounding function in the PS1 stdlib so round manually
+            if (remainder <= -0.5 or remainder >= 0.5) { // round half to even
+                /*
+                 * we can test for oddness with modulo, and as its return value
+                 * has the same sign as the dividend, we can use that as the
+                 * delta to reach the nearest even number (if already even, it
+                 * will be zero).
+                 */
+                integral += (integral % 2);
+            }
+            this->_raw_value = integral;
+        }
         /**
          * @returns a Fixed instance representing the closest fixed-point value
          * to the given integer value.

@@ -1,5 +1,7 @@
 #include <limits>
 
+#include <cmath>
+
 #include <catch2/catch.hpp>
 
 #include <sxpsxfp/Fixed.hpp>
@@ -51,7 +53,7 @@ TEST_CASE("Implicit conversion from float") {
         )
     );
     Fixed var = i;
-    REQUIRE((Underlying)var == (Underlying)(i * 4096));
+    REQUIRE((Underlying)var == (Underlying)round(i * 4096));
 }
 
 TEST_CASE("Implicit conversion from double") {
@@ -65,7 +67,7 @@ TEST_CASE("Implicit conversion from double") {
         )
     );
     Fixed var = i;
-    REQUIRE((Underlying)var == (Underlying)(i * 4096));
+    REQUIRE((Underlying)var == (Underlying)round(i * 4096));
 }
 
 TEST_CASE("Explicit conversion from float") {
@@ -79,7 +81,7 @@ TEST_CASE("Explicit conversion from float") {
         )
     );
     Fixed var(i);
-    REQUIRE((Underlying)var == (Underlying)(i * 4096));
+    REQUIRE((Underlying)var == (Underlying)round(i * 4096));
 }
 
 TEST_CASE("Explicit conversion from double") {
@@ -93,7 +95,7 @@ TEST_CASE("Explicit conversion from double") {
         )
     );
     Fixed var(i);
-    REQUIRE((Underlying)var == (Underlying)(i * 4096));
+    REQUIRE((Underlying)var == (Underlying)round(i * 4096));
 }
 
 TEST_CASE("Creation from integer value") {
