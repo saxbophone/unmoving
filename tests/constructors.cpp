@@ -1,3 +1,5 @@
+#include <limits>
+
 #include <catch2/catch.hpp>
 
 #include <sxpsxfp/Fixed.hpp>
@@ -11,38 +13,93 @@ TEST_CASE("Default constructor can be called") {
 }
 
 TEST_CASE("Implicit conversion from fixed-point integer") {
-    Fixed var = 32;
-    REQUIRE((Underlying)var == 32);
+    Underlying i = GENERATE(
+        take(
+            100,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Fixed var = i;
+    REQUIRE((Underlying)var == i);
 }
 
 TEST_CASE("Explicit conversion from fixed-point integer") {
-    Fixed var(32);
-    REQUIRE((Underlying)var == 32);
+    Underlying i = GENERATE(
+        take(
+            100,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Fixed var(i);
+    REQUIRE((Underlying)var == i);
 }
 
 TEST_CASE("Implicit conversion from float") {
-    Fixed var = 32.0f;
-    REQUIRE((Underlying)var == 131'072); // 32 * 4096
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594f,
+                524287.9997558594f
+            )
+        )
+    );
+    Fixed var = i;
+    REQUIRE((Underlying)var == (Underlying)(i * 4096));
 }
 
 TEST_CASE("Implicit conversion from double") {
-    Fixed var = 32.0;
-    REQUIRE((Underlying)var == 131'072); // 32 * 4096
+    double i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Fixed var = i;
+    REQUIRE((Underlying)var == (Underlying)(i * 4096));
 }
 
 TEST_CASE("Explicit conversion from float") {
-    Fixed var(32.0f);
-    REQUIRE((Underlying)var == 131'072); // 32 * 4096
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594f,
+                524287.9997558594f
+            )
+        )
+    );
+    Fixed var(i);
+    REQUIRE((Underlying)var == (Underlying)(i * 4096));
 }
 
 TEST_CASE("Explicit conversion from double") {
-    Fixed var(32.0);
-    REQUIRE((Underlying)var == 131'072); // 32 * 4096
+    double i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Fixed var(i);
+    REQUIRE((Underlying)var == (Underlying)(i * 4096));
 }
 
 TEST_CASE("Creation from integer value") {
-    Fixed var = Fixed::from_integer(32);
-    REQUIRE((Underlying)var == 131'072); // 32 * 4096
+    Underlying i = GENERATE(take(100, random(-524288, 524287)));
+    Fixed var = Fixed::from_integer(i);
+    REQUIRE((Underlying)var == i * 4096);
 }
 
 // Now for some more advanced stuff
