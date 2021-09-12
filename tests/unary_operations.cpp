@@ -11,6 +11,7 @@ TEST_CASE("Fixed prefix increment") {
             100,
             random(
                 -524288.9997558594f,
+                // max is reduced by 1 to prevent overflow
                 524286.9997558594f
             )
         )
@@ -27,6 +28,7 @@ TEST_CASE("Fixed postfix increment") {
             100,
             random(
                 -524288.9997558594f,
+                // max is reduced by 1 to prevent overflow
                 524286.9997558594f
             )
         )
@@ -42,6 +44,7 @@ TEST_CASE("Fixed prefix decrement") {
         take(
             100,
             random(
+                // min is increased by 1 to prevent underflow
                 -524287.9997558594f,
                 524287.9997558594f
             )
@@ -58,8 +61,9 @@ TEST_CASE("Fixed postfix decrement") {
         take(
             100,
             random(
-                -524288.9997558594f,
-                524286.9997558594f
+                // min is increased by 1 to prevent underflow
+                -524287.9997558594f,
+                524287.9997558594f
             )
         )
     );
