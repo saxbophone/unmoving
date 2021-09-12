@@ -6,27 +6,67 @@ using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed prefix increment") {
-    Fixed foo = {};
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594f,
+                524286.9997558594f
+            )
+        )
+    );
+    Fixed foo(i);
     Fixed bar = ++foo;
-    SUCCEED();
+    REQUIRE((float)bar == ++i);
+    REQUIRE((float)foo == i); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed postfix increment") {
-    Fixed foo = {};
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594f,
+                524286.9997558594f
+            )
+        )
+    );
+    Fixed foo(i);
     Fixed bar = foo++;
-    SUCCEED();
+    REQUIRE((float)bar == i++);
+    REQUIRE((float)foo == i); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed prefix decrement") {
-    Fixed foo = {};
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524287.9997558594f,
+                524287.9997558594f
+            )
+        )
+    );
+    Fixed foo(i);
     Fixed bar = --foo;
-    SUCCEED();
+    REQUIRE((float)bar == --i);
+    REQUIRE((float)foo == i); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed postfix decrement") {
-    Fixed foo = {};
+    float i = GENERATE(
+        take(
+            100,
+            random(
+                -524288.9997558594f,
+                524286.9997558594f
+            )
+        )
+    );
+    Fixed foo(i);
     Fixed bar = foo--;
-    SUCCEED();
+    REQUIRE((float)bar == i--);
+    REQUIRE((float)foo == i); // relies upon i value changed in previous check
 }
 
 TEST_CASE("Fixed unary minus") {
