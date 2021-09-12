@@ -81,7 +81,7 @@ namespace com::saxbophone::sxpsxfp {
             UnderlyingType integral = (UnderlyingType)scaled;
             double remainder = scaled - integral;
             // there's no rounding function in the PS1 stdlib so round manually
-            if (remainder <= -0.5 or remainder >= 0.5) { // round half to even
+            if (remainder <= -0.5 or remainder >= 0.5) { // round half to infinity
                 integral += (integral < 0 ? -1 : 1);
             }
             this->_raw_value = integral;
