@@ -126,12 +126,12 @@ namespace com::saxbophone::sxpsxfp {
          * @details Returns closest floating point value to this fixed-point
          * value.
          * @warn This loses precision as single-precision floating point cannot
-         * represent all possible fixed-point values. Cast to double for an
-         * exact result.
+         * represent all possible fixed-point values. Cast to double instead
+         * for an exact result.
          */
         explicit constexpr operator float() const {
-            // reuse cast to double and then allow it to implicitly narrow to float
-            return (double)*this;
+            // reuse cast to double and then narrow it to float
+            return (float)(double)*this;
         }
         /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.
