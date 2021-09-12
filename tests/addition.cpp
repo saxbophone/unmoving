@@ -27,8 +27,10 @@ TEST_CASE("Fixed += Fixed") {
     );
     Fixed foo(i);
     Fixed bar(j);
+    float foo_f = (float)foo, bar_f = (float)bar;
     foo += bar;
-    REQUIRE((Underlying)foo == i + j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((float)foo == Approx(foo_f + bar_f).margin(1.0 / 4096));
 }
 
 TEST_CASE("Fixed + Fixed") {
@@ -53,6 +55,8 @@ TEST_CASE("Fixed + Fixed") {
     );
     Fixed foo(i);
     Fixed bar(j);
+    float foo_f = (float)foo, bar_f = (float)bar;
     Fixed baz = foo + bar;
-    REQUIRE((Underlying)baz == i + j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((float)baz == Approx(foo_f + bar_f).margin(1.0 / 4096));
 }
