@@ -14,8 +14,10 @@ TEST_CASE("Fixed *= Fixed") {
     double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
     Fixed foo(i);
     Fixed bar(j);
-    foo *= bar;
-    REQUIRE((double)foo == i * j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    auto expected_result = Approx(i * j).margin(Fixed::FRACTIONAL_STEP);
+    CHECK((double)(foo *= bar) == expected_result);
+    REQUIRE((double)foo == expected_result);
 }
 
 TEST_CASE("Fixed *= UnderlyingType") {
@@ -25,8 +27,10 @@ TEST_CASE("Fixed *= UnderlyingType") {
     Underlying j = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
     Fixed foo(i);
     Underlying bar = j;
-    foo *= bar;
-    REQUIRE((double)foo == i * j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    auto expected_result = Approx(i * j).margin(Fixed::FRACTIONAL_STEP);
+    CHECK((double)(foo *= bar) == expected_result);
+    REQUIRE((double)foo == expected_result);
 }
 
 TEST_CASE("Fixed * Fixed") {
@@ -37,7 +41,8 @@ TEST_CASE("Fixed * Fixed") {
     Fixed foo(i);
     Fixed bar(j);
     Fixed baz = foo * bar;
-    REQUIRE((double)baz == i * j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)baz == Approx(i * j).margin(Fixed::FRACTIONAL_STEP));
 }
 
 TEST_CASE("Fixed * UnderlyingType") {
@@ -48,5 +53,6 @@ TEST_CASE("Fixed * UnderlyingType") {
     Fixed foo(i);
     Underlying bar = j;
     Fixed baz = foo * bar;
-    REQUIRE((double)baz == i * j);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)baz == Approx(i * j).margin(Fixed::FRACTIONAL_STEP));
 }
