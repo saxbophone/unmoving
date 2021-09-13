@@ -163,9 +163,9 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Check if one Fixed instance is less than another
          */
-        constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator<(const Fixed& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
         /**
          * @brief Compare a Fixed instance with UnderlyingType for equality
          */
@@ -183,15 +183,15 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Check if a Fixed instance is less than a value of UnderlyingType
          */
-        constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator<(const Fixed& lhs, const UnderlyingType& rhs) {
+        //     return {};
+        // }
         /**
          * @brief Check if value of UnderlyingType is less than a Fixed instance
          */
-        constexpr friend bool operator<(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
-        }
+        // constexpr friend bool operator<(const UnderlyingType& lhs, const Fixed& rhs) {
+        //     return {};
+        // }
         /**
          * @brief Prefix increment operator
          */

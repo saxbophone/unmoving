@@ -8,7 +8,7 @@ using Underlying = Fixed::UnderlyingType;
 TEST_CASE("Fixed == Fixed") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -17,7 +17,7 @@ TEST_CASE("Fixed == Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -38,7 +38,7 @@ TEST_CASE("Fixed == Fixed") {
 TEST_CASE("Fixed != Fixed") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -47,7 +47,7 @@ TEST_CASE("Fixed != Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -68,7 +68,7 @@ TEST_CASE("Fixed != Fixed") {
 TEST_CASE("Fixed == UnderlyingType") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -77,7 +77,7 @@ TEST_CASE("Fixed == UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -98,7 +98,7 @@ TEST_CASE("Fixed == UnderlyingType") {
 TEST_CASE("Fixed != UnderlyingType") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -107,7 +107,7 @@ TEST_CASE("Fixed != UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -128,7 +128,7 @@ TEST_CASE("Fixed != UnderlyingType") {
 TEST_CASE("UnderlyingType == Fixed") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -137,7 +137,7 @@ TEST_CASE("UnderlyingType == Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -158,7 +158,7 @@ TEST_CASE("UnderlyingType == Fixed") {
 TEST_CASE("UnderlyingType != Fixed") {
     Underlying i = GENERATE(
         take(
-            100,
+            10,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -167,7 +167,7 @@ TEST_CASE("UnderlyingType != Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            100,
+            10,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -186,15 +186,87 @@ TEST_CASE("UnderlyingType != Fixed") {
 }
 
 TEST_CASE("Fixed < Fixed") {
-    Fixed foo = {}, bar = {};
-    bool less = foo < bar;
-    SUCCEED();
+    Underlying i = GENERATE(
+        take(
+            10,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Underlying j = GENERATE_COPY(
+        take(
+            10,
+            filter(
+                [=](Underlying u) { return i < u; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
+            )
+        )
+    );
+    Underlying k = GENERATE_COPY(
+        take(
+            10,
+            filter(
+                [=](Underlying u) { return not (i < u); },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
+            )
+        )
+    );
+    Fixed smaller(i);
+    Fixed bigger(j);
+    Fixed not_bigger(k);
+    // check for both affirmative and negative < checks
+    CHECK(smaller < bigger);
+    CHECK_FALSE(smaller < not_bigger);
 }
 
 TEST_CASE("Fixed > Fixed") {
-    Fixed foo = {}, bar = {};
-    bool greater = foo > bar;
-    SUCCEED();
+    Underlying i = GENERATE(
+        take(
+            10,
+            random(
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
+            )
+        )
+    );
+    Underlying j = GENERATE_COPY(
+        take(
+            10,
+            filter(
+                [=](Underlying u) { return i > u; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
+            )
+        )
+    );
+    Underlying k = GENERATE_COPY(
+        take(
+            10,
+            filter(
+                [=](Underlying u) { return not (i > u); },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
+            )
+        )
+    );
+    Fixed bigger(i);
+    Fixed smaller(j);
+    Fixed not_smaller(k);
+    // check for both affirmative and negative < checks
+    CHECK(bigger > smaller);
+    CHECK_FALSE(bigger > not_smaller);
 }
 
 TEST_CASE("Fixed < UnderlyingType") {
