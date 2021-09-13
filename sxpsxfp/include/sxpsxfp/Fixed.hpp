@@ -159,9 +159,7 @@ namespace com::saxbophone::sxpsxfp {
         /**
          * @brief Compare two Fixed instances for equality
          */
-        constexpr friend bool operator==(const Fixed& lhs, const Fixed& rhs) {
-            return {};
-        }
+        constexpr friend bool operator==(const Fixed& lhs, const Fixed& rhs) = default;
         /**
          * @brief Check if one Fixed instance is less than another
          */
