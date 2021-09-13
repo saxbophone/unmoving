@@ -258,6 +258,8 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment division operator
          */
         constexpr Fixed& operator /=(const Fixed& rhs) {
+            this->_raw_value *= Fixed::SCALE;
+            this->_raw_value /= rhs._raw_value;
             return *this;
         }
         /**
@@ -305,7 +307,8 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Division operator
          */
         constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs) {
-            return {};
+            lhs /= rhs;
+            return lhs;
         }
         /**
          * @brief Integer division operator

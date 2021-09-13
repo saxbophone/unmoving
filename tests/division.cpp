@@ -15,12 +15,12 @@ TEST_CASE("Fixed /= Fixed") {
             )
         )
     );
-    double j = GENERATE(
+    double j = GENERATE_COPY(
         take(
             10,
             random(
-                -524288.9997558594,
-                524287.9997558594
+                i / Fixed::FRACTIONAL_STEP, // smallest value allowed to return
+                i / 524287.9997558594 // largest
             )
         )
     );
@@ -61,12 +61,12 @@ TEST_CASE("Fixed / Fixed") {
             )
         )
     );
-    double j = GENERATE(
+    double j = GENERATE_COPY(
         take(
             10,
             random(
-                -524288.9997558594,
-                524287.9997558594
+                i / Fixed::FRACTIONAL_STEP, // smallest value allowed to return
+                i / 524287.9997558594 // largest
             )
         )
     );
