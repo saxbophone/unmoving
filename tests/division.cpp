@@ -3,31 +3,94 @@
 #include <sxpsxfp/Fixed.hpp>
 
 using namespace com::saxbophone::sxpsxfp;
+using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed /= Fixed") {
-    Fixed foo = {};
-    Fixed bar = {};
-    foo /= bar;
-    SUCCEED();
+    double i = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    double j = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Fixed foo(i);
+    Fixed bar(j);
+    auto expected_result = Approx(i / j).margin(Fixed::FRACTIONAL_STEP);
+    CHECK((double)(foo /= bar) == expected_result);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)foo == expected_result);
 }
 
 TEST_CASE("Fixed /= UnderlyingType") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
-    foo /= bar;
-    SUCCEED();
+    double i = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Underlying j = GENERATE(take(10, random(-524288, 524287)));
+    Fixed foo(i);
+    Underlying bar = j;
+    auto expected_result = Approx(i / j).margin(Fixed::FRACTIONAL_STEP);
+    CHECK((double)(foo /= bar) == expected_result);
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)foo == expected_result);
 }
 
 TEST_CASE("Fixed / Fixed") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
+    double i = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    double j = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Fixed foo(i);
+    Fixed bar(j);
     Fixed baz = foo / bar;
-    SUCCEED();
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)baz == Approx(i / j).margin(Fixed::FRACTIONAL_STEP));
 }
 
 TEST_CASE("Fixed / UnderlyingType") {
-    Fixed foo = {};
-    Fixed::UnderlyingType bar = {};
+    double i = GENERATE(
+        take(
+            10,
+            random(
+                -524288.9997558594,
+                524287.9997558594
+            )
+        )
+    );
+    Underlying j = GENERATE(take(10, random(-524288, 524287)));
+    Fixed foo(i);
+    Underlying bar = j;
     Fixed baz = foo / bar;
-    SUCCEED();
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)baz == Approx(i / j).margin(Fixed::FRACTIONAL_STEP));
 }
