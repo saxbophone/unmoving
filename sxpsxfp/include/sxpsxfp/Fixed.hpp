@@ -170,7 +170,7 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compare a Fixed instance with UnderlyingType for equality
          */
         constexpr friend bool operator==(const Fixed& lhs, const UnderlyingType& rhs) {
-            return {};
+            return (UnderlyingType)lhs == rhs;
         }
         /**
          * @brief Compare a value of UnderlyingType with a Fixed instance for equality
@@ -178,7 +178,7 @@ namespace com::saxbophone::sxpsxfp {
          * which refuse to substitute the call to the other == operator with swapped operand order. Unclear why this is.
          */
         constexpr friend bool operator==(const UnderlyingType& lhs, const Fixed& rhs) {
-            return {};
+            return rhs == lhs;
         }
         /**
          * @brief Check if a Fixed instance is less than a value of UnderlyingType
