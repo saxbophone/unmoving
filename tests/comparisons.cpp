@@ -15,21 +15,24 @@ TEST_CASE("Fixed == Fixed") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Fixed original(i);
     Fixed same(i); // same as original
-    Fixed maybe_different(j); // might (probably will) be different
+    Fixed different(j); // different from original
     // check for both affirmative and negative == checks
     CHECK(original == same);
-    CHECK((original == maybe_different) == (i == j));
+    CHECK_FALSE(original == different);
 }
 
 TEST_CASE("Fixed != Fixed") {
@@ -42,21 +45,24 @@ TEST_CASE("Fixed != Fixed") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Fixed original(i);
     Fixed same(i); // same as original
-    Fixed maybe_different(j); // might (probably will) be different
+    Fixed different(j); // different from original
     // check for both affirmative and negative != checks
     CHECK_FALSE(original != same);
-    CHECK((original != maybe_different) == (i != j));
+    CHECK(original != different);
 }
 
 TEST_CASE("Fixed == UnderlyingType") {
@@ -69,21 +75,24 @@ TEST_CASE("Fixed == UnderlyingType") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Fixed original(i);
     Underlying same = i; // same as original
-    Underlying maybe_different = j; // might (probably will) be different
+    Underlying different = j; // different from original
     // check for both affirmative and negative == checks
     CHECK(original == same);
-    CHECK((original == maybe_different) == (i == j));
+    CHECK_FALSE(original == different);
 }
 
 TEST_CASE("Fixed != UnderlyingType") {
@@ -96,21 +105,24 @@ TEST_CASE("Fixed != UnderlyingType") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Fixed original(i);
     Underlying same = i; // same as original
-    Underlying maybe_different = j; // might (probably will) be different
+    Underlying different = j; // different from original
     // check for both affirmative and negative == checks
     CHECK_FALSE(original != same);
-    CHECK((original != maybe_different) == (i != j));
+    CHECK(original != different);
 }
 
 TEST_CASE("UnderlyingType == Fixed") {
@@ -123,21 +135,24 @@ TEST_CASE("UnderlyingType == Fixed") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Underlying original = i;
     Fixed same(i); // same as original
-    Fixed maybe_different(j); // might (probably will) be different
+    Fixed different(j); // different from original
     // check for both affirmative and negative == checks
     CHECK(original == same);
-    CHECK((original == maybe_different) == (i == j));
+    CHECK_FALSE(original == different);
 }
 
 TEST_CASE("UnderlyingType != Fixed") {
@@ -150,21 +165,24 @@ TEST_CASE("UnderlyingType != Fixed") {
             )
         )
     );
-    Underlying j = GENERATE(
+    Underlying j = GENERATE_COPY(
         take(
             100,
-            random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+            filter(
+                [=](Underlying u) { return u != i; },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Underlying original = i;
     Fixed same(i); // same as original
-    Fixed maybe_different(j); // might (probably will) be different
+    Fixed different(j); // different from original
     // check for both affirmative and negative == checks
     CHECK_FALSE(original != same);
-    CHECK((original != maybe_different) == (i != j));
+    CHECK(original != different);
 }
 
 TEST_CASE("Fixed < Fixed") {
