@@ -259,8 +259,9 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment division operator
          */
         constexpr Fixed& operator /=(const Fixed& rhs) {
-            this->_raw_value *= Fixed::SCALE;
-            this->_raw_value /= rhs._raw_value;
+            // XXX: no int64_t on PS1, needs rewrite to run on that platform
+            int64_t scaled = (int64_t)this->_raw_value * Fixed::SCALE;
+            this->_raw_value = scaled / rhs._raw_value;
             return *this;
         }
         /**
