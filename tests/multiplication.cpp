@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <cmath>
 
 #include <catch2/catch.hpp>
@@ -20,7 +18,6 @@ TEST_CASE("Fixed *= Fixed") {
     auto expected_result = Approx((double)foo * (double)bar).margin(Fixed::FRACTIONAL_STEP);
     CHECK((double)(foo *= bar) == expected_result);
     REQUIRE((double)foo == expected_result);
-    // std::cin.get();
 }
 
 TEST_CASE("Fixed *= UnderlyingType") {
@@ -31,10 +28,9 @@ TEST_CASE("Fixed *= UnderlyingType") {
     Fixed foo(i);
     Underlying bar = j;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    auto expected_result = Approx((double)foo * (double)bar).margin(Fixed::FRACTIONAL_STEP);
+    auto expected_result = Approx((double)foo * bar).margin(Fixed::FRACTIONAL_STEP);
     CHECK((double)(foo *= bar) == expected_result);
     REQUIRE((double)foo == expected_result);
-    // std::cin.get();
 }
 
 TEST_CASE("Fixed * Fixed") {
@@ -47,7 +43,6 @@ TEST_CASE("Fixed * Fixed") {
     Fixed baz = foo * bar;
     // allowed to deviate up to the smallest step in the fixed-point representation
     REQUIRE((double)baz == Approx((double)foo * (double)bar).margin(Fixed::FRACTIONAL_STEP));
-    // std::cin.get();
 }
 
 TEST_CASE("Fixed * UnderlyingType") {
@@ -59,6 +54,5 @@ TEST_CASE("Fixed * UnderlyingType") {
     Underlying bar = j;
     Fixed baz = foo * bar;
     // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)baz == Approx((double)foo * (double)bar).margin(Fixed::FRACTIONAL_STEP));
-    // std::cin.get();
+    REQUIRE((double)baz == Approx((double)foo * bar).margin(Fixed::FRACTIONAL_STEP));
 }
