@@ -242,9 +242,15 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment multiplication operator
          */
         constexpr Fixed& operator *=(const Fixed& rhs) {
-            // try reducing the precision of both by half before multiplying
-            this->_raw_value /= 64;
-            this->_raw_value *= (rhs._raw_value / 64);
+            // multiply integer and fraction parts separately
+            UnderlyingType integral = this->_raw_value * rhs.to_integer();
+            // get fraction by subtracting re-scaled integer value
+            UnderlyingType fraction = rhs._raw_value - integral * Fixed::SCALE;
+            // fraction needs special logic to de-scale after
+            this->_raw_value *= fraction;
+            this->_raw_value /= Fixed::SCALE;
+            // don't forget to add the integer component too
+            this->_raw_value += integral;
             return *this;
         }
         /**
