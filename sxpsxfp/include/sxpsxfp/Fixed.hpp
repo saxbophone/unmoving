@@ -264,6 +264,7 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment integer division operator
          */
         constexpr Fixed& operator /=(const UnderlyingType& rhs) {
+            this->_raw_value /= rhs;
             return *this;
         }
         /**
@@ -310,7 +311,8 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Integer division operator
          */
         constexpr friend Fixed operator/(Fixed lhs, const UnderlyingType& rhs) {
-            return {};
+            lhs /= rhs;
+            return lhs;
         }
 
     private:
