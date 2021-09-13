@@ -242,12 +242,6 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment multiplication operator
          */
         constexpr Fixed& operator *=(const Fixed& rhs) {
-            // XXX: shouldn't use 64-bit arithmetic on PlayStation
-            // TODO: rewrite to not use 64-bit arithmetic
-            // int64_t result = this->_raw_value * rhs._raw_value;
-            // // divide by scale to shift the value back down to correct magnitude
-            // this->_raw_value = result / Fixed::SCALE;
-
             // try reducing the precision of both by half before multiplying
             this->_raw_value /= 64;
             this->_raw_value *= (rhs._raw_value / 64);
