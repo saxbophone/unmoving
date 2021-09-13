@@ -242,9 +242,10 @@ namespace com::saxbophone::sxpsxfp {
          * @brief Compound assignment multiplication operator
          */
         constexpr Fixed& operator *=(const Fixed& rhs) {
-            // try reducing the precision of both by half before multiplying
-            this->_raw_value /= 64;
-            this->_raw_value *= (rhs._raw_value / 64);
+            // XXX: no int64_t on PS1, needs rewrite to run on that platform
+            int64_t result = (int64_t)this->_raw_value * rhs._raw_value;
+            // shift back down
+            this->_raw_value = result / Fixed::SCALE;
             return *this;
         }
         /**

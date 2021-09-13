@@ -16,7 +16,7 @@ target_sources(
         constructors.cpp
         division.cpp
         equivalences.cpp
-        # multiplication.cpp
+        multiplication.cpp
         static_checks.cpp
         subtraction.cpp
         unary_operations.cpp
