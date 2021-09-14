@@ -19,7 +19,7 @@ TEST_CASE("Fixed == Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -49,7 +49,7 @@ TEST_CASE("Fixed != Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -79,7 +79,7 @@ TEST_CASE("Fixed == UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -109,7 +109,7 @@ TEST_CASE("Fixed != UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -139,7 +139,7 @@ TEST_CASE("UnderlyingType == Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -169,7 +169,7 @@ TEST_CASE("UnderlyingType != Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return u != i; },
                 random(
@@ -199,7 +199,7 @@ TEST_CASE("Fixed < Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -211,7 +211,7 @@ TEST_CASE("Fixed < Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i < u); },
                 random(
@@ -241,7 +241,7 @@ TEST_CASE("Fixed > Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -253,7 +253,7 @@ TEST_CASE("Fixed > Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i > u); },
                 random(
@@ -283,7 +283,7 @@ TEST_CASE("Fixed < UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -295,7 +295,7 @@ TEST_CASE("Fixed < UnderlyingType") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i < u); },
                 random(
@@ -325,7 +325,7 @@ TEST_CASE("Fixed > UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -337,7 +337,7 @@ TEST_CASE("Fixed > UnderlyingType") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i > u); },
                 random(
@@ -367,7 +367,7 @@ TEST_CASE("UnderlyingType < Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -379,7 +379,7 @@ TEST_CASE("UnderlyingType < Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i < u); },
                 random(
@@ -409,7 +409,7 @@ TEST_CASE("UnderlyingType > Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -421,7 +421,7 @@ TEST_CASE("UnderlyingType > Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i > u); },
                 random(
@@ -451,7 +451,7 @@ TEST_CASE("Fixed <= Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -463,7 +463,7 @@ TEST_CASE("Fixed <= Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i <= u); },
                 random(
@@ -495,7 +495,7 @@ TEST_CASE("Fixed >= Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -507,7 +507,7 @@ TEST_CASE("Fixed >= Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i >= u); },
                 random(
@@ -539,7 +539,7 @@ TEST_CASE("Fixed <= UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -551,7 +551,7 @@ TEST_CASE("Fixed <= UnderlyingType") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i <= u); },
                 random(
@@ -583,7 +583,7 @@ TEST_CASE("Fixed >= UnderlyingType") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -595,7 +595,7 @@ TEST_CASE("Fixed >= UnderlyingType") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i >= u); },
                 random(
@@ -627,7 +627,7 @@ TEST_CASE("UnderlyingType <= Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i < u; },
                 random(
@@ -639,7 +639,7 @@ TEST_CASE("UnderlyingType <= Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i <= u); },
                 random(
@@ -671,7 +671,7 @@ TEST_CASE("UnderlyingType >= Fixed") {
     );
     Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return i > u; },
                 random(
@@ -683,7 +683,7 @@ TEST_CASE("UnderlyingType >= Fixed") {
     );
     Underlying k = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
+            1,
             filter(
                 [=](Underlying u) { return not (i >= u); },
                 random(

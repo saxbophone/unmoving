@@ -7,59 +7,48 @@
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
-TEST_CASE("Fixed -= Fixed") {
-    // use half of range for both operands to avoid signed underflow UB
+TEST_CASE("Subtraction") {
     Underlying i = GENERATE(
         take(
             tests_config::ITERATIONS,
             random(
-                std::numeric_limits<Underlying>::min() / 2,
-                std::numeric_limits<Underlying>::max() / 2
+                std::numeric_limits<Underlying>::min(),
+                std::numeric_limits<Underlying>::max()
             )
         )
     );
-    Underlying j = GENERATE(
+    // pick second operand carefully to avoid signed underflow UB
+    Underlying j = GENERATE_COPY(
         take(
-            tests_config::ITERATIONS,
-            random(
-                std::numeric_limits<Underlying>::min() / 2,
-                std::numeric_limits<Underlying>::max() / 2
+            1,
+            filter(
+                [=](Underlying u) {
+                    auto sum = ((std::int64_t)i - u);
+                    return std::numeric_limits<Underlying>::min() <= sum and
+                        sum <= std::numeric_limits<Underlying>::max();
+                },
+                random(
+                    std::numeric_limits<Underlying>::min(),
+                    std::numeric_limits<Underlying>::max()
+                )
             )
         )
     );
     Fixed foo(i);
     Fixed bar(j);
-    double foo_f = (double)foo, bar_f = (double)bar;
-    // allowed to deviate up to the smallest step in the fixed-point representation
-    auto expected_result = Approx(foo_f - bar_f).margin(Fixed::FRACTIONAL_STEP);
-    CHECK((double)(foo -= bar) == expected_result);
-    REQUIRE((double)foo == expected_result);
-}
 
-TEST_CASE("Fixed - Fixed") {
-    // use half of range for both operands to avoid signed overflow UB
-    Underlying i = GENERATE(
-        take(
-            tests_config::ITERATIONS,
-            random(
-                std::numeric_limits<Underlying>::min() / 2,
-                std::numeric_limits<Underlying>::max() / 2
-            )
-        )
-    );
-    Underlying j = GENERATE(
-        take(
-            tests_config::ITERATIONS,
-            random(
-                std::numeric_limits<Underlying>::min() / 2,
-                std::numeric_limits<Underlying>::max() / 2
-            )
-        )
-    );
-    Fixed foo(i);
-    Fixed bar(j);
-    double foo_f = (double)foo, bar_f = (double)bar;
-    Fixed baz = foo - bar;
-    // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)baz == Approx(foo_f - bar_f).margin(Fixed::FRACTIONAL_STEP));
+    SECTION("Fixed -= Fixed") {
+        double foo_f = (double)foo, bar_f = (double)bar;
+        // allowed to deviate up to the smallest step in the fixed-point representation
+        auto expected_result = Approx(foo_f - bar_f).margin(Fixed::FRACTIONAL_STEP);
+        CHECK((double)(foo -= bar) == expected_result);
+        REQUIRE((double)foo == expected_result);
+    }
+
+    SECTION("Fixed - Fixed") {
+        double foo_f = (double)foo, bar_f = (double)bar;
+        Fixed baz = foo - bar;
+        // allowed to deviate up to the smallest step in the fixed-point representation
+        REQUIRE((double)baz == Approx(foo_f - bar_f).margin(Fixed::FRACTIONAL_STEP));
+    }
 }
