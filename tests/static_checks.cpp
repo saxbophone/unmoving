@@ -8,6 +8,8 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 // various static (compile-time) checks on properties of Fixed class
 
 using namespace com::saxbophone::sxpsxfp;

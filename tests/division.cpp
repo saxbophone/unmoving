@@ -2,13 +2,15 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed /= Fixed") {
     double i = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -17,7 +19,7 @@ TEST_CASE("Fixed /= Fixed") {
     );
     double j = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -36,14 +38,14 @@ TEST_CASE("Fixed /= Fixed") {
 TEST_CASE("Fixed /= UnderlyingType") {
     double i = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
             )
         )
     );
-    Underlying j = GENERATE(take(10, random(-524288, 524287)));
+    Underlying j = GENERATE(take(tests_config::ITERATIONS, random(-524288, 524287)));
     Fixed foo(i);
     Underlying bar = j;
     auto expected_result = Approx((double)foo / bar).margin(Fixed::FRACTIONAL_STEP);
@@ -55,7 +57,7 @@ TEST_CASE("Fixed /= UnderlyingType") {
 TEST_CASE("Fixed / Fixed") {
     double i = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -64,7 +66,7 @@ TEST_CASE("Fixed / Fixed") {
     );
     double j = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -81,14 +83,14 @@ TEST_CASE("Fixed / Fixed") {
 TEST_CASE("Fixed / UnderlyingType") {
     double i = GENERATE(
         take(
-            10,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
             )
         )
     );
-    Underlying j = GENERATE(take(10, random(-524288, 524287)));
+    Underlying j = GENERATE(take(tests_config::ITERATIONS, random(-524288, 524287)));
     Fixed foo(i);
     Underlying bar = j;
     Fixed baz = foo / bar;

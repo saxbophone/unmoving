@@ -2,13 +2,15 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed prefix increment") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 // max is reduced by 1 to prevent overflow
@@ -25,7 +27,7 @@ TEST_CASE("Fixed prefix increment") {
 TEST_CASE("Fixed postfix increment") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 // max is reduced by 1 to prevent overflow
@@ -42,7 +44,7 @@ TEST_CASE("Fixed postfix increment") {
 TEST_CASE("Fixed prefix decrement") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 // min is increased by 1 to prevent underflow
                 -524287.9997558594,
@@ -59,7 +61,7 @@ TEST_CASE("Fixed prefix decrement") {
 TEST_CASE("Fixed postfix decrement") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 // min is increased by 1 to prevent underflow
                 -524287.9997558594,
@@ -76,7 +78,7 @@ TEST_CASE("Fixed postfix decrement") {
 TEST_CASE("Fixed unary minus") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()

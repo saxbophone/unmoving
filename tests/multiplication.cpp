@@ -4,14 +4,16 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Fixed *= Fixed") {
     // max value is sqrt(max fixed point value) to prevent overflow
     const double max_operand = std::sqrt(524287.9997558594);
-    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
-    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    double i = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
+    double j = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
     Fixed foo(i);
     Fixed bar(j);
     // allowed to deviate up to the smallest step in the fixed-point representation
@@ -23,8 +25,8 @@ TEST_CASE("Fixed *= Fixed") {
 TEST_CASE("Fixed *= UnderlyingType") {
     // max value is sqrt(max fixed point value) to prevent overflow
     const double max_operand = std::sqrt(524287.9997558594);
-    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
-    Underlying j = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
+    double i = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
+    Underlying j = GENERATE_COPY(take(tests_config::ITERATIONS, random((Underlying)-max_operand, (Underlying)max_operand)));
     Fixed foo(i);
     Underlying bar = j;
     // allowed to deviate up to the smallest step in the fixed-point representation
@@ -36,8 +38,8 @@ TEST_CASE("Fixed *= UnderlyingType") {
 TEST_CASE("Fixed * Fixed") {
     // max value is sqrt(max fixed point value) to prevent overflow
     const double max_operand = std::sqrt(524287.9997558594);
-    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
-    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    double i = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
+    double j = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
     Fixed foo(i);
     Fixed bar(j);
     Fixed baz = foo * bar;
@@ -48,8 +50,8 @@ TEST_CASE("Fixed * Fixed") {
 TEST_CASE("Fixed * UnderlyingType") {
     // max value is sqrt(max fixed point value) to prevent overflow
     const double max_operand = std::sqrt(524287.9997558594);
-    double i = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
-    Underlying j = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
+    double i = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
+    Underlying j = GENERATE_COPY(take(tests_config::ITERATIONS, random((Underlying)-max_operand, (Underlying)max_operand)));
     Fixed foo(i);
     Underlying bar = j;
     Fixed baz = foo * bar;
@@ -60,8 +62,8 @@ TEST_CASE("Fixed * UnderlyingType") {
 TEST_CASE("UnderlyingType * Fixed") {
     // max value is sqrt(max fixed point value) to prevent overflow
     const double max_operand = std::sqrt(524287.9997558594);
-    Underlying i = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
-    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Underlying i = GENERATE_COPY(take(tests_config::ITERATIONS, random((Underlying)-max_operand, (Underlying)max_operand)));
+    double j = GENERATE_COPY(take(tests_config::ITERATIONS, random(-max_operand, max_operand)));
     Underlying foo = i;
     Fixed bar(j);
     Fixed baz = foo * bar;

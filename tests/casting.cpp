@@ -4,13 +4,15 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Implicit cast Fixed to UnderlyingType") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -25,7 +27,7 @@ TEST_CASE("Implicit cast Fixed to UnderlyingType") {
 TEST_CASE("Explicit cast Fixed to UnderlyingType") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -40,7 +42,7 @@ TEST_CASE("Explicit cast Fixed to UnderlyingType") {
 TEST_CASE("Explicit cast Fixed to float") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -55,7 +57,7 @@ TEST_CASE("Explicit cast Fixed to float") {
 TEST_CASE("Explicit cast Fixed to double") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -70,7 +72,7 @@ TEST_CASE("Explicit cast Fixed to double") {
 TEST_CASE("Fixed.to_integer()") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()

@@ -6,6 +6,8 @@
 
 #include <sxpsxfp/Fixed.hpp>
 
+#include "config.hpp"
+
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
@@ -17,7 +19,7 @@ TEST_CASE("Default constructor can be called") {
 TEST_CASE("Implicit conversion from fixed-point integer") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -31,7 +33,7 @@ TEST_CASE("Implicit conversion from fixed-point integer") {
 TEST_CASE("Explicit conversion from fixed-point integer") {
     Underlying i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 std::numeric_limits<Underlying>::min(),
                 std::numeric_limits<Underlying>::max()
@@ -45,7 +47,7 @@ TEST_CASE("Explicit conversion from fixed-point integer") {
 TEST_CASE("Implicit conversion from float") {
     float i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594f,
                 524287.9997558594f
@@ -59,7 +61,7 @@ TEST_CASE("Implicit conversion from float") {
 TEST_CASE("Implicit conversion from double") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -73,7 +75,7 @@ TEST_CASE("Implicit conversion from double") {
 TEST_CASE("Explicit conversion from float") {
     float i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594f,
                 524287.9997558594f
@@ -87,7 +89,7 @@ TEST_CASE("Explicit conversion from float") {
 TEST_CASE("Explicit conversion from double") {
     double i = GENERATE(
         take(
-            100,
+            tests_config::ITERATIONS,
             random(
                 -524288.9997558594,
                 524287.9997558594
@@ -99,7 +101,7 @@ TEST_CASE("Explicit conversion from double") {
 }
 
 TEST_CASE("Creation from integer value") {
-    Underlying i = GENERATE(take(100, random(-524288, 524287)));
+    Underlying i = GENERATE(take(tests_config::ITERATIONS, random(-524288, 524287)));
     Fixed var = Fixed::from_integer(i);
     REQUIRE((Underlying)var == i * 4096);
 }
