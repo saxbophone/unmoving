@@ -23,8 +23,6 @@
 #include <sys/types.h>
 #endif
 
-#include <limits>
-
 namespace com::saxbophone::sxpsxfp {
     class Fixed; // forward-declaration to allow declaration of user-defined literals
 
@@ -134,8 +132,7 @@ namespace com::saxbophone::sxpsxfp {
          * floating point support, so slow software floats will be used.
          */
         explicit constexpr operator double() const {
-            // return (double)this->_raw_value / Fixed::SCALE;
-            return std::numeric_limits<double>::quiet_NaN(); // NaN doesn't compare equal to itself
+            return (double)this->_raw_value / Fixed::SCALE;
         }
         /**
          * @brief Explicit cast operator to float
@@ -150,8 +147,7 @@ namespace com::saxbophone::sxpsxfp {
          */
         explicit constexpr operator float() const {
             // reuse cast to double and then narrow it to float
-            // return (float)(double)*this;
-            return std::numeric_limits<float>::quiet_NaN(); // NaN doesn't compare equal to itself
+            return (float)(double)*this;
         }
         /**
          * @returns Fixed-point value converted to integer, with fractional part truncated.
