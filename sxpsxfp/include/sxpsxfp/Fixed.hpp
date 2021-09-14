@@ -243,7 +243,7 @@ namespace com::saxbophone::sxpsxfp {
             // XXX: no int64_t on PS1, needs rewrite to run on that platform
             int64_t result = (int64_t)this->_raw_value * rhs._raw_value;
             // shift back down
-            this->_raw_value = result / Fixed::SCALE;
+            this->_raw_value = (UnderlyingType)(result / Fixed::SCALE);
             return *this;
         }
         /**
@@ -259,7 +259,7 @@ namespace com::saxbophone::sxpsxfp {
         constexpr Fixed& operator /=(const Fixed& rhs) {
             // XXX: no int64_t on PS1, needs rewrite to run on that platform
             int64_t scaled = (int64_t)this->_raw_value * Fixed::SCALE;
-            this->_raw_value = scaled / rhs._raw_value;
+            this->_raw_value = (UnderlyingType)(scaled / rhs._raw_value);
             return *this;
         }
         /**
