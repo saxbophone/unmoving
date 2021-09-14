@@ -53,6 +53,22 @@ TEST_CASE("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1 - Fixed::FRACTIONAL_
     STATIC_REQUIRE(Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP));
 }
 
+TEST_CASE("Fixed::MAX() == Max 32-bit signed integer") {
+    STATIC_REQUIRE(Fixed::MAX() == Fixed(INT_MAX));
+}
+
+TEST_CASE("Fixed::MIN() == Min 32-bit signed integer") {
+    STATIC_REQUIRE(Fixed::MIN() == Fixed(INT_MIN));
+}
+
+TEST_CASE("typeof(Fixed::MAX()) == Fixed") {
+    STATIC_REQUIRE(std::is_same_v<decltype(Fixed::MAX()), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed::MIN()) == Fixed") {
+    STATIC_REQUIRE(std::is_same_v<decltype(Fixed::MIN()), Fixed>);
+}
+
 TEST_CASE("typeof(Fixed + Fixed) == Fixed") {
     Fixed x = {}, y = {};
     STATIC_REQUIRE(std::is_same_v<decltype(x + y), Fixed>);

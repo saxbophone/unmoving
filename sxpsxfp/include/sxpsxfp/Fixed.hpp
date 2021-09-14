@@ -23,6 +23,10 @@
 #include <sys/types.h>
 #endif
 
+/**
+ * @todo Consider shortening the namespace name to its last component
+ * @todo Consider choosing a more intuitive name than @b sxpsxfp
+ */
 namespace com::saxbophone::sxpsxfp {
     class Fixed; // forward-declaration to allow declaration of user-defined literals
 
@@ -60,6 +64,7 @@ namespace com::saxbophone::sxpsxfp {
      * point arithmetic and allows arithmetic operations to be done on these
      * instances directly, handling the additional arithmetic for emulating
      * fixed-point internally.
+     * @todo Document constants
      */
     class Fixed {
     public:
@@ -72,6 +77,15 @@ namespace com::saxbophone::sxpsxfp {
         static constexpr UnderlyingType DECIMAL_MIN = -(1 << Fixed::DECIMAL_BITS);
         static constexpr double FRACTIONAL_MAX = Fixed::DECIMAL_MAX + (1.0 - Fixed::FRACTIONAL_STEP);
         static constexpr double FRACTIONAL_MIN = Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP);
+
+        static constexpr Fixed MAX() {
+            return Fixed((UnderlyingType)2147483647);
+        }
+
+        static constexpr Fixed MIN() {
+            return Fixed((UnderlyingType)-2147483648);
+        }
+
         /**
          * @brief Default constructor, creates a Fixed instance with value `0.0_fx`
          */
@@ -93,6 +107,9 @@ namespace com::saxbophone::sxpsxfp {
          * @note Not recommended to use this outside of constexpr contexts
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
+         * @todo Consider adding a single-precision `float` version of this
+         * methodfor faster emulation when doing runtime conversions on the
+         * PlayStation and `double` precision is not needed.
          */
         constexpr Fixed(double value) {
             double scaled = value * Fixed::SCALE;
@@ -111,9 +128,9 @@ namespace com::saxbophone::sxpsxfp {
          * @warning Don't use this for converting raw fixed-point integers to Fixed.
          * Use Fixed::Fixed(UnderlyingType) for that.
          * @see Fixed::Fixed(UnderlyingType)
+         * @todo Check for overflow? No exceptions on the PS1...
          */
         static constexpr Fixed from_integer(int value) {
-            // TODO: Check for overflow? No exceptions on the PS1...
             return Fixed(value << Fixed::FRACTION_BITS);
         }
         /**
@@ -202,9 +219,14 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Compound assignment multiplication operator
+         * @todo Investigate performance impact of compiler-generated 64-bit
+         * multiplication emulation on 32-bit MIPS. If poor performance,
+         * consider utilising Lameguy64's suggested implementation using inline
+         * assembly to take advantage of the R3000's 64-bit double-word multiply
+         * feature.
          */
         constexpr Fixed& operator *=(const Fixed& rhs) {
-            // XXX: no int64_t on PS1, needs rewrite to run on that platform
+            // XXX: no int64_t on PS1, software emulation kicks in automatically
             int64_t result = (int64_t)this->_raw_value * rhs._raw_value;
             // shift back down
             this->_raw_value = (UnderlyingType)(result / Fixed::SCALE);
@@ -212,6 +234,7 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Compound assignment integer multiplication operator
+         * @todo Investigate overflow?
          */
         constexpr Fixed& operator *=(const UnderlyingType& rhs) {
             this->_raw_value *= rhs;
@@ -219,15 +242,21 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Compound assignment division operator
+         * @todo Investigate performance impact of compiler-generated 64-bit
+         * multiplication emulation on 32-bit MIPS. If poor performance,
+         * consider utilising Lameguy64's suggested implementation using inline
+         * assembly to take advantage of the R3000's 64-bit double-word multiply
+         * feature.
          */
         constexpr Fixed& operator /=(const Fixed& rhs) {
-            // XXX: no int64_t on PS1, needs rewrite to run on that platform
+            // XXX: no int64_t on PS1, software emulation kicks in automatically
             int64_t scaled = (int64_t)this->_raw_value * Fixed::SCALE;
             this->_raw_value = (UnderlyingType)(scaled / rhs._raw_value);
             return *this;
         }
         /**
          * @brief Compound assignment integer division operator
+         * @todo Investigate overflow?
          */
         constexpr Fixed& operator /=(const UnderlyingType& rhs) {
             this->_raw_value /= rhs;
