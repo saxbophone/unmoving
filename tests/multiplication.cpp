@@ -31,8 +31,11 @@ TEST_CASE("Multiplication") {
                 filter(
                     // verify result does not exceed bounds of Fixed type
                     [=](double u) {
-                        return -524288.9997558594 <= (i * u) and
-                            (i * u) <= 524287.9997558594;
+                        // get closest Fixed value of each operand
+                        double x = (double)Fixed(i);
+                        double y = (double)Fixed(u);
+                        return -524288.9997558594 <= (x * y) and
+                            (x * y) <= 524287.9997558594;
                     },
                     random(
                         bound_min,
