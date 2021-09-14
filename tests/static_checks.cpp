@@ -54,11 +54,11 @@ TEST_CASE("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1 - Fixed::FRACTIONAL_
 }
 
 TEST_CASE("Fixed::MAX() == Max 32-bit signed integer") {
-    STATIC_REQUIRE(Fixed::MAX() == Fixed(INT_MAX));
+    STATIC_REQUIRE(Fixed::MAX() == Fixed(std::numeric_limits<Fixed::UnderlyingType>::max()));
 }
 
 TEST_CASE("Fixed::MIN() == Min 32-bit signed integer") {
-    STATIC_REQUIRE(Fixed::MIN() == Fixed(INT_MIN));
+    STATIC_REQUIRE(Fixed::MIN() == Fixed(std::numeric_limits<Fixed::UnderlyingType>::min()));
 }
 
 TEST_CASE("typeof(Fixed::MAX()) == Fixed") {
