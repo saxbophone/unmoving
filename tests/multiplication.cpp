@@ -21,6 +21,10 @@ TEST_CASE("Multiplication") {
     );
 
     SECTION("Multiplication by Fixed") {
+        double bound_a = -524288.9997558594 / i;
+        double bound_b = 524287.9997558594 / i;
+        double bound_min = std::min(bound_a, bound_b);
+        double bound_max = std::max(bound_a, bound_b);
         double j = GENERATE_COPY(
             take(
                 1,
@@ -31,8 +35,8 @@ TEST_CASE("Multiplication") {
                             (i * u) <= 524287.9997558594;
                     },
                     random(
-                        -524288.9997558594,
-                        524287.9997558594
+                        bound_min,
+                        bound_max
                     )
                 )
             )
@@ -57,6 +61,10 @@ TEST_CASE("Multiplication") {
     }
 
     SECTION("Multiplication by UnderlyingType") {
+        Underlying bound_a = -524288.9997558594 / i;
+        Underlying bound_b = 524287.9997558594 / i;
+        Underlying bound_min = std::min(bound_a, bound_b);
+        Underlying bound_max = std::max(bound_a, bound_b);
         Underlying j = GENERATE_COPY(
             take(
                 1,
@@ -67,8 +75,8 @@ TEST_CASE("Multiplication") {
                             (i * u) <= 524287.9997558594;
                     },
                     random(
-                        -524288,
-                        524287
+                        bound_min,
+                        bound_max
                     )
                 )
             )
