@@ -13,39 +13,41 @@ using namespace com::saxbophone::sxpsxfp;
  * there are no "true" negative integer literals.
  */
 
-TEST_CASE("Full user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, double>({
-        {123.45_fx, 123.45,},
-        {123.456789_fx, 123.456789,},
-        {0.317282_fx, 0.317282,},
-        {456128.33937921009_fx, 456128.33937921009,},
-    }));
-    Fixed foo = std::get<Fixed>(literal_to_value);
-    CAPTURE(std::get<Fixed>(literal_to_value), std::get<double>(literal_to_value));
-    // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
-}
+TEST_CASE("User-defined literals") {
+    SECTION("Full user-defined literal") {
+        auto literal_to_value = GENERATE(table<Fixed, double>({
+            {123.45_fx, 123.45,},
+            {123.456789_fx, 123.456789,},
+            {0.317282_fx, 0.317282,},
+            {456128.33937921009_fx, 456128.33937921009,},
+        }));
+        Fixed foo = std::get<Fixed>(literal_to_value);
+        CAPTURE(std::get<Fixed>(literal_to_value), std::get<double>(literal_to_value));
+        // allowed to deviate up to the smallest step in the fixed-point representation
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+    }
 
-TEST_CASE("Fractional user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, double>({
-        {.45_fx, .45,},
-        {.456789_fx, .456789,},
-        {.317282_fx, .317282,},
-        {.33937921009_fx, .33937921009,},
-    }));
-    Fixed foo = std::get<Fixed>(literal_to_value);
-    // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
-}
+    SECTION("Fractional user-defined literal") {
+        auto literal_to_value = GENERATE(table<Fixed, double>({
+            {.45_fx, .45,},
+            {.456789_fx, .456789,},
+            {.317282_fx, .317282,},
+            {.33937921009_fx, .33937921009,},
+        }));
+        Fixed foo = std::get<Fixed>(literal_to_value);
+        // allowed to deviate up to the smallest step in the fixed-point representation
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+    }
 
-TEST_CASE("Integral user-defined literal") {
-    auto literal_to_value = GENERATE(table<Fixed, double>({
-        {12345_fx, 12345.0,},
-        {123456_fx, 123456.0,},
-        {317282_fx, 317282.0,},
-        {456128_fx, 456128.0,},
-    }));
-    Fixed foo = std::get<Fixed>(literal_to_value);
-    // allowed to deviate up to the smallest step in the fixed-point representation
-    REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+    SECTION("Integral user-defined literal") {
+        auto literal_to_value = GENERATE(table<Fixed, double>({
+            {12345_fx, 12345.0,},
+            {123456_fx, 123456.0,},
+            {317282_fx, 317282.0,},
+            {456128_fx, 456128.0,},
+        }));
+        Fixed foo = std::get<Fixed>(literal_to_value);
+        // allowed to deviate up to the smallest step in the fixed-point representation
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+    }
 }
