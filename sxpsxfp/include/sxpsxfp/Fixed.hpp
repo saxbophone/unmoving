@@ -268,6 +268,12 @@ namespace com::saxbophone::sxpsxfp {
             return lhs;
         }
         /**
+         * @brief Integer multiplication operator
+         */
+        constexpr friend Fixed operator*(UnderlyingType lhs, const Fixed& rhs) {
+            return rhs * lhs;
+        }
+        /**
          * @brief Division operator
          */
         constexpr friend Fixed operator/(Fixed lhs, const Fixed& rhs) {

@@ -52,3 +52,73 @@ TEST_CASE("Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1 - Fixed::FRACTIONAL_
 TEST_CASE("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1 - Fixed::FRACTIONAL_STEP)") {
     STATIC_REQUIRE(Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP));
 }
+
+TEST_CASE("typeof(Fixed + Fixed) == Fixed") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x + y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed += Fixed) == Fixed&") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x += y), Fixed&>);
+}
+
+TEST_CASE("typeof(Fixed - Fixed) == Fixed") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x - y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed -= Fixed) == Fixed&") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x -= y), Fixed&>);
+}
+
+TEST_CASE("typeof(Fixed * Fixed) == Fixed") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed *= Fixed) == Fixed&") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x *= y), Fixed&>);
+}
+
+TEST_CASE("typeof(Fixed * UnderlyingType) == Fixed") {
+    Fixed x = {};
+    Fixed::UnderlyingType y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed *= UnderlyingType) == Fixed&") {
+    Fixed x = {};
+    Fixed::UnderlyingType y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x *= y), Fixed&>);
+}
+
+TEST_CASE("typeof(UnderlyingType * Fixed) == Fixed") {
+    Fixed::UnderlyingType x = {};
+    Fixed y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed / Fixed) == Fixed") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x / y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed /= Fixed) == Fixed&") {
+    Fixed x = {}, y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x /= y), Fixed&>);
+}
+
+TEST_CASE("typeof(Fixed / UnderlyingType) == Fixed") {
+    Fixed x = {};
+    Fixed::UnderlyingType y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x / y), Fixed>);
+}
+
+TEST_CASE("typeof(Fixed /= UnderlyingType) == Fixed&") {
+    Fixed x = {};
+    Fixed::UnderlyingType y = {};
+    STATIC_REQUIRE(std::is_same_v<decltype(x /= y), Fixed&>);
+}

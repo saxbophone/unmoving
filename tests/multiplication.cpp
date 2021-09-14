@@ -56,3 +56,15 @@ TEST_CASE("Fixed * UnderlyingType") {
     // allowed to deviate up to the smallest step in the fixed-point representation
     REQUIRE((double)baz == Approx((double)foo * bar).margin(Fixed::FRACTIONAL_STEP));
 }
+
+TEST_CASE("UnderlyingType * Fixed") {
+    // max value is sqrt(max fixed point value) to prevent overflow
+    const double max_operand = std::sqrt(524287.9997558594);
+    Underlying i = GENERATE_COPY(take(10, random((Underlying)-max_operand, (Underlying)max_operand)));
+    double j = GENERATE_COPY(take(10, random(-max_operand, max_operand)));
+    Underlying foo = i;
+    Fixed bar(j);
+    Fixed baz = foo * bar;
+    // allowed to deviate up to the smallest step in the fixed-point representation
+    REQUIRE((double)baz == Approx(foo * (double)bar).margin(Fixed::FRACTIONAL_STEP));
+}
