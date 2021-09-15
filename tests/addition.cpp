@@ -44,7 +44,7 @@ TEST_CASE("Addition") {
     SECTION("Fixed += Fixed") {
         double foo_f = (double)foo, bar_f = (double)bar;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        auto expected_result = Approx(foo_f + bar_f).margin(Fixed::FRACTIONAL_STEP);
+        auto expected_result = Approx(foo_f + bar_f).margin(Fixed::PRECISION);
         CHECK((double)(foo += bar) == expected_result);
         REQUIRE((double)foo == expected_result);
     }
@@ -53,6 +53,6 @@ TEST_CASE("Addition") {
         double foo_f = (double)foo, bar_f = (double)bar;
         Fixed baz = foo + bar;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)baz == Approx(foo_f + bar_f).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((double)baz == Approx(foo_f + bar_f).margin(Fixed::PRECISION));
     }
 }

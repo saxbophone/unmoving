@@ -13,7 +13,7 @@ TEST_CASE("Unary operations") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594,
+                    -524288.0,
                     // max is reduced by 1 to prevent overflow
                     524286.9997558594
                 )
@@ -21,8 +21,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = ++foo;
-        REQUIRE((double)bar == Approx(++i).margin(Fixed::FRACTIONAL_STEP));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(++i).margin(Fixed::PRECISION));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed postfix increment") {
@@ -30,7 +30,7 @@ TEST_CASE("Unary operations") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594,
+                    -524288.0,
                     // max is reduced by 1 to prevent overflow
                     524286.9997558594
                 )
@@ -38,8 +38,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = foo++;
-        REQUIRE((double)bar == Approx(i++).margin(Fixed::FRACTIONAL_STEP));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(i++).margin(Fixed::PRECISION));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed prefix decrement") {
@@ -48,15 +48,15 @@ TEST_CASE("Unary operations") {
                 tests_config::ITERATIONS,
                 random(
                     // min is increased by 1 to prevent underflow
-                    -524287.9997558594,
+                    -524287.0,
                     524287.9997558594
                 )
             )
         );
         Fixed foo(i);
         Fixed bar = --foo;
-        REQUIRE((double)bar == Approx(--i).margin(Fixed::FRACTIONAL_STEP));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(--i).margin(Fixed::PRECISION));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed postfix decrement") {
@@ -65,15 +65,15 @@ TEST_CASE("Unary operations") {
                 tests_config::ITERATIONS,
                 random(
                     // min is increased by 1 to prevent underflow
-                    -524287.9997558594,
+                    -524287.0,
                     524287.9997558594
                 )
             )
         );
         Fixed foo(i);
         Fixed bar = foo--;
-        REQUIRE((double)bar == Approx(i--).margin(Fixed::FRACTIONAL_STEP));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::FRACTIONAL_STEP)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(i--).margin(Fixed::PRECISION));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed unary minus") {

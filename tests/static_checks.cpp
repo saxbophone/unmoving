@@ -36,8 +36,12 @@ TEST_CASE("Static Checks") {
         STATIC_REQUIRE(Fixed::DECIMAL_BITS == std::numeric_limits<Underlying>::digits - Fixed::FRACTION_BITS);
     }
 
-    SECTION("Fixed::FRACTIONAL_STEP == 1 / Fixed::SCALE") {
-        STATIC_REQUIRE(Fixed::FRACTIONAL_STEP == Approx(1.0 / Fixed::SCALE));
+    SECTION("Fixed::PRECISION == 1 / Fixed::SCALE") {
+        STATIC_REQUIRE(Fixed::PRECISION == Approx(1.0 / Fixed::SCALE));
+    }
+
+    SECTION("Fixed::ACCURACY == Fixed::PRECISION / 2") {
+        STATIC_REQUIRE(Fixed::ACCURACY == Fixed::PRECISION / 2.0);
     }
 
     SECTION("Fixed::DECIMAL_MAX == 2 ** Fixed::DECIMAL_BITS - 1") {
@@ -48,12 +52,12 @@ TEST_CASE("Static Checks") {
         STATIC_REQUIRE(Fixed::DECIMAL_MIN == -(1 << Fixed::DECIMAL_BITS));
     }
 
-    SECTION("Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1 - Fixed::FRACTIONAL_STEP)") {
-        STATIC_REQUIRE(Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1.0 - Fixed::FRACTIONAL_STEP));
+    SECTION("Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1 - Fixed::PRECISION)") {
+        STATIC_REQUIRE(Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1.0 - Fixed::PRECISION));
     }
 
-    SECTION("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1 - Fixed::FRACTIONAL_STEP)") {
-        STATIC_REQUIRE(Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP));
+    SECTION("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN") {
+        STATIC_REQUIRE(Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN);
     }
 
     SECTION("Fixed::MAX() == Max 32-bit signed integer") {

@@ -30,14 +30,14 @@ TEST_CASE("Equivalences") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594f,
+                    -524288.0f,
                     524287.9997558594f
                 )
             )
         );
         Fixed var = i;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((float)var == Approx(i).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((float)var == Approx(i).margin(Fixed::PRECISION));
     }
 
     SECTION("Can cast from and back to double") {
@@ -45,14 +45,14 @@ TEST_CASE("Equivalences") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594,
+                    -524288.0,
                     524287.9997558594
                 )
             )
         );
         Fixed var = i;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)var == Approx(i).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((double)var == Approx(i).margin(Fixed::PRECISION));
     }
 
     SECTION("Can cast from and back to integer") {

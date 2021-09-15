@@ -72,11 +72,14 @@ namespace com::saxbophone::sxpsxfp {
         static constexpr size_t FRACTION_BITS = 12;
         static constexpr size_t DECIMAL_BITS = 19;
         static constexpr UnderlyingType SCALE = 1 << Fixed::FRACTION_BITS;
-        static constexpr double FRACTIONAL_STEP = 1.0 / Fixed::SCALE;
+        // precision is the closeness of different values to eachother
+        static constexpr double PRECISION = 1.0 / Fixed::SCALE;
+        // accuracy is closeness of a value to the "true" value
+        static constexpr double ACCURACY = Fixed::PRECISION / 2.0;
         static constexpr UnderlyingType DECIMAL_MAX = (1 << Fixed::DECIMAL_BITS) - 1;
         static constexpr UnderlyingType DECIMAL_MIN = -(1 << Fixed::DECIMAL_BITS);
-        static constexpr double FRACTIONAL_MAX = Fixed::DECIMAL_MAX + (1.0 - Fixed::FRACTIONAL_STEP);
-        static constexpr double FRACTIONAL_MIN = Fixed::DECIMAL_MIN - (1.0 - Fixed::FRACTIONAL_STEP);
+        static constexpr double FRACTIONAL_MAX = Fixed::DECIMAL_MAX + (1.0 - Fixed::PRECISION);
+        static constexpr double FRACTIONAL_MIN = Fixed::DECIMAL_MIN;
 
         static constexpr Fixed MAX() {
             return Fixed((UnderlyingType)2147483647);

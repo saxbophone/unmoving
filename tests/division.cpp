@@ -12,7 +12,7 @@ TEST_CASE("Division") {
         take(
             tests_config::ITERATIONS,
             random(
-                -524288.9997558594,
+                -524288.0,
                 524287.9997558594
             )
         )
@@ -25,11 +25,11 @@ TEST_CASE("Division") {
                 filter(
                     // verify result does not exceed bounds of Fixed type
                     [=](double u) {
-                        return -524288.9997558594 <= (i / u) and
+                        return -524288.0 <= (i / u) and
                             (i / u) <= 524287.9997558594;
                     },
                     random(
-                        -524288.9997558594,
+                        -524288.0,
                         524287.9997558594
                     )
                 )
@@ -38,7 +38,7 @@ TEST_CASE("Division") {
 
         Fixed foo(i);
         Fixed bar(j);
-        auto expected_result = Approx((double)foo / (double)bar).margin(Fixed::FRACTIONAL_STEP);
+        auto expected_result = Approx((double)foo / (double)bar).margin(Fixed::PRECISION);
 
         SECTION("Fixed /= Fixed") {
             CAPTURE(i, j, expected_result, (double)foo, (double)bar);
@@ -61,7 +61,7 @@ TEST_CASE("Division") {
                 filter(
                     // verify result does not exceed bounds of Fixed type
                     [=](Underlying u) {
-                        return -524288.9997558594 <= (i / u) and
+                        return -524288.0 <= (i / u) and
                             (i / u) <= 524287.9997558594;
                     },
                     random(
@@ -74,7 +74,7 @@ TEST_CASE("Division") {
 
         Fixed foo(i);
         Underlying bar = j;
-        auto expected_result = Approx((double)foo / bar).margin(Fixed::FRACTIONAL_STEP);
+        auto expected_result = Approx((double)foo / bar).margin(Fixed::PRECISION);
 
         SECTION("Fixed /= UnderlyingType") {
             CHECK((double)(foo /= bar) == expected_result);

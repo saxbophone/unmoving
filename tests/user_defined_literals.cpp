@@ -24,7 +24,7 @@ TEST_CASE("User-defined literals") {
         Fixed foo = std::get<Fixed>(literal_to_value);
         CAPTURE(std::get<Fixed>(literal_to_value), std::get<double>(literal_to_value));
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::PRECISION));
     }
 
     SECTION("Fractional user-defined literal") {
@@ -36,7 +36,7 @@ TEST_CASE("User-defined literals") {
         }));
         Fixed foo = std::get<Fixed>(literal_to_value);
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::PRECISION));
     }
 
     SECTION("Integral user-defined literal") {
@@ -48,6 +48,6 @@ TEST_CASE("User-defined literals") {
         }));
         Fixed foo = std::get<Fixed>(literal_to_value);
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::FRACTIONAL_STEP));
+        REQUIRE((double)foo == Approx(std::get<double>(literal_to_value)).margin(Fixed::PRECISION));
     }
 }
