@@ -38,7 +38,7 @@ TEST_CASE("Division") {
 
         Fixed foo(i);
         Fixed bar(j);
-        auto expected_result = Approx((double)foo / (double)bar).margin(Fixed::PRECISION);
+        auto expected_result = Approx((double)foo / (double)bar).margin(std::pow(1.0 + Fixed::ACCURACY, 2.0) - 1.0);
 
         SECTION("Fixed /= Fixed") {
             CAPTURE(i, j, expected_result, (double)foo, (double)bar);
@@ -74,7 +74,7 @@ TEST_CASE("Division") {
 
         Fixed foo(i);
         Underlying bar = j;
-        auto expected_result = Approx((double)foo / bar).margin(Fixed::PRECISION);
+        auto expected_result = Approx((double)foo / bar).margin(std::pow(1.0 + Fixed::ACCURACY, 2.0) - 1.0);
 
         SECTION("Fixed /= UnderlyingType") {
             CHECK((double)(foo /= bar) == expected_result);

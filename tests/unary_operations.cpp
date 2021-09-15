@@ -21,8 +21,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = ++foo;
-        REQUIRE((double)bar == Approx(++i).margin(Fixed::PRECISION));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(++i).margin(Fixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed postfix increment") {
@@ -38,8 +38,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = foo++;
-        REQUIRE((double)bar == Approx(i++).margin(Fixed::PRECISION));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(i++).margin(Fixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed prefix decrement") {
@@ -55,8 +55,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = --foo;
-        REQUIRE((double)bar == Approx(--i).margin(Fixed::PRECISION));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(--i).margin(Fixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed postfix decrement") {
@@ -72,8 +72,8 @@ TEST_CASE("Unary operations") {
         );
         Fixed foo(i);
         Fixed bar = foo--;
-        REQUIRE((double)bar == Approx(i--).margin(Fixed::PRECISION));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::PRECISION)); // relies upon i value changed in previous check
+        REQUIRE((double)bar == Approx(i--).margin(Fixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
     SECTION("Fixed unary minus") {

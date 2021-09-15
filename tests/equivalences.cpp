@@ -37,7 +37,7 @@ TEST_CASE("Equivalences") {
         );
         Fixed var = i;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((float)var == Approx(i).margin(Fixed::PRECISION));
+        REQUIRE((float)var == Approx(i).margin(Fixed::ACCURACY));
     }
 
     SECTION("Can cast from and back to double") {
@@ -52,7 +52,7 @@ TEST_CASE("Equivalences") {
         );
         Fixed var = i;
         // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)var == Approx(i).margin(Fixed::PRECISION));
+        REQUIRE((double)var == Approx(i).margin(Fixed::ACCURACY));
     }
 
     SECTION("Can cast from and back to integer") {

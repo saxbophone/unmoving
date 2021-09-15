@@ -47,7 +47,7 @@ TEST_CASE("Multiplication") {
 
         Fixed foo(i);
         Fixed bar(j);
-        auto expected_result = Approx((double)foo * (double)bar).margin(Fixed::PRECISION);
+        auto expected_result = Approx((double)foo * (double)bar).margin(Fixed::ACCURACY);
 
         SECTION("Fixed *= Fixed") {
             CAPTURE(i, j, expected_result, (double)foo, (double)bar);
@@ -87,7 +87,7 @@ TEST_CASE("Multiplication") {
 
         Fixed foo(i);
         Underlying bar = j;
-        auto expected_result = Approx((double)foo * bar).margin(Fixed::PRECISION);
+        auto expected_result = Approx((double)foo * bar).margin(Fixed::ACCURACY);
 
         SECTION("Fixed *= UnderlyingType") {
             CHECK((double)(foo *= bar) == expected_result);
