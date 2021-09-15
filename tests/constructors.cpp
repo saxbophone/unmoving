@@ -65,7 +65,7 @@ TEST_CASE("Constructors") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594f,
+                    -524288.0f,
                     524287.9997558594f
                 )
             )
@@ -73,6 +73,7 @@ TEST_CASE("Constructors") {
 
         SECTION("Implicit conversion from float") {
             Fixed var = i;
+            CAPTURE(i, var, (Underlying)var, i * 4096, round(i * 4096), (Underlying)round(i * 4096));
             REQUIRE((Underlying)var == (Underlying)round(i * 4096));
         }
 
@@ -87,7 +88,7 @@ TEST_CASE("Constructors") {
             take(
                 tests_config::ITERATIONS,
                 random(
-                    -524288.9997558594,
+                    -524288.0,
                     524287.9997558594
                 )
             )
