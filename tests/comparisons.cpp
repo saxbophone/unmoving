@@ -12,8 +12,8 @@ TEST_CASE("Comparisons") {
         take(
             tests_config::ITERATIONS,
             random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+                std::numeric_limits<Underlying>::min() + 1, // prevent underflow at bounds
+                std::numeric_limits<Underlying>::max() - 1  // prevent overflow at bounds
             )
         )
     );
@@ -91,25 +91,25 @@ TEST_CASE("Comparisons") {
         Underlying j = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return i < u; },
+                // filter(
+                //     [=](Underlying u) { return i < u; },
                     random(
-                        std::numeric_limits<Underlying>::min(),
+                        i + 1, // must be greater than i
                         std::numeric_limits<Underlying>::max()
                     )
-                )
+                // )
             )
         );
         Underlying k = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return not (i < u); },
+                // filter(
+                //     [=](Underlying u) { return not (i < u); },
                     random(
                         std::numeric_limits<Underlying>::min(),
-                        std::numeric_limits<Underlying>::max()
+                        i // must not be greater than i
                     )
-                )
+                // )
             )
         );
 
@@ -145,25 +145,26 @@ TEST_CASE("Comparisons") {
         Underlying j = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return i > u; },
+                // filter(
+                //     [=](Underlying u) { return i > u; },
                     random(
                         std::numeric_limits<Underlying>::min(),
-                        std::numeric_limits<Underlying>::max()
+                        i - 1 // must be less than i
                     )
-                )
+                // )
             )
         );
         Underlying k = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return not (i > u); },
+                // filter(
+                //     [=](Underlying u) { return not (i > u); },
                     random(
-                        std::numeric_limits<Underlying>::min(),
+                        // must not be less than i
+                        i,
                         std::numeric_limits<Underlying>::max()
                     )
-                )
+                // )
             )
         );
 
@@ -201,25 +202,25 @@ TEST_CASE("Comparisons") {
         Underlying j = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return i < u; },
+                // filter(
+                //     [=](Underlying u) { return i < u; },
                     random(
-                        std::numeric_limits<Underlying>::min(),
+                        i + 1, // must be greater than i
                         std::numeric_limits<Underlying>::max()
                     )
-                )
+                // )
             )
         );
         Underlying k = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return not (i <= u); },
+                // filter(
+                //     [=](Underlying u) { return not (i <= u); },
                     random(
                         std::numeric_limits<Underlying>::min(),
-                        std::numeric_limits<Underlying>::max()
+                        i - 1 // must not be greater than or equal to i
                     )
-                )
+                // )
             )
         );
 
@@ -261,25 +262,26 @@ TEST_CASE("Comparisons") {
         Underlying j = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return i > u; },
+                // filter(
+                //     [=](Underlying u) { return i > u; },
                     random(
                         std::numeric_limits<Underlying>::min(),
-                        std::numeric_limits<Underlying>::max()
+                        i - 1 // must be less than i
                     )
-                )
+                // )
             )
         );
         Underlying k = GENERATE_COPY(
             take(
                 1,
-                filter(
-                    [=](Underlying u) { return not (i >= u); },
+                // filter(
+                //     [=](Underlying u) { return not (i >= u); },
                     random(
-                        std::numeric_limits<Underlying>::min(),
+                        // must not be less than or equal to i
+                        i + 1,
                         std::numeric_limits<Underlying>::max()
                     )
-                )
+                // )
             )
         );
 

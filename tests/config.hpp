@@ -4,7 +4,7 @@
 #include <cstddef>
 
 namespace tests_config {
-    constexpr std::size_t ITERATIONS = 1'000'000;
+    constexpr std::size_t ITERATIONS = 10'000;
 }
 
 #endif // include guard
