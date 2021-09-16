@@ -64,8 +64,8 @@ TEST_CASE("Multiplication") {
     }
 
     SECTION("Multiplication by UnderlyingType") {
-        Underlying bound_a = -524288.0 / i;
-        Underlying bound_b = 524287.9997558594 / i;
+        Underlying bound_a = (Underlying)(-524288.0 / i);
+        Underlying bound_b = (Underlying)(524287.9997558594 / i);
         Underlying bound_min = std::min(bound_a, bound_b);
         Underlying bound_max = std::max(bound_a, bound_b);
         Underlying j = GENERATE_COPY(
