@@ -9,6 +9,16 @@
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
+template <typename T, typename U>
+constexpr double propagated_accuracy(T x, U y) {
+    if (x == 0 or y == 0) {
+        return 0.0; // avoid divide-by-zero errors, these results are always exact
+    }
+    double z = x * y;
+    // use standard deviation method
+    return std::abs(z) * std::sqrt(std::pow(Fixed::ACCURACY / x, 2.0) + std::pow(Fixed::ACCURACY / y, 2.0));
+}
+
 TEST_CASE("Multiplication") {
     double i = GENERATE(
         take(
@@ -47,18 +57,18 @@ TEST_CASE("Multiplication") {
 
         Fixed foo(i);
         Fixed bar(j);
-        auto expected_result = Approx((double)foo * (double)bar).margin(std::pow(1.0 + Fixed::ACCURACY, 2.0) - 1.0);
+
+        // calculate propagated accuracy error based on operands
+        auto expected_result = Approx((double)foo * (double)bar).margin(propagated_accuracy(i, j));
 
         SECTION("Fixed *= Fixed") {
             CAPTURE(i, j, expected_result, (double)foo, (double)bar);
             CHECK((double)(foo *= bar) == expected_result);
-            // allowed to deviate up to the smallest step in the fixed-point representation
             REQUIRE((double)foo == expected_result);
         }
 
         SECTION("Fixed * Fixed") {
             Fixed baz = foo * bar;
-            // allowed to deviate up to the smallest step in the fixed-point representation
             REQUIRE((double)baz == expected_result);
         }
     }
@@ -87,23 +97,21 @@ TEST_CASE("Multiplication") {
 
         Fixed foo(i);
         Underlying bar = j;
-        auto expected_result = Approx((double)foo * bar).margin(std::pow(1.0 + Fixed::ACCURACY, 2.0) - 1.0);
+        // calculate propagated accuracy error based on operands
+        auto expected_result = Approx((double)foo * bar).margin(propagated_accuracy(i, j));
 
         SECTION("Fixed *= UnderlyingType") {
             CHECK((double)(foo *= bar) == expected_result);
-            // allowed to deviate up to the smallest step in the fixed-point representation
             REQUIRE((double)foo == expected_result);
         }
 
         SECTION("Fixed * UnderlyingType") {
             Fixed baz = foo * bar;
-            // allowed to deviate up to the smallest step in the fixed-point representation
             REQUIRE((double)baz == expected_result);
         }
 
         SECTION("UnderlyingType * Fixed") {
             Fixed baz = bar * foo;
-            // allowed to deviate up to the smallest step in the fixed-point representation
             REQUIRE((double)baz == expected_result);
         }
 
