@@ -50,14 +50,4 @@ TEST_CASE("Conversion to String") {
 
         REQUIRE_FALSE(var.to_c_str(output, buffer_size));
     }
-
-    SECTION("Fixed.to_c_str() returns false when buffer is a null pointer") {
-        Fixed var;
-
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic warning "-Wformat-truncation=0"
-        // should fail because of null pointer and not buffer_size, the latter of which is big enough
-        REQUIRE_FALSE(var.to_c_str(nullptr, 15));
-        #pragma GCC diagnostic pop
-    }
 }

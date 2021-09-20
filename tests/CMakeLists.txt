@@ -15,6 +15,7 @@ target_sources(
         comparisons.cpp
         constructors.cpp
         conversion_to_string.cpp
+        conversion_to_string_null.cpp
         division.cpp
         equivalences.cpp
         multiplication.cpp
@@ -23,6 +24,15 @@ target_sources(
         unary_operations.cpp
         user_defined_literals.cpp
 )
+# disable check for null buffer to vsnprintf() family functions for one file,
+# which needs to deliberately pass a null-pointer as part of the test case
+check_cxx_compiler_flag("-Wno-format-truncation" flag_supported)
+if(flag_supported)
+    set_source_files_properties(
+        conversion_to_string_null.cpp
+        PROPERTIES COMPILE_FLAGS -Wno-format-truncation
+    )
+endif()
 target_link_libraries(
     tests
     PRIVATE
