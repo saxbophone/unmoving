@@ -33,6 +33,7 @@ if(flag_supported)
         PROPERTIES COMPILE_FLAGS -Wno-format-truncation
     )
 endif()
+unset(flag_supported CACHE)
 target_link_libraries(
     tests
     PRIVATE
