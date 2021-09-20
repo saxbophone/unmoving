@@ -1,5 +1,6 @@
 #include <limits>
 
+#include <cmath>
 #include <cstdint>
 
 #include <catch2/catch.hpp>
@@ -11,48 +12,48 @@
 using namespace com::saxbophone::sxpsxfp;
 using Underlying = Fixed::UnderlyingType;
 
+// calculated propagated accuracy error after an addition
+constexpr double ACCURACY = Fixed::ACCURACY * 2.0;
+
 TEST_CASE("Addition") {
-    Underlying i = GENERATE(
+    double i = GENERATE(
         take(
             tests_config::ITERATIONS,
             random(
-                std::numeric_limits<Underlying>::min(),
-                std::numeric_limits<Underlying>::max()
+                Fixed::FRACTIONAL_MIN,
+                Fixed::FRACTIONAL_MAX
             )
         )
     );
     // pick second operand carefully to avoid signed overflow UB
-    Underlying j = GENERATE_COPY(
+    double j = GENERATE_COPY(
         take(
             1,
             filter(
-                [=](Underlying u) {
-                    auto sum = ((std::int64_t)i + u);
-                    return std::numeric_limits<Underlying>::min() <= sum and
-                        sum <= std::numeric_limits<Underlying>::max();
+                [=](double u) {
+                    auto sum = i + u;
+                    return Fixed::FRACTIONAL_MIN <= sum and
+                        sum <= Fixed::FRACTIONAL_MAX;
                 },
                 random(
-                    std::numeric_limits<Underlying>::min(),
-                    std::numeric_limits<Underlying>::max()
+                    Fixed::FRACTIONAL_MIN,
+                    Fixed::FRACTIONAL_MAX
                 )
             )
         )
     );
     Fixed foo(i);
     Fixed bar(j);
+    // use calculated accuracy to set the margin of error
+    auto expected_result = Approx(i + j).margin(ACCURACY);
 
     SECTION("Fixed += Fixed") {
-        double foo_f = (double)foo, bar_f = (double)bar;
-        // allowed to deviate up to the smallest step in the fixed-point representation
-        auto expected_result = Approx(foo_f + bar_f).margin(Fixed::ACCURACY);
         CHECK((double)(foo += bar) == expected_result);
         REQUIRE((double)foo == expected_result);
     }
 
     SECTION("Fixed + Fixed") {
-        double foo_f = (double)foo, bar_f = (double)bar;
         Fixed baz = foo + bar;
-        // allowed to deviate up to the smallest step in the fixed-point representation
-        REQUIRE((double)baz == Approx(foo_f + bar_f).margin(Fixed::ACCURACY));
+        REQUIRE((double)baz == expected_result);
     }
 }
