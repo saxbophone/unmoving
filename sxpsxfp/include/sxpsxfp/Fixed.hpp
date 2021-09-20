@@ -183,9 +183,11 @@ namespace com::saxbophone::sxpsxfp {
         constexpr bool to_c_str(char* buffer, std::size_t buffer_size) const {
             // need at least 15 characters and 1 for the null-terminator
             if (buffer_size < 16) { return false; } // refuse if not at least this many in buffer
-            int decimal_part = this->_raw_value / 4096;
-            unsigned int fractional_part = ((((unsigned int)abs(this->_raw_value)) % 4096) * 1'000'000) / 4096;
-            // int fractional_part = abs(((this->_raw_value % 4096) * 100'000) / 4096);
+            int decimal_part = this->_raw_value / 4096; // floor-divide
+            // decompose the fractional part into an unsigned int to allow us to scale it up for more decimal places
+            unsigned int remainder = ((unsigned int)abs(this->_raw_value)) % 4096;
+            // 1M is the maximum we can scale it up without overflow, since 4096*1M = 4096M, compared to max uint32 = ~4294M
+            unsigned int fractional_part = (remainder * 1'000'000) / 4096; // this gives us 6 decimal places
             // can't print a decimal point if negative and decimal_part is zero
             if (this->_raw_value < 0 and decimal_part == 0) {
                 snprintf(buffer, buffer_size, "-%d.%06u", decimal_part, fractional_part);
