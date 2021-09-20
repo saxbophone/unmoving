@@ -32,7 +32,7 @@ TEST_CASE("Conversion to String") {
         // strtod sets cursor to output if conversion failed, so check that it isn't
         REQUIRE(cursor != output);
 
-        // finally, approximately compare this value cast to double
-        REQUIRE(value == Approx((double)var).margin(Fixed::ACCURACY));
+        // finally, approximately compare this value cast to double --we want them equal to 6 decimal places
+        REQUIRE(value == Approx((double)var).margin(0.000001));
     }
 }
