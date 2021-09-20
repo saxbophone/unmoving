@@ -35,4 +35,19 @@ TEST_CASE("Conversion to String") {
         // finally, approximately compare this value cast to double --we want them equal to 6 decimal places
         REQUIRE(value == Approx((double)var).margin(0.000001));
     }
+
+    SECTION("Fixed.to_c_str() returns false when given buffer_size = zero") {
+        Fixed var;
+        char output = {};
+
+        REQUIRE_FALSE(var.to_c_str(&output, 0));
+    }
+
+    SECTION("Fixed.to_c_str() returns false when 1 ≤ buffer_size < 15") {
+        std::size_t buffer_size = GENERATE(range(1U, 14U));
+        Fixed var;
+        char* output = new char[buffer_size] {0};
+
+        REQUIRE_FALSE(var.to_c_str(output, buffer_size));
+    }
 }

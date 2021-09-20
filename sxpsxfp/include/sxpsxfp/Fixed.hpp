@@ -180,14 +180,14 @@ namespace com::saxbophone::sxpsxfp {
         }
         /**
          * @brief Stringifies the Fixed-point value to a C-string
-         * @param buffer pointer to array of `char`. Must be `sizeof(buffer_size)` and at least `15`!
+         * @param buffer pointer to array of `char`. Must be `sizeof(buffer_size)` and should be at least `15`!
          * @param[out] buffer_size size of `buffer`
          * @returns `false` if buffer could not be written, because buffer_size wasn't big enough
          * @returns `true` if buffer was written
          * @todo Check for `buffer == nullptr` and bail early --it doesn't look like the PSn00bSDK C-library `vsnprintf()`
          * implementation checks this before writing to `buffer`... This is a memory error waiting to happen.
          */
-        constexpr bool to_c_str(char* buffer, std::size_t buffer_size) const {
+        constexpr bool to_c_str(char* buffer, size_t buffer_size) const {
             // need at least 14 characters and 1 for the null-terminator
             if (buffer_size < 15) { return false; } // refuse if not at least this many in buffer
             int decimal_part = this->_raw_value / 4096; // floor-divide
