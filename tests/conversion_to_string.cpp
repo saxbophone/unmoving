@@ -22,7 +22,7 @@ TEST_CASE("Conversion to String") {
             )
         );
         Fixed var = i;
-        char output[17] = {}; // need up to 16 characters for string, including null-terminator
+        char output[16] = {}; // need up to 16 characters for string, including null-terminator
 
         // we require the function call to return true for successful call
         CHECK(var.to_c_str(output, sizeof(output)));
@@ -32,7 +32,7 @@ TEST_CASE("Conversion to String") {
         // strtod sets cursor to output if conversion failed, so check that it isn't
         REQUIRE(cursor != output);
 
-        // finally, approximately compare this value with the original
-        REQUIRE(value == Approx(i).margin(Fixed::ACCURACY));
+        // finally, approximately compare this value cast to double
+        REQUIRE(value == Approx((double)var).margin(Fixed::ACCURACY));
     }
 }
