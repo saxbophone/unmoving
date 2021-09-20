@@ -22,7 +22,7 @@ TEST_CASE("Conversion to String") {
             )
         );
         Fixed var = i;
-        char output[16] = {}; // need up to 16 characters for string, including null-terminator
+        char output[15] = {}; // need up to 15 characters for string, including null-terminator
 
         // we require the function call to return true for successful call
         CHECK(var.to_c_str(output, sizeof(output)));
