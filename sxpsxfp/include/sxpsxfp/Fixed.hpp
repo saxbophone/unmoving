@@ -177,6 +177,11 @@ namespace com::saxbophone::sxpsxfp {
             return this->_raw_value / Fixed::SCALE;
         }
         /**
+         */
+        constexpr bool to_c_str(char* buffer, std::size_t buffer_size) const {
+            return false;
+        }
+        /**
          * @brief Prefix increment operator
          */
         constexpr Fixed& operator++() {

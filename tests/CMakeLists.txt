@@ -14,6 +14,7 @@ target_sources(
         casting.cpp
         comparisons.cpp
         constructors.cpp
+        conversion_to_string.cpp
         division.cpp
         equivalences.cpp
         multiplication.cpp
