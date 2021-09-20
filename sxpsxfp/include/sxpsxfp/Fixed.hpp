@@ -184,12 +184,13 @@ namespace com::saxbophone::sxpsxfp {
             // need at least 15 characters and 1 for the null-terminator
             if (buffer_size < 16) { return false; } // refuse if not at least this many in buffer
             int decimal_part = this->_raw_value / 4096;
-            int fractional_part = abs(((this->_raw_value % 4096) * 100'000) / 4096);
+            unsigned int fractional_part = ((((unsigned int)abs(this->_raw_value)) % 4096) * 1'000'000) / 4096;
+            // int fractional_part = abs(((this->_raw_value % 4096) * 100'000) / 4096);
             // can't print a decimal point if negative and decimal_part is zero
             if (this->_raw_value < 0 and decimal_part == 0) {
-                snprintf(buffer, buffer_size, "-%d.%05d", decimal_part, fractional_part);
+                snprintf(buffer, buffer_size, "-%d.%06u", decimal_part, fractional_part);
             } else { // otherwise, we can rely on snprintf() to do it for us
-                snprintf(buffer, buffer_size, "%d.%05d", decimal_part, fractional_part);
+                snprintf(buffer, buffer_size, "%d.%06u", decimal_part, fractional_part);
             }
             return true;
         }
