@@ -1,25 +1,16 @@
 include(GNUInstallDirs)
 
-add_library(unmoving STATIC)
+add_library(unmoving INTERFACE)  # use INTERFACE for a header-only library
 # ALIAS target to export a namespaced target even when building in-tree
 add_library(Unmoving::unmoving ALIAS unmoving)
-# add source files
-add_subdirectory(src)
 # library public header files location
 target_include_directories(
-    unmoving PUBLIC
+    unmoving INTERFACE
     # different include directory path depending on if using the local or installed version of library
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-# pass in version of project as preprocessor definitions
-target_compile_definitions(
-    unmoving PRIVATE
-    -DUNMOVING_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
-    -DUNMOVING_VERSION_MINOR=${PROJECT_VERSION_MINOR}
-    -DUNMOVING_VERSION_PATCH=${PROJECT_VERSION_PATCH}
-    -DUNMOVING_VERSION_STRING=${UNMOVING_ESCAPED_VERSION_STRING}
-)
+# These next two commands perhaps can be removed if they're only for library objects (not header-only)?
 # set up version and soversion for the main library object
 set_target_properties(
     unmoving PROPERTIES
@@ -31,12 +22,6 @@ set_target_properties(
 set_property(
     TARGET unmoving
     APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "${Unmoving_MAJOR_VERSION}.${Unmoving_MINOR_VERSION}"
-)
-# inherit common project compiler options
-target_link_libraries(
-    unmoving
-        PRIVATE
-            $<BUILD_INTERFACE:unmoving-compiler-options>
 )
 
 # install if we're not being built as a sub-project
