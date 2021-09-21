@@ -1,10 +1,10 @@
 #include <catch2/catch.hpp>
 
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::sxpsxfp;
+using namespace com::saxbophone::unmoving;
 
 /*
  * NOTE: we shouldn't test any negative literals here, because this would be

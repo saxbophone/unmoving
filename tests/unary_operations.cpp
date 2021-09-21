@@ -1,10 +1,10 @@
 #include <catch2/catch.hpp>
 
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::sxpsxfp;
+using namespace com::saxbophone::unmoving;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Unary operations") {

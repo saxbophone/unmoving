@@ -1,8 +1,8 @@
 #include <catch2/catch.hpp>
 
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
-using namespace com::saxbophone::sxpsxfp;
+using namespace com::saxbophone::unmoving;
 
 TEST_CASE("Fixed.to_c_str() returns false when buffer is a null pointer") {
     Fixed var;

@@ -1,4 +1,4 @@
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
 /**
  * @file
@@ -7,4 +7,4 @@
  * strictly header-only build.
  */
 
-namespace com::saxbophone::sxpsxfp {}
+namespace com::saxbophone::unmoving {}

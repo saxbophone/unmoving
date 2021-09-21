@@ -4,11 +4,11 @@
 
 #include <catch2/catch.hpp>
 
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::sxpsxfp;
+using namespace com::saxbophone::unmoving;
 
 TEST_CASE("Conversion to String") {
     SECTION("Fixed.to_c_str() creates a C string with the value's decimal respresentation") {
