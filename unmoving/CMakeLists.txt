@@ -10,18 +10,10 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-# These next two commands perhaps can be removed if they're only for library objects (not header-only)?
-# set up version and soversion for the main library object
-set_target_properties(
-    unmoving PROPERTIES
-    VERSION ${UNMOVING_VERSION_STRING}
-    SOVERSION ${PROJECT_VERSION_MAJOR}
-    INTERFACE_unmoving_MAJOR_VERSION ${PROJECT_VERSION_MAJOR}
-    INTERFACE_unmoving_MINOR_VERSION ${PROJECT_VERSION_MINOR}
-)
+# not 100% sure if this is still needed, but it appears in the package-config output so best to keep
 set_property(
     TARGET unmoving
-    APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "${Unmoving_MAJOR_VERSION}.${Unmoving_MINOR_VERSION}"
+    APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
 )
 
 # install if we're not being built as a sub-project
