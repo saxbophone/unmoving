@@ -1,6 +1,16 @@
 /**
  * @file
- * This file forms part of unmoving
+ * @brief This file forms part of Unmoving
+ * @details Unmoving is a C++ header-only library providing more convenient
+ * fixed-point arithmetic for the Sony PlayStation ("PS1"), in the form of a
+ * C++ class that wraps the native integer type used by the console standard
+ * library for performing fixed-point calculations. This class is intended to
+ * remove much of the more tedious aspects of the boilerplate code required to
+ * handle numbers in this way. The author hopes that it is useful.
+ * @warning Performance testing has not been done either in emulators or real
+ * PlayStation hardware. Although effort has been made to make this code
+ * efficient, at this stage this cannot be guaranteed, particularly with
+ * multiplication or division between two Fixed instances.
  *
  * @author Joshua Saxby <joshua.a.saxby@gmail.com>
  * @date September 2021
@@ -8,8 +18,9 @@
  * @copyright Copyright Joshua Saxby <joshua.a.saxby@gmail.com> 2021
  *
  * @copyright
- * This is closed-source software and may not be used in any way without the
- * express written permission of the copyright holder. All rights reserved.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
 #ifndef COM_SAXBOPHONE_UNMOVING_UNMOVING_HPP
@@ -25,10 +36,6 @@
 #include <stdio.h>  // snprintf
 #include <stdlib.h> // abs
 
-/**
- * @todo Consider shortening the namespace name to its last component
- * @todo Consider choosing a more intuitive name than @b unmoving
- */
 namespace com::saxbophone::unmoving {
     class Fixed; // forward-declaration to allow declaration of user-defined literals
 
