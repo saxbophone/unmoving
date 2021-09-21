@@ -37,8 +37,8 @@ unset(flag_supported CACHE)
 target_link_libraries(
     tests
     PRIVATE
-        sxpsxfp-compiler-options  # tests use same compiler options as main project
-        sxpsxfp
+        unmoving-compiler-options  # tests use same compiler options as main project
+        unmoving
         Catch2::Catch2             # unit testing framework
 )
 

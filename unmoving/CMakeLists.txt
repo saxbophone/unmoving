@@ -1,50 +1,50 @@
 include(GNUInstallDirs)
 
-add_library(sxpsxfp STATIC)
+add_library(unmoving STATIC)
 # ALIAS target to export a namespaced target even when building in-tree
-add_library(SxPsxFp::sxpsxfp ALIAS sxpsxfp)
+add_library(Unmoving::unmoving ALIAS unmoving)
 # add source files
 add_subdirectory(src)
 # library public header files location
 target_include_directories(
-    sxpsxfp PUBLIC
+    unmoving PUBLIC
     # different include directory path depending on if using the local or installed version of library
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 # pass in version of project as preprocessor definitions
 target_compile_definitions(
-    sxpsxfp PRIVATE
-    -DSXPSXFP_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
-    -DSXPSXFP_VERSION_MINOR=${PROJECT_VERSION_MINOR}
-    -DSXPSXFP_VERSION_PATCH=${PROJECT_VERSION_PATCH}
-    -DSXPSXFP_VERSION_STRING=${SXPSXFP_ESCAPED_VERSION_STRING}
+    unmoving PRIVATE
+    -DUNMOVING_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
+    -DUNMOVING_VERSION_MINOR=${PROJECT_VERSION_MINOR}
+    -DUNMOVING_VERSION_PATCH=${PROJECT_VERSION_PATCH}
+    -DUNMOVING_VERSION_STRING=${UNMOVING_ESCAPED_VERSION_STRING}
 )
 # set up version and soversion for the main library object
 set_target_properties(
-    sxpsxfp PROPERTIES
-    VERSION ${SXPSXFP_VERSION_STRING}
+    unmoving PROPERTIES
+    VERSION ${UNMOVING_VERSION_STRING}
     SOVERSION ${PROJECT_VERSION_MAJOR}
-    INTERFACE_sxpsxfp_MAJOR_VERSION ${PROJECT_VERSION_MAJOR}
-    INTERFACE_sxpsxfp_MINOR_VERSION ${PROJECT_VERSION_MINOR}
+    INTERFACE_unmoving_MAJOR_VERSION ${PROJECT_VERSION_MAJOR}
+    INTERFACE_unmoving_MINOR_VERSION ${PROJECT_VERSION_MINOR}
 )
 set_property(
-    TARGET sxpsxfp
-    APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "${SxPsxFp_MAJOR_VERSION}.${SxPsxFp_MINOR_VERSION}"
+    TARGET unmoving
+    APPEND PROPERTY COMPATIBLE_INTERFACE_STRING "${Unmoving_MAJOR_VERSION}.${Unmoving_MINOR_VERSION}"
 )
 # inherit common project compiler options
 target_link_libraries(
-    sxpsxfp
+    unmoving
         PRIVATE
-            $<BUILD_INTERFACE:sxpsxfp-compiler-options>
+            $<BUILD_INTERFACE:unmoving-compiler-options>
 )
 
 # install if we're not being built as a sub-project
-if (NOT SXPSXFP_SUBPROJECT)
+if (NOT UNMOVING_SUBPROJECT)
     # library
     install(
-        TARGETS sxpsxfp
-        EXPORT SxPsxFpTargets
+        TARGETS unmoving
+        EXPORT UnmovingTargets
         # when a static library
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         # when a shared library on UNIX
@@ -58,27 +58,27 @@ if (NOT SXPSXFP_SUBPROJECT)
     )
     # CMake export
     install(
-        EXPORT SxPsxFpTargets
-        FILE SxPsxFpTargets.cmake
-        NAMESPACE SxPsxFp::
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/SxPsxFp"
+        EXPORT UnmovingTargets
+        FILE UnmovingTargets.cmake
+        NAMESPACE Unmoving::
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Unmoving"
     )
     # CMake package
     include(CMakePackageConfigHelpers)
     configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-        "${CMAKE_CURRENT_BINARY_DIR}/SxPsxFpConfig.cmake"
-        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/SxPsxFp"
+        "${CMAKE_CURRENT_BINARY_DIR}/UnmovingConfig.cmake"
+        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Unmoving"
     )
     # generate the version file for the config file
     write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/SxPsxFpConfigVersion.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/UnmovingConfigVersion.cmake"
         VERSION "${version}"
         COMPATIBILITY SameMinorVersion
     )
     install(
         FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/SxPsxFpConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/SxPsxFpConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/SxPsxFp"
+        "${CMAKE_CURRENT_BINARY_DIR}/UnmovingConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/UnmovingConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/Unmoving"
     )
 endif()

@@ -6,13 +6,13 @@
 #define CATCH_CONFIG_RUNTIME_STATIC_REQUIRE
 #include <catch2/catch.hpp>
 
-#include <sxpsxfp/Fixed.hpp>
+#include <unmoving/Fixed.hpp>
 
 #include "config.hpp"
 
 // various static (compile-time) checks on properties of Fixed class
 
-using namespace com::saxbophone::sxpsxfp;
+using namespace com::saxbophone::unmoving;
 using Underlying = Fixed::UnderlyingType;
 
 TEST_CASE("Static Checks") {

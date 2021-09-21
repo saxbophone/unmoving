@@ -1,6 +1,6 @@
 # top-level namespace source files
 target_sources(
-    sxpsxfp
+    unmoving
         PRIVATE
             Fixed.cpp
 )

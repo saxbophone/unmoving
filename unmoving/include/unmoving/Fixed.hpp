@@ -1,6 +1,6 @@
 /**
  * @file
- * This file forms part of sxpsxfp
+ * This file forms part of unmoving
  *
  * @author Joshua Saxby <joshua.a.saxby@gmail.com>
  * @date September 2021
@@ -12,8 +12,8 @@
  * express written permission of the copyright holder. All rights reserved.
  */
 
-#ifndef COM_SAXBOPHONE_SXPSXFP_SXPSXFP_HPP
-#define COM_SAXBOPHONE_SXPSXFP_SXPSXFP_HPP
+#ifndef COM_SAXBOPHONE_UNMOVING_UNMOVING_HPP
+#define COM_SAXBOPHONE_UNMOVING_UNMOVING_HPP
 
 // NOTE: Blindly assuming that the PS1 environment declares itself as a freestanding implementation for this check!
 #if __STDC_HOSTED__
@@ -27,9 +27,9 @@
 
 /**
  * @todo Consider shortening the namespace name to its last component
- * @todo Consider choosing a more intuitive name than @b sxpsxfp
+ * @todo Consider choosing a more intuitive name than @b unmoving
  */
-namespace com::saxbophone::sxpsxfp {
+namespace com::saxbophone::unmoving {
     class Fixed; // forward-declaration to allow declaration of user-defined literals
 
     /**
