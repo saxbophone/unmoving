@@ -37,7 +37,7 @@ unset(flag_supported CACHE)
 target_link_libraries(
     tests
     PRIVATE
-        unmoving-compiler-options  # tests use same compiler options as main project
+        unmoving-compiler-options  # use custom compiler options
         unmoving
         Catch2::Catch2             # unit testing framework
 )
