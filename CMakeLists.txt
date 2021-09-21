@@ -36,8 +36,8 @@ endif()
 
 message(STATUS "[unmoving] Build Mode: ${CMAKE_BUILD_TYPE}")
 
-# set the C++ standard to use to C++20 always
-set(UNMOVING_CXX_STANDARD "20")
+# set the C++ standard to use to C++17 always
+set(UNMOVING_CXX_STANDARD "17")
 message(STATUS "[unmoving] C++ Standard set to C++${UNMOVING_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD ${UNMOVING_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

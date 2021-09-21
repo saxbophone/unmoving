@@ -116,7 +116,7 @@ namespace com::saxbophone::unmoving {
          * methodfor faster emulation when doing runtime conversions on the
          * PlayStation and `double` precision is not needed.
          */
-        constexpr Fixed(double value) {
+        constexpr Fixed(double value) : Fixed() {
             double scaled = value * Fixed::SCALE;
             // separate into integer and fraction so we can round the fraction
             UnderlyingType integral = (UnderlyingType)scaled;
