@@ -5,34 +5,30 @@ on:
     types: [published]
 
 jobs:
-  # just upload the header file to the Github release object for the "build" job
-  build-release:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+      - name: Set Tag Name
+        # trim prefix from ref to get tag name
+        run: echo "TAG_NAME=${GITHUB_REF#'refs/tags/'}" >> $GITHUB_ENV
+      - name: Version-stamp Header file
+        working-directory: ${{github.workspace}}
+        run: |
+          echo "// Unmoving $TAG_NAME downloaded from Github at https://github.com/saxbophone/unmoving/releases" > header_stub.hpp
+          cat header_stub.hpp unmoving/include/unmoving/PSXFixed.hpp > PSXFixed.hpp
       - name: Upload Header file
         uses: actions/upload-artifact@v2
         with:
           name: PSXFixed.hpp
-          path: ${{github.workspace}}/unmoving/include/PSXFixed.hpp
-  build-docs:
-    runs-on: ubuntu-20.04
-    # don't deploy docs unless release build succeeds
-    needs: build-release
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set Tag Name
-        shell: bash
-        # trim prefix from ref to get tag name
-        run: echo "TAG_NAME=${GITHUB_REF#'refs/tags/'}" >> $GITHUB_ENV
+          working-directory: ${{github.workspace}}
+          path: PSXFixed.hpp
       - name: Format Docs Version Name
-        shell: bash
         # trim patch version off version number as minor version specifies ABI changes
         run: echo "DOCS_VERSION=${TAG_NAME%.*}" >> $GITHUB_ENV
       - name: Build Doxygen Docs
         uses: mattnotmitt/doxygen-action@v1.3.3
       - name: Set up latest docs auto-linking
-        shell: bash
         working-directory: ${{github.workspace}}
         # make docs folder, move docs there, call script to generate HTML redirect in index
         run: |
