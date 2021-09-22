@@ -22,6 +22,12 @@ _TODO: Instructions go here for retrieving the library with CMake or just grabbi
 - Unmoving has been tested and confirmed to run on PCSXR, the PlayStation emulator. There is no reason why it wouldn't also run on real PlayStation hardware, but this has not yet been tested.
 - Unmoving hasn't been profiled for performance on the PlayStation. Vague observations from testing with PCSXR suggest its efficiency is reasonable, maybe even decent, but this area needs further investigation —particularly for the multiplication and division routines.
 
+## Usage
+
+_TODO: Code samples_
+
+Further reading: [API reference](https://saxbophone.com/unmoving/)
+
 ## Test suite
 
 Unmoving has a thorough unit test suite, however this cannot be built for the PlayStation due the extensive C++ library dependencies of the test suite itself. This test suite is run in CI for Linux, macOS and Windows. You can run the tests yourself by building the project in Debug mode or with `ENABLE_TESTS=ON` with CMake:
@@ -36,5 +42,3 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=ON
 # runs the tests with 5 threads
 ctest -j 5
 ```
-
-- [API reference](@ref com::saxbophone::unmoving)
