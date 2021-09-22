@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['max_45',['MAX',['../classcom_1_1saxbophone_1_1sxpsxfp_1_1Fixed.html#aa73a3d8250c08bb87f708413abe1ca2b',1,'com::saxbophone::sxpsxfp::Fixed']]],
-  ['min_46',['MIN',['../classcom_1_1saxbophone_1_1sxpsxfp_1_1Fixed.html#ad7b5ea2fed8a43ed349ed94c19755019',1,'com::saxbophone::sxpsxfp::Fixed']]]
+  ['max_40',['MAX',['../classunmoving_1_1PSXFixed.html#a3da2c955cedfc60f96e9b02a19fd04d5',1,'unmoving::PSXFixed']]],
+  ['min_41',['MIN',['../classunmoving_1_1PSXFixed.html#a217bc56c4e8abef6b4223e94acdaf60a',1,'unmoving::PSXFixed']]]
 ];

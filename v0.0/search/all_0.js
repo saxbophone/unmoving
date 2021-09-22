@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['com_0',['com',['../namespacecom.html',1,'']]],
-  ['saxbophone_1',['saxbophone',['../namespacecom_1_1saxbophone.html',1,'com']]],
-  ['sxpsxfp_2',['sxpsxfp',['../namespacecom_1_1saxbophone_1_1sxpsxfp.html',1,'com::saxbophone']]]
+  ['accuracy_0',['ACCURACY',['../classunmoving_1_1PSXFixed.html#a727001fec3925d00b2f48e59710f2764',1,'unmoving::PSXFixed']]]
 ];

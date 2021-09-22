@@ -1,14 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "cdfmorstu",
-  1: "f",
-  2: "c",
-  3: "fr",
-  4: "fmot",
-  5: "dfs",
+  0: "adfmoprstu",
+  1: "p",
+  2: "u",
+  3: "pr",
+  4: "fmopt",
+  5: "adfps",
   6: "u",
   7: "o",
-  8: "st"
+  8: "tu"
 };
 
 var indexSectionNames =

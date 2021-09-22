@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sxpsxfp: SxPsxFp</title>
+<title>unmoving: Unmoving</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,8 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">sxpsxfp
-   &#160;<span id="projectnumber">v0.0.0</span>
+   <div id="projectname">unmoving
+   &#160;<span id="projectnumber">v0.0.1</span>
    </div>
    <div id="projectbrief">More convenient fixed-point arithmetic for the Sony PlayStation</div>
   </td>
@@ -64,13 +64,140 @@ $(function() {
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">SxPsxFp </div>  </div>
+<div class="title">Unmoving </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a>More convenient fixed-point arithmetic for the Sony PlayStation</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> Unmoving is a C++ header-only library providing more convenient fixed-point arithmetic for the Sony PlayStation ("PS1"), in the form of a C++ class that wraps the native integer type used by the console standard library for performing fixed-point calculations. This class is intended to remove much of the more tedious aspects of the boilerplate code required to handle numbers in this way. The author hopes that it is useful.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Getting it</h1>
+<p>Unmoving is written in C++20 and can target the PlayStation or most desktop OSes. In all cases, you will need a recent C++ compiler in order to build C++20 code.</p>
+<p>For getting a toolchain that can target the PlayStation and which can compile C++20 code, you will need to compile a toolchain yourself. I recommend following the instructions in PSn00bSDK (which this project is tested with) for manually compiling toolchains (<a href="https://github.com/Lameguy64/PSn00bSDK/blob/ffa679d4d24b891cb59aba10946368f2ec00c391/toolchain.txt">https://github.com/Lameguy64/PSn00bSDK/blob/ffa679d4d24b891cb59aba10946368f2ec00c391/toolchain.txt</a>), <b>but choose newer versions of Binutils and GCC than are specified</b>.</p>
+<p>I used <b>Binutils 2.37</b> and <b>GCC 10.3.0</b>.</p>
+<p>Of course, as this is a header-only library, you could just head over to the <a href="https://github.com/saxbophone/unmoving/releases">releases page</a> on Github and download the latest version of it from there and then put it in your include path to use it in your projects.</p>
+<h2><a class="anchor" id="autotoc_md2"></a>
+CMake integration</h2>
+<p>Alternatively, you can fetch the project with CMake if you like. You need CMake 3.15 or newer to do this.</p>
+<p>A convenient way to do this is to use CPM (<a href="https://github.com/cpm-cmake/CPM.cmake">https://github.com/cpm-cmake/CPM.cmake</a>) to fetch the project from Github for you:</p>
+<div class="fragment"><div class="line">CPMFindPackage(</div>
+<div class="line">    NAME Unmoving</div>
+<div class="line">    GIT_REPOSITORY git@github.com:saxbophone/unmoving.git</div>
+<div class="line">    GIT_TAG v0.1.0</div>
+<div class="line">)</div>
+</div><!-- fragment --><p>Or if you don't want to use a third-party CMake tool, CMake's <code>FetchContent()</code> API can be used in a similar way instead.</p>
+<p>You could also clone this project's source code, build and install it with CMake and then use CMake's <code>find_package()</code> to use it in your project. <code>CPMFindPackage()</code> will also use locally-installed packages if you install it this way.</p>
+<p>You can then link your build targets to <em>Unmoving</em> in the typical way:</p>
+<div class="fragment"><div class="line"># sample target &quot;main&quot;</div>
+<div class="line">add_executable(main main.cpp)</div>
+<div class="line">target_link_libraries(main Unmoving::unmoving)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+License</h2>
+<blockquote class="doxtable">
+<p>This project is licensed under the Mozilla Public License v2.0.</p>
+<p>This is a permissive copyleft software license which applies the copyleft provisions to this project's source code only. This means you can use it in any project, whether open-source or not, without needing to disclose <em>your</em> source. However, if you make modifications to <em>this</em> project which you include in a project that you distribute (even a closed-source one), you are required to share the modifications you made to this project, but these parts only.</p>
+<p>Basically, if you modify <em>Unmoving</em> and distribute it, you need to publish your modifications. </p>
+</blockquote>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Some general notes for running on the PlayStation</h2>
 <ul>
-<li><a class="el" href="namespacecom_1_1saxbophone_1_1sxpsxfp.html">sxpsxfp</a> API reference </li>
+<li>Although written in C++20, Unmoving does not rely upon the C++ standard library or STL. The only dependencies it has are satisfied by the minimal C standard library that comes with PSn00bSDK.</li>
+<li>Unmoving has been tested and confirmed to run on PCSXR, the PlayStation emulator. There is no reason why it wouldn't also run on real PlayStation hardware, but this has not yet been tested.</li>
+<li>Unmoving hasn't been profiled for performance on the PlayStation. Vague observations from testing with PCSXR suggest its efficiency is reasonable, maybe even decent, but this area needs further investigation —particularly for the multiplication and division routines.</li>
 </ul>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Usage</h1>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="PSXFixed_8hpp.html">unmoving/PSXFixed.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code" href="namespaceunmoving.html">unmoving</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> print(<span class="keyword">const</span> PSXFixed&amp; fixed);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    PSXFixed d; <span class="comment">// default-initialised</span></div>
+<div class="line">    print(d);   <span class="comment">// -&gt; &quot;0.000000&quot;</span></div>
+<div class="line">    <span class="comment">// uses custom user-defined-literal, equivalent to the previous statement</span></div>
+<div class="line">    PSXFixed z = 0.0_fx, v = 0_fx;</div>
+<div class="line">    print(z); <span class="comment">// -&gt; &quot;0.000000&quot;</span></div>
+<div class="line">    print(v); <span class="comment">// -&gt; &quot;0.000000&quot;</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// contrasting use of custom literals vs built-in literals:</span></div>
+<div class="line">    PSXFixed c = 123456_fx;</div>
+<div class="line">    print(c); <span class="comment">// -&gt; &quot;123456.000000&quot;</span></div>
+<div class="line">    PSXFixed b = 123456; <span class="comment">// -&gt; equivalent to reinterpret_cast&lt;&gt;()</span></div>
+<div class="line">                         <span class="comment">//    i.e. takes 123456 to be the raw integer</span></div>
+<div class="line">                         <span class="comment">//    representation of a fixed-point value</span></div>
+<div class="line">    print(b);            <span class="comment">// -&gt; &quot;30.140625&quot;</span></div>
+<div class="line">    <span class="comment">// NOTE: c and b have different values!</span></div>
+<div class="line">    assert(b != c);</div>
+<div class="line">    <span class="comment">// use PSXFixed::from_integer() to value-convert from integer</span></div>
+<div class="line">    PSXFixed i = <a class="code" href="classunmoving_1_1PSXFixed.html#ae09bc4c938665a85a59e51aa616f4719">PSXFixed::from_integer</a>(123456); <span class="comment">// -&gt; 123456.0_fx</span></div>
+<div class="line">    print(i); <span class="comment">// -&gt; &quot;123456.000000&quot;</span></div>
+<div class="line">    assert(i == c);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// arithmetic expressions using fixed-point type</span></div>
+<div class="line">    <span class="comment">// note that as all methods are constexpr, constants can be folded at compile-time</span></div>
+<div class="line">    <span class="keyword">static</span> constexpr PSXFixed compile_time_expression = (3.14159265_fx / 3) + 0.02_fx * 45;</div>
+<div class="line">    <span class="comment">/*</span></div>
+<div class="line"><span class="comment">     * An optimising compiler can put the variable declared above in rodata as a constant:</span></div>
+<div class="line"><span class="comment">     *</span></div>
+<div class="line"><span class="comment">     * Disassembly of section .rodata:</span></div>
+<div class="line"><span class="comment">     * </span></div>
+<div class="line"><span class="comment">     * ...[truncated]...</span></div>
+<div class="line"><span class="comment">     * </span></div>
+<div class="line"><span class="comment">     * 0000000000400ca4 &lt;main::compile_time_expression&gt;:</span></div>
+<div class="line"><span class="comment">     *   400ca4:       2b 1f                   sub    (%rdi),%ebx</span></div>
+<div class="line"><span class="comment">     *         ...</span></div>
+<div class="line"><span class="comment">     *</span></div>
+<div class="line"><span class="comment">     * NOTE here that 0x1F2B as seen in the assembly is the decimal value 7979</span></div>
+<div class="line"><span class="comment">     * which is the raw fixed-point value for 1.947998</span></div>
+<div class="line"><span class="comment">     */</span></div>
+<div class="line">    print(compile_time_expression); <span class="comment">// -&gt; &quot;1.947998&quot;</span></div>
+<div class="line">    <span class="comment">// fixed-point instances cast to int implicitly, yielding their raw value:</span></div>
+<div class="line">    std::cout &lt;&lt; compile_time_expression &lt;&lt; std::endl; <span class="comment">// -&gt; &quot;7979&quot;</span></div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> print(<span class="keyword">const</span> PSXFixed&amp; fixed) {</div>
+<div class="line">    <span class="keywordtype">char</span> buffer[15] = {};</div>
+<div class="line">    <span class="keywordflow">if</span> (fixed.to_c_str(buffer, <span class="keyword">sizeof</span>(buffer))) {</div>
+<div class="line">        std::cout &lt;&lt; buffer &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aPSXFixed_8hpp_html"><div class="ttname"><a href="PSXFixed_8hpp.html">PSXFixed.hpp</a></div><div class="ttdoc">This file forms part of Unmoving.</div></div>
+<div class="ttc" id="aclassunmoving_1_1PSXFixed_html_ae09bc4c938665a85a59e51aa616f4719"><div class="ttname"><a href="classunmoving_1_1PSXFixed.html#ae09bc4c938665a85a59e51aa616f4719">unmoving::PSXFixed::from_integer</a></div><div class="ttdeci">static constexpr PSXFixed from_integer(int value)</div><div class="ttdef"><b>Definition:</b> PSXFixed.hpp:184</div></div>
+<div class="ttc" id="anamespaceunmoving_html"><div class="ttname"><a href="namespaceunmoving.html">unmoving</a></div><div class="ttdef"><b>Definition:</b> PSXFixed.hpp:44</div></div>
+</div><!-- fragment --><p>Because <code>PSXFixed</code> objects implicitly cast to their base integer type, it is possible to use them more or less as a drop-in replacement for "raw" integers for fixed-point maths, including being able to pass them into and out of the PSX standard library functions such as <code>rcos()</code> and friends.</p>
+<p>The only thing one has to be careful about is avoiding implicit integer conversions when the intention is to convert by <em>value</em> rather than raw bit-pattern, as demonstrated in the sample code above. <a class="el" href="classunmoving_1_1PSXFixed.html#ae09bc4c938665a85a59e51aa616f4719">PSXFixed::from_integer()</a> and <a class="el" href="classunmoving_1_1PSXFixed.html#a0e822edbd04722a1e525c8e500add7db">PSXFixed::to_integer()</a> are provided for such value-conversions.</p>
+<p>Further reading: <a href="https://saxbophone.com/unmoving/">API reference</a></p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Test suite</h1>
+<p>Unmoving has a thorough unit test suite, however this cannot be built for the PlayStation due the extensive C++ library dependencies of the test suite itself. This test suite is run in CI for Linux, macOS and Windows. You can run the tests yourself by building the project in Debug mode or with <code>ENABLE_TESTS=ON</code> with CMake:</p>
+<div class="fragment"><div class="line">git checkout git@github.com:saxbophone/unmoving.git</div>
+<div class="line">cd unmoving/build</div>
+<div class="line"># debug mode is the default</div>
+<div class="line">cmake ..</div>
+<div class="line"># OR alternatively (builds tests but in optimised Release mode)</div>
+<div class="line">cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=ON</div>
+<div class="line"> </div>
+<div class="line"># compile tests, using 5 threads</div>
+<div class="line">cmake --build . -j 5</div>
+<div class="line"> </div>
+<div class="line"># runs the tests with 5 threads</div>
+<div class="line">ctest -j 5</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+Limitations</h1>
+<p>The author of this software was very new to PlayStation programming at the time he wrote it, although having decent knowledge of C and C++. As such, there are no doubt going to be some oversights made on his part about the intricacies of PSX programming that haven't been considered in the project's design or implementation.</p>
+<p>If you feel something is missing or can be improved, I would be very grateful for your input and invite you to contribute issues or pull requests at this project's page on Github: <a href="https://github.com/saxbophone/unmoving">https://github.com/saxbophone/unmoving</a>.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Acknowledgements</h1>
+<p>Big thanks to <a href="https://github.com/lameguy64">Lameguy64</a> for both his <a href="http://lameguy64.net/tutorials/pstutorials/">series of tutorials</a> on PlayStation programming (the fixed-point arithmetic section of which was particularly helpful in the making of this software) and for his open-source PSX SDK <a href="https://github.com/Lameguy64/PSn00bSDK">PSn00bSDK</a>, which this project is tested with and which I thoroughly recommend checking out. Your work inspires me, sir!</p>
+<blockquote class="doxtable">
+<p>"What do you call a decimal point which sticks around in the same place?"</p>
+<p>...</p>
+<p><em>UNMOVING!</em> </p>
+</blockquote>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
