@@ -15,24 +15,24 @@
 
 #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
 using namespace com::saxbophone::unmoving;
 
 TEST_CASE("Conversion to String") {
-    SECTION("Fixed.to_c_str() creates a C string with the value's decimal respresentation") {
+    SECTION("PSXFixed.to_c_str() creates a C string with the value's decimal respresentation") {
         double i = GENERATE(
             take(
                 tests_config::ITERATIONS,
                 random(
-                    Fixed::FRACTIONAL_MIN,
-                    Fixed::FRACTIONAL_MAX
+                    PSXFixed::FRACTIONAL_MIN,
+                    PSXFixed::FRACTIONAL_MAX
                 )
             )
         );
-        Fixed var = i;
+        PSXFixed var = i;
         char output[15] = {}; // need up to 15 characters for string, including null-terminator
 
         // we require the function call to return true for successful call
@@ -47,16 +47,16 @@ TEST_CASE("Conversion to String") {
         REQUIRE(value == Approx((double)var).margin(0.000001));
     }
 
-    SECTION("Fixed.to_c_str() returns false when given buffer_size = zero") {
-        Fixed var;
+    SECTION("PSXFixed.to_c_str() returns false when given buffer_size = zero") {
+        PSXFixed var;
         char output = {};
 
         REQUIRE_FALSE(var.to_c_str(&output, 0));
     }
 
-    SECTION("Fixed.to_c_str() returns false when 1 ≤ buffer_size < 15") {
+    SECTION("PSXFixed.to_c_str() returns false when 1 ≤ buffer_size < 15") {
         std::size_t buffer_size = GENERATE(range(1U, 14U));
-        Fixed var;
+        PSXFixed var;
         char* output = new char[buffer_size] {0};
 
         REQUIRE_FALSE(var.to_c_str(output, buffer_size));

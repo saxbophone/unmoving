@@ -13,12 +13,12 @@
 
 #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
 using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Casting") {
     Underlying i = GENERATE(
@@ -30,26 +30,26 @@ TEST_CASE("Casting") {
             )
         )
     );
-    Fixed foo(i);
+    PSXFixed foo(i);
 
-    SECTION("Implicit cast Fixed to UnderlyingType") {
+    SECTION("Implicit cast PSXFixed to UnderlyingType") {
         Underlying bar = foo;
         REQUIRE(bar == i);
     }
 
-    SECTION("Explicit cast Fixed to UnderlyingType") {
+    SECTION("Explicit cast PSXFixed to UnderlyingType") {
         REQUIRE((Underlying)foo == i);
     }
 
-    SECTION("Explicit cast Fixed to float") {
+    SECTION("Explicit cast PSXFixed to float") {
         REQUIRE((float)foo == (float)i / 4096);
     }
 
-    SECTION("Explicit cast Fixed to double") {
+    SECTION("Explicit cast PSXFixed to double") {
         REQUIRE((double)foo == (double)i / 4096);
     }
 
-    SECTION("Fixed.to_integer()") {
+    SECTION("PSXFixed.to_integer()") {
         REQUIRE(foo.to_integer() == i / 4096);
     }
 }

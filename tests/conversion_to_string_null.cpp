@@ -11,12 +11,12 @@
  */
  #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 using namespace com::saxbophone::unmoving;
 
-TEST_CASE("Fixed.to_c_str() returns false when buffer is a null pointer") {
-    Fixed var;
+TEST_CASE("PSXFixed.to_c_str() returns false when buffer is a null pointer") {
+    PSXFixed var;
 
     // should fail because of null pointer and not buffer_size, the latter of which is big enough
     REQUIRE_FALSE(var.to_c_str(nullptr, 15));

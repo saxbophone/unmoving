@@ -13,12 +13,12 @@
 
 #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
 using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using Underlying = PSXFixed::UnderlyingType;
 
 template <typename T, typename U>
 constexpr double propagated_accuracy(T x, U y) {
@@ -27,7 +27,7 @@ constexpr double propagated_accuracy(T x, U y) {
     }
     double z = x * y;
     // use standard deviation method
-    return std::abs(z) * std::sqrt(std::pow(Fixed::ACCURACY / x, 2.0) + std::pow(Fixed::ACCURACY / y, 2.0));
+    return std::abs(z) * std::sqrt(std::pow(PSXFixed::ACCURACY / x, 2.0) + std::pow(PSXFixed::ACCURACY / y, 2.0));
 }
 
 TEST_CASE("Multiplication") {
@@ -41,7 +41,7 @@ TEST_CASE("Multiplication") {
         )
     );
 
-    SECTION("Multiplication by Fixed") {
+    SECTION("Multiplication by PSXFixed") {
         double bound_a = -524288.0 / i;
         double bound_b = 524287.9997558594 / i;
         double bound_min = std::min(bound_a, bound_b);
@@ -50,11 +50,11 @@ TEST_CASE("Multiplication") {
             take(
                 1,
                 filter(
-                    // verify result does not exceed bounds of Fixed type
+                    // verify result does not exceed bounds of PSXFixed type
                     [=](double u) {
-                        // get closest Fixed value of each operand
-                        double x = (double)Fixed(i);
-                        double y = (double)Fixed(u);
+                        // get closest PSXFixed value of each operand
+                        double x = (double)PSXFixed(i);
+                        double y = (double)PSXFixed(u);
                         return -524288.0 <= (x * y) and
                             (x * y) <= 524287.9997558594;
                     },
@@ -66,20 +66,20 @@ TEST_CASE("Multiplication") {
             )
         );
 
-        Fixed foo(i);
-        Fixed bar(j);
+        PSXFixed foo(i);
+        PSXFixed bar(j);
 
         // calculate propagated accuracy error based on operands
         auto expected_result = Approx((double)foo * (double)bar).margin(propagated_accuracy(i, j));
 
-        SECTION("Fixed *= Fixed") {
+        SECTION("PSXFixed *= PSXFixed") {
             CAPTURE(i, j, expected_result, (double)foo, (double)bar);
             CHECK((double)(foo *= bar) == expected_result);
             REQUIRE((double)foo == expected_result);
         }
 
-        SECTION("Fixed * Fixed") {
-            Fixed baz = foo * bar;
+        SECTION("PSXFixed * PSXFixed") {
+            PSXFixed baz = foo * bar;
             REQUIRE((double)baz == expected_result);
         }
     }
@@ -93,7 +93,7 @@ TEST_CASE("Multiplication") {
             take(
                 1,
                 filter(
-                    // verify result does not exceed bounds of Fixed type
+                    // verify result does not exceed bounds of PSXFixed type
                     [=](Underlying u) {
                         return -524288.0 <= (i * u) and
                             (i * u) <= 524287.9997558594;
@@ -106,23 +106,23 @@ TEST_CASE("Multiplication") {
             )
         );
 
-        Fixed foo(i);
+        PSXFixed foo(i);
         Underlying bar = j;
         // calculate propagated accuracy error based on operands
         auto expected_result = Approx((double)foo * bar).margin(propagated_accuracy(i, j));
 
-        SECTION("Fixed *= UnderlyingType") {
+        SECTION("PSXFixed *= UnderlyingType") {
             CHECK((double)(foo *= bar) == expected_result);
             REQUIRE((double)foo == expected_result);
         }
 
-        SECTION("Fixed * UnderlyingType") {
-            Fixed baz = foo * bar;
+        SECTION("PSXFixed * UnderlyingType") {
+            PSXFixed baz = foo * bar;
             REQUIRE((double)baz == expected_result);
         }
 
-        SECTION("UnderlyingType * Fixed") {
-            Fixed baz = bar * foo;
+        SECTION("UnderlyingType * PSXFixed") {
+            PSXFixed baz = bar * foo;
             REQUIRE((double)baz == expected_result);
         }
 
