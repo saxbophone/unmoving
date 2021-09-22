@@ -16,6 +16,18 @@ _TODO: Instructions go here for using Unmoving with PSn00bSDK_
 
 _TODO: Instructions go here for retrieving the library with CMake or just grabbing the header_
 
+> This project is licensed under the Mozilla Public License v2.0.
+>
+> This is a permissive copyleft software license which applies the copyleft
+> provisions to this project's source code only. This means you can use it in any
+> project, whether open-source or not, without needing to disclose _your_ source.
+> However, if you make modifications to _this_ project which you include in a
+> project that you distribute (even a closed-source one), you are required to share
+> the modifications you made to this project, but these parts only.
+>
+> Basically, if you modify _Unmoving_ and distribute it, you need to publish your
+> modifications.
+
 ### Some general notes for running on the PlayStation
 
 - Although written in C++20, Unmoving does not rely upon the C++ standard library or STL. The only dependencies it has are satisfied by the minimal C standard library that comes with PSn00bSDK.
@@ -87,6 +99,18 @@ void print(const PSXFixed& fixed) {
 }
 ```
 
+Because `PSXFixed` objects implicitly cast to their base integer type, it is
+possible to use them more or less as a drop-in replacement for "raw" integers
+for fixed-point maths, including being able to pass them into and out of the
+PSX standard library functions such as `rcos()` and friends.
+
+The only thing one has to be careful about is avoiding implicit integer conversions
+when the intention is to convert by _value_ rather than raw bit-pattern, as
+demonstrated in the sample code above.
+[PSXFixed::from_integer()](@ref unmoving::PSXFixed::from_integer()) and
+[PSXFixed::to_integer()](@ref unmoving::PSXFixed::to_integer()) are provided for such
+value-conversions.
+
 Further reading: [API reference](https://saxbophone.com/unmoving/)
 
 ## Test suite
@@ -107,3 +131,24 @@ cmake --build . -j 5
 # runs the tests with 5 threads
 ctest -j 5
 ```
+
+## Limitations
+
+The author of this software was very new to PlayStation programming at the time
+he wrote it, although having decent knowledge of C and C++. As such, there are
+no doubt going to be some oversights made on his part about the intricacies of
+PSX programming that haven't been considered in the project's design or
+implementation.
+
+If you feel something is missing or can be improved, I would be very grateful
+for your input and invite you to contribute issues or pull requests at this
+project's page on Github: [https://github.com/saxbophone/unmoving](https://github.com/saxbophone/unmoving).
+
+## Acknowledgements
+
+Big thanks to [Lameguy64](https://github.com/lameguy64) for both his
+[series of tutorials](http://lameguy64.net/tutorials/pstutorials/) on PlayStation
+programming (the fixed-point arithmetic section of which was particularly
+helpful in the making of this software) and for his open-source PSX SDK
+[PSn00bSDK](https://github.com/Lameguy64/PSn00bSDK), which this project is tested
+with and which I thoroughly recommend checking out. Your work inspires me, sir!
