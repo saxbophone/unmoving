@@ -24,7 +24,68 @@ _TODO: Instructions go here for retrieving the library with CMake or just grabbi
 
 ## Usage
 
-_TODO: Code samples_
+```cpp
+#include <cassert>
+#include <iostream>
+
+#include <unmoving/PSXFixed.hpp>
+
+
+using namespace unmoving;
+
+void print(const PSXFixed& fixed);
+
+int main() {
+    PSXFixed d; // default-initialised
+    print(d);   // -> "0.000000"
+    // uses custom user-defined-literal, equivalent to the previous statement
+    PSXFixed z = 0.0_fx, v = 0_fx;
+    print(z); // -> "0.000000"
+    print(v); // -> "0.000000"
+
+    // contrasting use of custom literals vs built-in literals:
+    PSXFixed c = 123456_fx;
+    print(c); // -> "123456.000000"
+    PSXFixed b = 123456; // -> equivalent to reinterpret_cast<>()
+                         //    i.e. takes 123456 to be the raw integer
+                         //    representation of a fixed-point value
+    print(b);            // -> "30.140625"
+    // NOTE: c and b have different values!
+    assert(b != c);
+    // use PSXFixed::from_integer() to value-convert from integer
+    PSXFixed i = PSXFixed::from_integer(123456); // -> 123456.0_fx
+    print(i); // -> "123456.000000"
+    assert(i == c);
+
+    // arithmetic expressions using fixed-point type
+    // note that as all methods are constexpr, constants can be folded at compile-time
+    static constexpr PSXFixed compile_time_expression = (3.14159265_fx / 3) + 0.02_fx * 45;
+    /*
+     * An optimising compiler can put the variable declared above in rodata as a constant:
+     *
+     * Disassembly of section .rodata:
+     * 
+     * ...[truncated]...
+     * 
+     * 0000000000400ca4 <main::compile_time_expression>:
+     *   400ca4:       2b 1f                   sub    (%rdi),%ebx
+     *         ...
+     *
+     * NOTE here that 0x1F2B as seen in the assembly is the decimal value 7979
+     * which is the raw fixed-point value for 1.947998
+     */
+    print(compile_time_expression); // -> "1.947998"
+    // fixed-point instances cast to int implicitly, yielding their raw value:
+    std::cout << compile_time_expression << std::endl; // -> "7979"
+}
+
+void print(const PSXFixed& fixed) {
+    char buffer[15] = {};
+    if (fixed.to_c_str(buffer, sizeof(buffer))) {
+        std::cout << buffer << std::endl;
+    }
+}
+```
 
 Further reading: [API reference](https://saxbophone.com/unmoving/)
 
@@ -39,6 +100,10 @@ cd unmoving/build
 cmake ..
 # OR alternatively (builds tests but in optimised Release mode)
 cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=ON
+
+# compile tests, using 5 threads
+cmake --build . -j 5
+
 # runs the tests with 5 threads
 ctest -j 5
 ```
