@@ -26,13 +26,18 @@
 #ifndef COM_SAXBOPHONE_UNMOVING_PSX_FIXED_HPP
 #define COM_SAXBOPHONE_UNMOVING_PSX_FIXED_HPP
 
-// NOTE: Blindly assuming that the PS1 environment declares itself as a freestanding implementation for this check!
+// we can get int32 and size_t from the C++ standard library when build is hosted
 #if __STDC_HOSTED__
-#include <cstddef>
-#include <cstdint>
+#include <cstddef> // size_t
+#include <cstdint> // int32
 #else
-#include <sys/types.h>
+// NOTE: this C header is specific to the PSX SDK
+#include <sys/types.h> // int32, size_t
 #endif
+/*
+ * get other symbols from the C headers as these are guaranteed to exist both in
+ * C++ and the PSX SDK
+ */
 #include <stdio.h>  // snprintf
 #include <stdlib.h> // abs
 
@@ -73,31 +78,65 @@ namespace com::saxbophone::unmoving {
      * point arithmetic and allows arithmetic operations to be done on these
      * instances directly, handling the additional arithmetic for emulating
      * fixed-point internally.
-     * @todo Document constants
+     * @note The fixed-point integers implemented by this type match those
+     * handled by the PSX standard library, which are `Q19.12` numbers when
+     * specified in Q Notation (https://en.wikipedia.org/wiki/Q_(number_format))
      */
     class PSXFixed {
     public:
+        /**
+         * @brief Underlying base type the fixed-point integer is stored as
+         * @details Should be `int32` or `int` to match the type used by PSX
+         * standard library in its fixed-point maths routines.
+         */
         using UnderlyingType = int32_t;
-        static constexpr size_t FRACTION_BITS = 12;
+        /** @brief How many bits are used for the integer part of the fixed-point integer */
         static constexpr size_t DECIMAL_BITS = 19;
+        /** @brief How many bits are used for the fraction part of the fixed-point integer */
+        static constexpr size_t FRACTION_BITS = 12;
+        /**
+         * @brief The scale used for the fixed-point integer
+         * @note This matches the scale used by the PSX standard library for
+         * fixed-point arithmetic, which uses a scale of 4096 (macro: `ONE`).
+         */
         static constexpr UnderlyingType SCALE = 1 << PSXFixed::FRACTION_BITS;
-        // precision is the closeness of different values to eachother
+        /**
+         * @brief How far apart two adjacent fixed-point values are
+         */
         static constexpr double PRECISION = 1.0 / PSXFixed::SCALE;
-        // accuracy is closeness of a value to the "true" value
+        /**
+         * @brief The largest difference between a fixed-point value and the
+         * "true" value it represents.
+         */
         static constexpr double ACCURACY = PSXFixed::PRECISION / 2.0;
+        /**
+         * @brief Largest integer value representable by the fixed-point type
+         */
         static constexpr UnderlyingType DECIMAL_MAX = (1 << PSXFixed::DECIMAL_BITS) - 1;
+        /**
+         * @brief Smallest integer value representable by the fixed-point type
+         */
         static constexpr UnderlyingType DECIMAL_MIN = -(1 << PSXFixed::DECIMAL_BITS);
+        /**
+         * @brief Largest real value representable by the fixed-point type
+         */
         static constexpr double FRACTIONAL_MAX = PSXFixed::DECIMAL_MAX + (1.0 - PSXFixed::PRECISION);
+        /**
+         * @brief Smallest real value representable by the fixed-point type
+         */
         static constexpr double FRACTIONAL_MIN = PSXFixed::DECIMAL_MIN;
-
+        /**
+         * @brief Largest PSXFixed value
+         */
         static constexpr PSXFixed MAX() {
             return PSXFixed((UnderlyingType)2147483647);
         }
-
+        /**
+         * @brief Smallest PSXFixed value
+         */
         static constexpr PSXFixed MIN() {
             return PSXFixed((UnderlyingType)-2147483648);
         }
-
         /**
          * @brief Default constructor, creates a PSXFixed instance with value `0.0_fx`
          */
@@ -194,6 +233,9 @@ namespace com::saxbophone::unmoving {
          * @note Although conforming C-libraries check if `buffer == nullptr` for you, the implementation of `vsnprintf()`
          * in libPSn00bSDK, which this project is intended for use with, doesn't seem to check if `buffer == NULL`, hence
          * the need to check it here.
+         * @todo Consider replacing the call to `snprintf()` with a call to
+         * `sprintf()` --it looks like the original Sony C library doesn't support
+         * `snprintf()`...
          */
         constexpr bool to_c_str(char* buffer, size_t buffer_size) const {
             // don't write to a null-pointer!
