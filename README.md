@@ -12,9 +12,51 @@ handle numbers in this way. The author hopes that it is useful.
 Unmoving is written in C++20 and can target the PlayStation or most desktop OSes.
 In all cases, you will need a recent C++ compiler in order to build C++20 code.
 
-_TODO: Instructions go here for using Unmoving with PSn00bSDK_
+For getting a toolchain that can target the PlayStation and which can compile
+C++20 code, you will need to compile a toolchain yourself. I recommend following
+the instructions in PSn00bSDK (which this project is tested with) for manually
+compiling toolchains
+([https://github.com/Lameguy64/PSn00bSDK/blob/ffa679d4d24b891cb59aba10946368f2ec00c391/toolchain.txt](https://github.com/Lameguy64/PSn00bSDK/blob/ffa679d4d24b891cb59aba10946368f2ec00c391/toolchain.txt)), **but choose newer versions of Binutils and GCC than are specified**.
 
-_TODO: Instructions go here for retrieving the library with CMake or just grabbing the header_
+I used **Binutils 2.37** and **GCC 10.3.0**.
+
+Of course, as this is a header-only library, you could just head over to the
+[releases page](https://github.com/saxbophone/unmoving/releases) on Github and
+download the latest version of it from there and then put it in your include path to use it in your projects.
+
+### CMake integration
+
+Alternatively, you can fetch the project with CMake if you like. You need CMake 3.15 or newer
+to do this.
+
+A convenient way to do this is to use CPM
+([https://github.com/cpm-cmake/CPM.cmake](https://github.com/cpm-cmake/CPM.cmake))
+to fetch the project from Github for you:
+
+```cmake
+CPMFindPackage(
+    NAME Unmoving
+    GIT_REPOSITORY git@github.com:saxbophone/unmoving.git
+    GIT_TAG v0.1.0
+)
+```
+
+Or if you don't want to use a third-party CMake tool, CMake's `FetchContent()`
+API can be used in a similar way instead.
+
+You could also clone this project's source code, build and install it with CMake
+and then use CMake's `find_package()` to use it in your project. `CPMFindPackage()`
+will also use locally-installed packages if you install it this way.
+
+You can then link your build targets to _Unmoving_ in the typical way:
+
+```cmake
+# sample target "main"
+add_executable(main main.cpp)
+target_link_libraries(main Unmoving::unmoving)
+```
+
+### License
 
 > This project is licensed under the Mozilla Public License v2.0.
 >
@@ -152,3 +194,9 @@ programming (the fixed-point arithmetic section of which was particularly
 helpful in the making of this software) and for his open-source PSX SDK
 [PSn00bSDK](https://github.com/Lameguy64/PSn00bSDK), which this project is tested
 with and which I thoroughly recommend checking out. Your work inspires me, sir!
+
+> "What do you call a decimal point which sticks around in the same place?"
+>
+> ...
+>
+> _UNMOVING!_
