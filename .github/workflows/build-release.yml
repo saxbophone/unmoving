@@ -12,15 +12,17 @@ jobs:
       - name: Set Tag Name
         # trim prefix from ref to get tag name
         run: echo "TAG_NAME=${GITHUB_REF#'refs/tags/'}" >> $GITHUB_ENV
-      - name: Version-stamp Header file
-        run: |
-          echo "// Unmoving $TAG_NAME downloaded from Github at https://github.com/saxbophone/unmoving/releases" > header_stub.hpp
-          cat header_stub.hpp unmoving/include/unmoving/PSXFixed.hpp > PSXFixed.hpp
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.3
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - name: Version-stamp Header file
+        env:
+          RELEASE_URL: ${{ steps.get_release.outputs.html_url }}
+        run: |
+          echo "// Unmoving $TAG_NAME downloaded from Github at $RELEASE_URL" > header_stub.hpp
+          cat header_stub.hpp unmoving/include/unmoving/PSXFixed.hpp > PSXFixed.hpp
       - name: Upload Header file
         uses: actions/upload-release-asset@v1.0.2
         env:
