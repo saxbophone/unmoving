@@ -19,7 +19,7 @@
 
 #include "config.hpp"
 
-using namespace com::saxbophone::unmoving;
+using namespace unmoving;
 
 TEST_CASE("Conversion to String") {
     SECTION("PSXFixed.to_c_str() creates a C string with the value's decimal respresentation") {

@@ -41,7 +41,7 @@
 #include <stdio.h>  // snprintf
 #include <stdlib.h> // abs
 
-namespace com::saxbophone::unmoving {
+namespace unmoving {
     class PSXFixed; // forward-declaration to allow declaration of user-defined literals
 
     /**
@@ -226,6 +226,7 @@ namespace com::saxbophone::unmoving {
         }
         /**
          * @brief Stringifies the PSXFixed-point value to a C-string
+         * @details Output is equivalent to `printf()`-family `%.6f`, so trailing zeroes are always displayed
          * @param buffer pointer to array of `char`. Must be non-null and pointing to buffer of size `buffer_size`.
          * @param[out] buffer_size size of `buffer`. Should be at least `15`.
          * @returns `false` if buffer could not be written, because buffer_size wasn't big enough
@@ -236,6 +237,7 @@ namespace com::saxbophone::unmoving {
          * @todo Consider replacing the call to `snprintf()` with a call to
          * `sprintf()` --it looks like the original Sony C library doesn't support
          * `snprintf()`...
+         * @todo Consider adding the ability to reduce the number of displayed decimal places, or to remove trailing zeroes
          */
         constexpr bool to_c_str(char* buffer, size_t buffer_size) const {
             // don't write to a null-pointer!

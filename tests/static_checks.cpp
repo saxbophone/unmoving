@@ -23,7 +23,7 @@
 
 // various static (compile-time) checks on properties of PSXFixed class
 
-using namespace com::saxbophone::unmoving;
+using namespace unmoving;
 using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Static Checks") {

@@ -20,7 +20,7 @@
 
 #include "config.hpp"
 
-using namespace com::saxbophone::unmoving;
+using namespace unmoving;
 using Underlying = PSXFixed::UnderlyingType;
 
 // calculated propagated accuracy error after a subtraction

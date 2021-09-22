@@ -13,7 +13,7 @@
 
 #include <unmoving/PSXFixed.hpp>
 
-using namespace com::saxbophone::unmoving;
+using namespace unmoving;
 
 TEST_CASE("PSXFixed.to_c_str() returns false when buffer is a null pointer") {
     PSXFixed var;
