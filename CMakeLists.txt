@@ -9,7 +9,7 @@ else()
     set(UNMOVING_SUBPROJECT ON)
 endif()
 
-project(Unmoving VERSION 0.1.0 LANGUAGES CXX)
+project(Unmoving VERSION 0.0.1 LANGUAGES CXX)
 
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
