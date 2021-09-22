@@ -1,19 +1,30 @@
-#include <limits>
+/*
+ * This source file forms part of Unmoving
+ * Unmoving is a C++ header-only library providing more convenient fixed-point
+ * arithmetic for the Sony PlayStation ("PS1").
+ *
+ * Copyright Joshua Saxby <joshua.a.saxby@gmail.com> 2021
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+ #include <limits>
 
 #include <cmath>
 
 #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using namespace unmoving;
+using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Constructors") {
     SECTION("Default constructor can be called") {
-        Fixed foo = {};
+        PSXFixed foo = {};
         REQUIRE((Underlying)foo == 0);
     }
 
@@ -29,32 +40,32 @@ TEST_CASE("Constructors") {
         );
 
         SECTION("Implicit conversion from fixed-point integer") {
-            Fixed var = i;
+            PSXFixed var = i;
             REQUIRE((Underlying)var == i);
         }
 
         SECTION("Explicit conversion from fixed-point integer") {
-            Fixed var(i);
+            PSXFixed var(i);
             REQUIRE((Underlying)var == i);
         }
 
         SECTION("Special advanced constructors") {
             // Now for some more advanced stuff
             SECTION("Assignment operator can be called") {
-                Fixed foo, bar(i);
+                PSXFixed foo, bar(i);
                 foo = bar;
                 REQUIRE((Underlying)foo == (Underlying)bar);
             }
 
             SECTION("Copy constructor can be called") {
-                Fixed foo(i);
-                Fixed bar = foo;
+                PSXFixed foo(i);
+                PSXFixed bar = foo;
                 REQUIRE((Underlying)foo == (Underlying)bar);
             }
 
             SECTION("Explicit copy constructor can be called") {
-                Fixed foo(i);
-                Fixed bar(foo);
+                PSXFixed foo(i);
+                PSXFixed bar(foo);
                 REQUIRE((Underlying)foo == (Underlying)bar);
             }
         }
@@ -72,13 +83,13 @@ TEST_CASE("Constructors") {
         );
 
         SECTION("Implicit conversion from float") {
-            Fixed var = i;
+            PSXFixed var = i;
             CAPTURE(i, var, (Underlying)var, i * 4096, round(i * 4096), (Underlying)round(i * 4096));
             REQUIRE((Underlying)var == (Underlying)round(i * 4096));
         }
 
         SECTION("Explicit conversion from float") {
-            Fixed var(i);
+            PSXFixed var(i);
             REQUIRE((Underlying)var == (Underlying)round(i * 4096));
         }
     }
@@ -95,20 +106,20 @@ TEST_CASE("Constructors") {
         );
 
         SECTION("Implicit conversion from double") {
-            Fixed var = i;
+            PSXFixed var = i;
             REQUIRE((Underlying)var == (Underlying)round(i * 4096));
         }
 
 
         SECTION("Explicit conversion from double") {
-            Fixed var(i);
+            PSXFixed var(i);
             REQUIRE((Underlying)var == (Underlying)round(i * 4096));
         }
     }
 
     SECTION("Creation from integer value") {
         Underlying i = GENERATE(take(tests_config::ITERATIONS, random(-524288, 524287)));
-        Fixed var = Fixed::from_integer(i);
+        PSXFixed var = PSXFixed::from_integer(i);
         REQUIRE((Underlying)var == i * 4096);
     }
 }

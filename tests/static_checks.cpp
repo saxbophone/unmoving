@@ -1,4 +1,15 @@
-#include <limits>
+/*
+ * This source file forms part of Unmoving
+ * Unmoving is a C++ header-only library providing more convenient fixed-point
+ * arithmetic for the Sony PlayStation ("PS1").
+ *
+ * Copyright Joshua Saxby <joshua.a.saxby@gmail.com> 2021
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+ #include <limits>
 #include <type_traits>
 
 // defer static checks to runtime
@@ -6,144 +17,144 @@
 #define CATCH_CONFIG_RUNTIME_STATIC_REQUIRE
 #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
-// various static (compile-time) checks on properties of Fixed class
+// various static (compile-time) checks on properties of PSXFixed class
 
-using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using namespace unmoving;
+using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Static Checks") {
-    SECTION("Fixed::UnderlyingType is integral") {
+    SECTION("PSXFixed::UnderlyingType is integral") {
         STATIC_REQUIRE(std::is_integral_v<Underlying>);
     }
 
-    SECTION("Fixed::UnderlyingType has more bits than Fixed::FRACTION_BITS") {
-        STATIC_REQUIRE(std::numeric_limits<Underlying>::digits > Fixed::FRACTION_BITS);
+    SECTION("PSXFixed::UnderlyingType has more bits than PSXFixed::FRACTION_BITS") {
+        STATIC_REQUIRE(std::numeric_limits<Underlying>::digits > PSXFixed::FRACTION_BITS);
     }
 
-    SECTION("Fixed::UnderlyingType has more bits than Fixed::DECIMAL_BITS") {
-        STATIC_REQUIRE(std::numeric_limits<Underlying>::digits > Fixed::DECIMAL_BITS);
+    SECTION("PSXFixed::UnderlyingType has more bits than PSXFixed::DECIMAL_BITS") {
+        STATIC_REQUIRE(std::numeric_limits<Underlying>::digits > PSXFixed::DECIMAL_BITS);
     }
 
-    SECTION("Fixed::SCALE == 2 ** Fixed::FRACTION_BITS") {
-        STATIC_REQUIRE(Fixed::SCALE == 1 << Fixed::FRACTION_BITS);
+    SECTION("PSXFixed::SCALE == 2 ** PSXFixed::FRACTION_BITS") {
+        STATIC_REQUIRE(PSXFixed::SCALE == 1 << PSXFixed::FRACTION_BITS);
     }
 
-    SECTION("Fixed::DECIMAL_BITS == Fixed::UnderlyingType bits - Fixed::FRACTION_BITS") {
-        STATIC_REQUIRE(Fixed::DECIMAL_BITS == std::numeric_limits<Underlying>::digits - Fixed::FRACTION_BITS);
+    SECTION("PSXFixed::DECIMAL_BITS == PSXFixed::UnderlyingType bits - PSXFixed::FRACTION_BITS") {
+        STATIC_REQUIRE(PSXFixed::DECIMAL_BITS == std::numeric_limits<Underlying>::digits - PSXFixed::FRACTION_BITS);
     }
 
-    SECTION("Fixed::PRECISION == 1 / Fixed::SCALE") {
-        STATIC_REQUIRE(Fixed::PRECISION == Approx(1.0 / Fixed::SCALE));
+    SECTION("PSXFixed::PRECISION == 1 / PSXFixed::SCALE") {
+        STATIC_REQUIRE(PSXFixed::PRECISION == Approx(1.0 / PSXFixed::SCALE));
     }
 
-    SECTION("Fixed::ACCURACY == Fixed::PRECISION / 2") {
-        STATIC_REQUIRE(Fixed::ACCURACY == Fixed::PRECISION / 2.0);
+    SECTION("PSXFixed::ACCURACY == PSXFixed::PRECISION / 2") {
+        STATIC_REQUIRE(PSXFixed::ACCURACY == PSXFixed::PRECISION / 2.0);
     }
 
-    SECTION("Fixed::DECIMAL_MAX == 2 ** Fixed::DECIMAL_BITS - 1") {
-        STATIC_REQUIRE(Fixed::DECIMAL_MAX == (1 << Fixed::DECIMAL_BITS) - 1);
+    SECTION("PSXFixed::DECIMAL_MAX == 2 ** PSXFixed::DECIMAL_BITS - 1") {
+        STATIC_REQUIRE(PSXFixed::DECIMAL_MAX == (1 << PSXFixed::DECIMAL_BITS) - 1);
     }
 
-    SECTION("Fixed::DECIMAL_MIN == -(2 ** Fixed::DECIMAL_BITS)") {
-        STATIC_REQUIRE(Fixed::DECIMAL_MIN == -(1 << Fixed::DECIMAL_BITS));
+    SECTION("PSXFixed::DECIMAL_MIN == -(2 ** PSXFixed::DECIMAL_BITS)") {
+        STATIC_REQUIRE(PSXFixed::DECIMAL_MIN == -(1 << PSXFixed::DECIMAL_BITS));
     }
 
-    SECTION("Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1 - Fixed::PRECISION)") {
-        STATIC_REQUIRE(Fixed::FRACTIONAL_MAX == Fixed::DECIMAL_MAX + (1.0 - Fixed::PRECISION));
+    SECTION("PSXFixed::FRACTIONAL_MAX == PSXFixed::DECIMAL_MAX + (1 - PSXFixed::PRECISION)") {
+        STATIC_REQUIRE(PSXFixed::FRACTIONAL_MAX == PSXFixed::DECIMAL_MAX + (1.0 - PSXFixed::PRECISION));
     }
 
-    SECTION("Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN") {
-        STATIC_REQUIRE(Fixed::FRACTIONAL_MIN == Fixed::DECIMAL_MIN);
+    SECTION("PSXFixed::FRACTIONAL_MIN == PSXFixed::DECIMAL_MIN") {
+        STATIC_REQUIRE(PSXFixed::FRACTIONAL_MIN == PSXFixed::DECIMAL_MIN);
     }
 
-    SECTION("Fixed::MAX() == Max 32-bit signed integer") {
-        STATIC_REQUIRE(Fixed::MAX() == Fixed(std::numeric_limits<Fixed::UnderlyingType>::max()));
+    SECTION("PSXFixed::MAX() == Max 32-bit signed integer") {
+        STATIC_REQUIRE(PSXFixed::MAX() == PSXFixed(std::numeric_limits<PSXFixed::UnderlyingType>::max()));
     }
 
-    SECTION("Fixed::MIN() == Min 32-bit signed integer") {
-        STATIC_REQUIRE(Fixed::MIN() == Fixed(std::numeric_limits<Fixed::UnderlyingType>::min()));
+    SECTION("PSXFixed::MIN() == Min 32-bit signed integer") {
+        STATIC_REQUIRE(PSXFixed::MIN() == PSXFixed(std::numeric_limits<PSXFixed::UnderlyingType>::min()));
     }
 
-    SECTION("typeof(Fixed::MAX()) == Fixed") {
-        STATIC_REQUIRE(std::is_same_v<decltype(Fixed::MAX()), Fixed>);
+    SECTION("typeof(PSXFixed::MAX()) == PSXFixed") {
+        STATIC_REQUIRE(std::is_same_v<decltype(PSXFixed::MAX()), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed::MIN()) == Fixed") {
-        STATIC_REQUIRE(std::is_same_v<decltype(Fixed::MIN()), Fixed>);
+    SECTION("typeof(PSXFixed::MIN()) == PSXFixed") {
+        STATIC_REQUIRE(std::is_same_v<decltype(PSXFixed::MIN()), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed + Fixed) == Fixed") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x + y), Fixed>);
+    SECTION("typeof(PSXFixed + PSXFixed) == PSXFixed") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x + y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed += Fixed) == Fixed&") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x += y), Fixed&>);
+    SECTION("typeof(PSXFixed += PSXFixed) == PSXFixed&") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x += y), PSXFixed&>);
     }
 
-    SECTION("typeof(Fixed - Fixed) == Fixed") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x - y), Fixed>);
+    SECTION("typeof(PSXFixed - PSXFixed) == PSXFixed") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x - y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed -= Fixed) == Fixed&") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x -= y), Fixed&>);
+    SECTION("typeof(PSXFixed -= PSXFixed) == PSXFixed&") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x -= y), PSXFixed&>);
     }
 
-    SECTION("typeof(Fixed * Fixed) == Fixed") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+    SECTION("typeof(PSXFixed * PSXFixed) == PSXFixed") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x * y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed *= Fixed) == Fixed&") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x *= y), Fixed&>);
+    SECTION("typeof(PSXFixed *= PSXFixed) == PSXFixed&") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x *= y), PSXFixed&>);
     }
 
-    SECTION("typeof(Fixed * UnderlyingType) == Fixed") {
-        Fixed x = {};
-        Fixed::UnderlyingType y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+    SECTION("typeof(PSXFixed * UnderlyingType) == PSXFixed") {
+        PSXFixed x = {};
+        PSXFixed::UnderlyingType y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x * y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed *= UnderlyingType) == Fixed&") {
-        Fixed x = {};
-        Fixed::UnderlyingType y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x *= y), Fixed&>);
+    SECTION("typeof(PSXFixed *= UnderlyingType) == PSXFixed&") {
+        PSXFixed x = {};
+        PSXFixed::UnderlyingType y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x *= y), PSXFixed&>);
     }
 
-    SECTION("typeof(UnderlyingType * Fixed) == Fixed") {
-        Fixed::UnderlyingType x = {};
-        Fixed y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x * y), Fixed>);
+    SECTION("typeof(UnderlyingType * PSXFixed) == PSXFixed") {
+        PSXFixed::UnderlyingType x = {};
+        PSXFixed y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x * y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed / Fixed) == Fixed") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x / y), Fixed>);
+    SECTION("typeof(PSXFixed / PSXFixed) == PSXFixed") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x / y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed /= Fixed) == Fixed&") {
-        Fixed x = {}, y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x /= y), Fixed&>);
+    SECTION("typeof(PSXFixed /= PSXFixed) == PSXFixed&") {
+        PSXFixed x = {}, y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x /= y), PSXFixed&>);
     }
 
-    SECTION("typeof(Fixed / UnderlyingType) == Fixed") {
-        Fixed x = {};
-        Fixed::UnderlyingType y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x / y), Fixed>);
+    SECTION("typeof(PSXFixed / UnderlyingType) == PSXFixed") {
+        PSXFixed x = {};
+        PSXFixed::UnderlyingType y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x / y), PSXFixed>);
     }
 
-    SECTION("typeof(Fixed /= UnderlyingType) == Fixed&") {
-        Fixed x = {};
-        Fixed::UnderlyingType y = {};
-        STATIC_REQUIRE(std::is_same_v<decltype(x /= y), Fixed&>);
+    SECTION("typeof(PSXFixed /= UnderlyingType) == PSXFixed&") {
+        PSXFixed x = {};
+        PSXFixed::UnderlyingType y = {};
+        STATIC_REQUIRE(std::is_same_v<decltype(x /= y), PSXFixed&>);
     }
 }
 

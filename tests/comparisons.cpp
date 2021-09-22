@@ -1,11 +1,22 @@
-#include <catch2/catch.hpp>
+/*
+ * This source file forms part of Unmoving
+ * Unmoving is a C++ header-only library providing more convenient fixed-point
+ * arithmetic for the Sony PlayStation ("PS1").
+ *
+ * Copyright Joshua Saxby <joshua.a.saxby@gmail.com> 2021
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+ #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using namespace unmoving;
+using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Comparisons") {
     Underlying i = GENERATE(
@@ -32,26 +43,26 @@ TEST_CASE("Comparisons") {
             )
         );
 
-        SECTION("Fixed == Fixed") {
-            Fixed original(i);
-            Fixed same(i); // same as original
-            Fixed different(j); // different from original
+        SECTION("PSXFixed == PSXFixed") {
+            PSXFixed original(i);
+            PSXFixed same(i); // same as original
+            PSXFixed different(j); // different from original
             // check for both affirmative and negative == checks
             CHECK(original == same);
             CHECK_FALSE(original == different);
         }
 
-        SECTION("Fixed != Fixed") {
-            Fixed original(i);
-            Fixed same(i); // same as original
-            Fixed different(j); // different from original
+        SECTION("PSXFixed != PSXFixed") {
+            PSXFixed original(i);
+            PSXFixed same(i); // same as original
+            PSXFixed different(j); // different from original
             // check for both affirmative and negative != checks
             CHECK_FALSE(original != same);
             CHECK(original != different);
         }
 
-        SECTION("Fixed == UnderlyingType") {
-            Fixed original(i);
+        SECTION("PSXFixed == UnderlyingType") {
+            PSXFixed original(i);
             Underlying same = i; // same as original
             Underlying different = j; // different from original
             // check for both affirmative and negative == checks
@@ -59,8 +70,8 @@ TEST_CASE("Comparisons") {
             CHECK_FALSE(original == different);
         }
 
-        SECTION("Fixed != UnderlyingType") {
-            Fixed original(i);
+        SECTION("PSXFixed != UnderlyingType") {
+            PSXFixed original(i);
             Underlying same = i; // same as original
             Underlying different = j; // different from original
             // check for both affirmative and negative == checks
@@ -68,19 +79,19 @@ TEST_CASE("Comparisons") {
             CHECK(original != different);
         }
 
-        SECTION("UnderlyingType == Fixed") {
+        SECTION("UnderlyingType == PSXFixed") {
             Underlying original = i;
-            Fixed same(i); // same as original
-            Fixed different(j); // different from original
+            PSXFixed same(i); // same as original
+            PSXFixed different(j); // different from original
             // check for both affirmative and negative == checks
             CHECK(original == same);
             CHECK_FALSE(original == different);
         }
 
-        SECTION("UnderlyingType != Fixed") {
+        SECTION("UnderlyingType != PSXFixed") {
             Underlying original = i;
-            Fixed same(i); // same as original
-            Fixed different(j); // different from original
+            PSXFixed same(i); // same as original
+            PSXFixed different(j); // different from original
             // check for both affirmative and negative == checks
             CHECK_FALSE(original != same);
             CHECK(original != different);
@@ -113,17 +124,17 @@ TEST_CASE("Comparisons") {
             )
         );
 
-        SECTION("Fixed < Fixed") {
-            Fixed smaller(i);
-            Fixed bigger(j);
-            Fixed not_bigger(k);
+        SECTION("PSXFixed < PSXFixed") {
+            PSXFixed smaller(i);
+            PSXFixed bigger(j);
+            PSXFixed not_bigger(k);
             // check for both affirmative and negative < checks
             CHECK(smaller < bigger);
             CHECK_FALSE(smaller < not_bigger);
         }
 
-        SECTION("Fixed < UnderlyingType") {
-            Fixed smaller(i);
+        SECTION("PSXFixed < UnderlyingType") {
+            PSXFixed smaller(i);
             Underlying bigger = j;
             Underlying not_bigger = k;
             // check for both affirmative and negative < checks
@@ -131,10 +142,10 @@ TEST_CASE("Comparisons") {
             CHECK_FALSE(smaller < not_bigger);
         }
 
-        SECTION("UnderlyingType < Fixed") {
+        SECTION("UnderlyingType < PSXFixed") {
             Underlying smaller = i;
-            Fixed bigger(j);
-            Fixed not_bigger(k);
+            PSXFixed bigger(j);
+            PSXFixed not_bigger(k);
             // check for both affirmative and negative < checks
             CHECK(smaller < bigger);
             CHECK_FALSE(smaller < not_bigger);
@@ -168,18 +179,18 @@ TEST_CASE("Comparisons") {
             )
         );
 
-        SECTION("Fixed > Fixed") {
-            Fixed bigger(i);
-            Fixed smaller(j);
-            Fixed not_smaller(k);
+        SECTION("PSXFixed > PSXFixed") {
+            PSXFixed bigger(i);
+            PSXFixed smaller(j);
+            PSXFixed not_smaller(k);
             // check for both affirmative and negative < checks
             CHECK(bigger > smaller);
             CHECK_FALSE(bigger > not_smaller);
         }
 
 
-        SECTION("Fixed > UnderlyingType") {
-            Fixed bigger(i);
+        SECTION("PSXFixed > UnderlyingType") {
+            PSXFixed bigger(i);
             Underlying smaller = j;
             Underlying not_smaller = k;
             // check for both affirmative and negative < checks
@@ -188,10 +199,10 @@ TEST_CASE("Comparisons") {
         }
 
 
-        SECTION("UnderlyingType > Fixed") {
+        SECTION("UnderlyingType > PSXFixed") {
             Underlying bigger = i;
-            Fixed smaller(j);
-            Fixed not_smaller(k);
+            PSXFixed smaller(j);
+            PSXFixed not_smaller(k);
             // check for both affirmative and negative < checks
             CHECK(bigger > smaller);
             CHECK_FALSE(bigger > not_smaller);
@@ -224,19 +235,19 @@ TEST_CASE("Comparisons") {
             )
         );
 
-        SECTION("Fixed <= Fixed") {
-            Fixed original(i);
-            Fixed equal(i);
-            Fixed bigger(j);
-            Fixed not_bigger_or_equal(k);
+        SECTION("PSXFixed <= PSXFixed") {
+            PSXFixed original(i);
+            PSXFixed equal(i);
+            PSXFixed bigger(j);
+            PSXFixed not_bigger_or_equal(k);
             // check for both affirmative and negative <= checks
             CHECK(original <= equal);
             CHECK(original <= bigger);
             CHECK_FALSE(original <= not_bigger_or_equal);
         }
 
-        SECTION("Fixed <= UnderlyingType") {
-            Fixed original(i);
+        SECTION("PSXFixed <= UnderlyingType") {
+            PSXFixed original(i);
             Underlying equal = i;
             Underlying bigger = j;
             Underlying not_bigger_or_equal = k;
@@ -246,11 +257,11 @@ TEST_CASE("Comparisons") {
             CHECK_FALSE(original <= not_bigger_or_equal);
         }
 
-        SECTION("UnderlyingType <= Fixed") {
+        SECTION("UnderlyingType <= PSXFixed") {
             Underlying original = i;
-            Fixed equal(i);
-            Fixed bigger(j);
-            Fixed not_bigger_or_equal(k);
+            PSXFixed equal(i);
+            PSXFixed bigger(j);
+            PSXFixed not_bigger_or_equal(k);
             // check for both affirmative and negative <= checks
             CHECK(original <= equal);
             CHECK(original <= bigger);
@@ -285,19 +296,19 @@ TEST_CASE("Comparisons") {
             )
         );
 
-        SECTION("Fixed >= Fixed") {
-            Fixed original(i);
-            Fixed equal(i);
-            Fixed smaller(j);
-            Fixed not_smaller_or_equal(k);
+        SECTION("PSXFixed >= PSXFixed") {
+            PSXFixed original(i);
+            PSXFixed equal(i);
+            PSXFixed smaller(j);
+            PSXFixed not_smaller_or_equal(k);
             // check for both affirmative and negative <= checks
             CHECK(original >= equal);
             CHECK(original >= smaller);
             CHECK_FALSE(original >= not_smaller_or_equal);
         }
 
-        SECTION("Fixed >= UnderlyingType") {
-            Fixed original(i);
+        SECTION("PSXFixed >= UnderlyingType") {
+            PSXFixed original(i);
             Underlying equal = i;
             Underlying smaller = j;
             Underlying not_smaller_or_equal = k;
@@ -307,11 +318,11 @@ TEST_CASE("Comparisons") {
             CHECK_FALSE(original >= not_smaller_or_equal);
         }
 
-        SECTION("UnderlyingType >= Fixed") {
+        SECTION("UnderlyingType >= PSXFixed") {
             Underlying original = i;
-            Fixed equal(i);
-            Fixed smaller(j);
-            Fixed not_smaller_or_equal(k);
+            PSXFixed equal(i);
+            PSXFixed smaller(j);
+            PSXFixed not_smaller_or_equal(k);
             // check for both affirmative and negative <= checks
             CHECK(original >= equal);
             CHECK(original >= smaller);

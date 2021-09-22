@@ -1,14 +1,25 @@
-#include <catch2/catch.hpp>
+/*
+ * This source file forms part of Unmoving
+ * Unmoving is a C++ header-only library providing more convenient fixed-point
+ * arithmetic for the Sony PlayStation ("PS1").
+ *
+ * Copyright Joshua Saxby <joshua.a.saxby@gmail.com> 2021
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+ #include <catch2/catch.hpp>
 
-#include <unmoving/Fixed.hpp>
+#include <unmoving/PSXFixed.hpp>
 
 #include "config.hpp"
 
-using namespace com::saxbophone::unmoving;
-using Underlying = Fixed::UnderlyingType;
+using namespace unmoving;
+using Underlying = PSXFixed::UnderlyingType;
 
 TEST_CASE("Unary operations") {
-    SECTION("Fixed prefix increment") {
+    SECTION("PSXFixed prefix increment") {
         double i = GENERATE(
             take(
                 tests_config::ITERATIONS,
@@ -19,13 +30,13 @@ TEST_CASE("Unary operations") {
                 )
             )
         );
-        Fixed foo(i);
-        Fixed bar = ++foo;
-        REQUIRE((double)bar == Approx(++i).margin(Fixed::ACCURACY));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
+        PSXFixed foo(i);
+        PSXFixed bar = ++foo;
+        REQUIRE((double)bar == Approx(++i).margin(PSXFixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(PSXFixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
-    SECTION("Fixed postfix increment") {
+    SECTION("PSXFixed postfix increment") {
         double i = GENERATE(
             take(
                 tests_config::ITERATIONS,
@@ -36,13 +47,13 @@ TEST_CASE("Unary operations") {
                 )
             )
         );
-        Fixed foo(i);
-        Fixed bar = foo++;
-        REQUIRE((double)bar == Approx(i++).margin(Fixed::ACCURACY));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
+        PSXFixed foo(i);
+        PSXFixed bar = foo++;
+        REQUIRE((double)bar == Approx(i++).margin(PSXFixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(PSXFixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
-    SECTION("Fixed prefix decrement") {
+    SECTION("PSXFixed prefix decrement") {
         double i = GENERATE(
             take(
                 tests_config::ITERATIONS,
@@ -53,13 +64,13 @@ TEST_CASE("Unary operations") {
                 )
             )
         );
-        Fixed foo(i);
-        Fixed bar = --foo;
-        REQUIRE((double)bar == Approx(--i).margin(Fixed::ACCURACY));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
+        PSXFixed foo(i);
+        PSXFixed bar = --foo;
+        REQUIRE((double)bar == Approx(--i).margin(PSXFixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(PSXFixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
-    SECTION("Fixed postfix decrement") {
+    SECTION("PSXFixed postfix decrement") {
         double i = GENERATE(
             take(
                 tests_config::ITERATIONS,
@@ -70,13 +81,13 @@ TEST_CASE("Unary operations") {
                 )
             )
         );
-        Fixed foo(i);
-        Fixed bar = foo--;
-        REQUIRE((double)bar == Approx(i--).margin(Fixed::ACCURACY));
-        REQUIRE((double)foo == Approx(i).margin(Fixed::ACCURACY)); // relies upon i value changed in previous check
+        PSXFixed foo(i);
+        PSXFixed bar = foo--;
+        REQUIRE((double)bar == Approx(i--).margin(PSXFixed::ACCURACY));
+        REQUIRE((double)foo == Approx(i).margin(PSXFixed::ACCURACY)); // relies upon i value changed in previous check
     }
 
-    SECTION("Fixed unary minus") {
+    SECTION("PSXFixed unary minus") {
         Underlying i = GENERATE(
             take(
                 tests_config::ITERATIONS,
@@ -86,8 +97,8 @@ TEST_CASE("Unary operations") {
                 )
             )
         );
-        Fixed foo(i);
-        Fixed bar = -foo;
+        PSXFixed foo(i);
+        PSXFixed bar = -foo;
         // this should be an exact conversion, so comparing for exact equality is fine
         REQUIRE((double)bar == -((double)foo));
     }
