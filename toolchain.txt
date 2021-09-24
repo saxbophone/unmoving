@@ -2,11 +2,13 @@
 > instructions for PSn00bSDK
 > (https://github.com/Lameguy64/PSn00bSDK/blob/ffa679d4d24b891cb59aba10946368f2ec00c391/toolchain.txt)
 >
-> Modified September 2021 by Joshua Saxby to describe the process for building the
-> toolchain with support for the minimum set of C++ standard library headers
-> required for freestanding implementations (https://en.cppreference.com/w/cpp/freestanding)
+> Modified September 2021 by Joshua Saxby to describe the process for building
+> the toolchain with support for the minimum set of C++ standard library headers
+> required for freestanding implementations:
+> (https://en.cppreference.com/w/cpp/freestanding)
 >
-> NOTE that this is a very experimental process but has shown promising results so far
+> NOTE that this is a very experimental process but has shown promising results
+> so far
 
 If you wish to build the toolchain yourself, beware that this process can get
 pretty tedious unless you have a powerful enough computer with plenty of
@@ -83,12 +85,12 @@ freestanding for low-level systems like the PlayStation, however GCC won't even
 install the minimum standard library headers required by the standard for
 freestanding implementations if we don't build *a* C++ standard library.
 
-A solution identified here (https://forum.osdev.org/viewtopic.php?f=8&t=23947)
+A solution identified here: (https://forum.osdev.org/viewtopic.php?f=8&t=23947)
 is to build newlib for the target, and then build GCC with newlib. Newlib is a
 small C/C++ standard library intended for use on embedded systems. We won't
-actually install most of the built newlib with GCC, just the freestanding headers
-but frustratingly, we still have to build the entirety of newlib to get the headers
-in this way. These build instructions are simplified from these
+actually install most of the built newlib with GCC, just the freestanding
+headers but frustratingly, we still have to build the entirety of newlib to get
+the headers in this way. These build instructions are simplified from these:
 (http://www.ifp.illinois.edu/~nakazato/tips/xgcc.html).
 
 * Download newlib source with git: git://sourceware.org/git/newlib-cygwin.git
@@ -112,14 +114,15 @@ recent than v3.2.0. (commit: 8c8d3b7a9).
 
 NOTE: if you need superuser privileges to write to the installation directory
 you might not be able to just run `sudo make install` to get around this.
-Newlib's makefile doesn't like running as root and will refuse to do the install.
+Newlib's makefile doesn't like running as root and will refuse to do the
+install.
 
 The workaround I used was to run `sudo su` to get a shell running as root, and
 then to run `make install` from there.
 
-You'll need to make sure that /usr/local/mipsel-unknown-elf/bin or wherever you're
-building your toolchain to is in the root user's PATH otherwise the make install
-command will not work.
+You'll need to make sure that /usr/local/mipsel-unknown-elf/bin or wherever
+you're building your toolchain to is in the root user's PATH otherwise the make
+install command will not work.
 
 Building gcc:
 
@@ -192,8 +195,8 @@ undefined vtables, try specifying --fno-rtti to the g++ command line.
 >
 > It's important to clarify that simply being able to #include a header doesn't
 > mean all the functionality in it is working. At the time of writing this guide
-> both the spaceship operator (<=>) from <compare> and std::is_constant_evaluated()
-> from <type_traits> were found to be working.
+> both the spaceship operator (<=>) from <compare> and
+> std::is_constant_evaluated() from <type_traits> were found to be working.
 
 -----------------------------------------------------------------------------
 Updating the ldscript (NO LONGER REQUIRED as PSn00bSDK now ships with its own
