@@ -34,6 +34,9 @@
 // NOTE: this C header is specific to the PSX SDK
 #include <sys/types.h> // int32, size_t
 #endif
+
+#include <type_traits> // is_constant_evaluated
+
 /*
  * get other symbols from the C headers as these are guaranteed to exist both in
  * C++ and the PSX SDK
@@ -310,6 +313,17 @@ namespace unmoving {
          * feature.
          */
         constexpr PSXFixed& operator *=(const PSXFixed& rhs) {
+            //       GNU C macro    other macro
+            #if defined (_R3000) || defined (R3000)
+            if (not std::is_constant_evaluated()) {
+                /*
+                 * if compiling for the PlayStation (MIPS R3000 CPU) and this
+                 * method call is not being evaluated at compile-time, generate
+                 * optimised MIPS assembly for the operation
+                 */
+                asm volatile ("nop"); // placeholder asm, not sure if volatile needed
+            }
+            #endif
             // XXX: no int64_t on PS1, software emulation kicks in automatically
             int64_t result = (int64_t)this->_raw_value * rhs._raw_value;
             // shift back down
@@ -333,6 +347,17 @@ namespace unmoving {
          * feature.
          */
         constexpr PSXFixed& operator /=(const PSXFixed& rhs) {
+            //       GNU C macro    other macro
+            #if defined (_R3000) || defined (R3000)
+            if (not std::is_constant_evaluated()) {
+                /*
+                 * if compiling for the PlayStation (MIPS R3000 CPU) and this
+                 * method call is not being evaluated at compile-time, generate
+                 * optimised MIPS assembly for the operation
+                 */
+                asm volatile ("nop"); // placeholder asm, not sure if volatile needed
+            }
+            #endif
             // XXX: no int64_t on PS1, software emulation kicks in automatically
             int64_t scaled = (int64_t)this->_raw_value * PSXFixed::SCALE;
             this->_raw_value = (UnderlyingType)(scaled / rhs._raw_value);
