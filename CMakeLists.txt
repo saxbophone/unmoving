@@ -136,6 +136,17 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Mo
 # a better way to load dependencies
 include(CPM)
 
+# use Format.cmake for using clang-format on sources
+CPMAddPackage(
+    NAME Format.cmake
+    VERSION 1.7.0
+    GITHUB_REPOSITORY TheLartians/Format.cmake
+    OPTIONS # set to yes skip cmake formatting
+        "FORMAT_SKIP_CMAKE NO"
+        # path to exclude (optional, supports regular expressions)
+        "CMAKE_FORMAT_EXCLUDE cmake/Modules/*"
+)
+
 # library
 add_subdirectory(unmoving)
 # unit tests --only enable if requested AND we're not building as a sub-project
