@@ -434,6 +434,8 @@ namespace unmoving {
             remainder = fractional % 10;
             fractional /= 10;
         }
+        // TODO: count the number of bits in the fractional component and shift
+        // so that it takes up no more than FRACTION_BITS (12), this should do
         return {integral + fractional + (remainder >= 5)};
     }
 
