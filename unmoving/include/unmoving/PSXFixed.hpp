@@ -406,24 +406,35 @@ namespace unmoving {
         UnderlyingType _raw_value;
     };
 
+    namespace {
+        constexpr PSXFixed::UnderlyingType str_to_int(size_t length, char* digits) {
+            PSXFixed::UnderlyingType value = 0;
+            for (size_t i = 0; i < length; ++i) {
+                value *= 10;
+                value += (digits[i] - '0');
+            }
+            return value;
+        }
+    }
+
     template <char... DIGITS>
     constexpr PSXFixed operator"" _fx() {
         // unpack template characters into a char array for ease of access
         char digits[sizeof...(DIGITS)] = {DIGITS...};
-        // handle digits before the decimal point first
-        PSXFixed integral;
+        // find the decimal point
         size_t i = 0;
-        for (; i < sizeof...(DIGITS) and digits[i] != '.'; ++i) {
-            integral *= PSXFixed::from_integer(10);
-            integral += PSXFixed::from_integer(digits[i] - '0');
+        for (; i < sizeof...(DIGITS); ++i) {
+            if (digits[i] == '.') break;
         }
-        // now do the fractional digits
-        PSXFixed fractional;
-        for (size_t j = sizeof...(DIGITS); j --> i + 1; ) {
-            fractional += PSXFixed::from_integer(digits[j] - '0');
-            fractional /= PSXFixed::from_integer(10);
+        // get the integral and fractional part as two integers
+        auto integral = str_to_int(i, digits) << PSXFixed::FRACTION_BITS;
+        auto fractional = str_to_int(sizeof...(DIGITS) - i - 1, digits + i + 1) << PSXFixed::FRACTION_BITS;
+        PSXFixed::UnderlyingType remainder = 0;
+        for (size_t j = 0; j < (sizeof...(DIGITS) - i - 1); ++j) {
+            remainder = fractional % 10;
+            fractional /= 10;
         }
-        return integral + fractional;
+        return {integral + fractional + (remainder >= 5)};
     }
 
     constexpr PSXFixed operator"" _fx(unsigned long long int literal) {
