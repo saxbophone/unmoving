@@ -109,7 +109,7 @@ namespace unmoving {
          * @brief The largest difference between a fixed-point value and the
          * "true" value it represents.
          */
-        static constexpr double ACCURACY = PSXFixed::PRECISION;
+        static constexpr double ACCURACY = PSXFixed::PRECISION / 2.0;
         /**
          * @brief Largest integer value representable by the fixed-point type
          */
