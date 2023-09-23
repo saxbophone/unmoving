@@ -54,7 +54,8 @@ namespace unmoving {
      * @endcode
      * @relatedalso PSXFixed
      */
-    constexpr PSXFixed operator"" _fx(long double literal);
+    template <char...>
+    constexpr PSXFixed operator"" _fx();
 
     /**
      * @brief User-defined literal for PSXFixed objects without fractional parts
@@ -108,7 +109,7 @@ namespace unmoving {
          * @brief The largest difference between a fixed-point value and the
          * "true" value it represents.
          */
-        static constexpr double ACCURACY = PSXFixed::PRECISION / 2.0;
+        static constexpr double ACCURACY = PSXFixed::PRECISION;
         /**
          * @brief Largest integer value representable by the fixed-point type
          */
@@ -159,7 +160,7 @@ namespace unmoving {
          * where avoidable on the PlayStation, as the console has no hardware
          * floating point support, so slow software floats will be used.
          * @todo Consider adding a single-precision `float` version of this
-         * methodfor faster emulation when doing runtime conversions on the
+         * method for faster emulation when doing runtime conversions on the
          * PlayStation and `double` precision is not needed.
          */
         constexpr PSXFixed(double value) {
@@ -405,8 +406,24 @@ namespace unmoving {
         UnderlyingType _raw_value;
     };
 
-    constexpr PSXFixed operator"" _fx(long double literal) {
-        return PSXFixed((double)literal);
+    template <char... DIGITS>
+    constexpr PSXFixed operator"" _fx() {
+        // unpack template characters into a char array for ease of access
+        char digits[sizeof...(DIGITS)] = {DIGITS...};
+        // handle digits before the decimal point first
+        PSXFixed integral;
+        size_t i = 0;
+        for (; i < sizeof...(DIGITS) and digits[i] != '.'; ++i) {
+            integral *= PSXFixed::from_integer(10);
+            integral += PSXFixed::from_integer(digits[i] - '0');
+        }
+        // now do the fractional digits
+        PSXFixed fractional;
+        for (size_t j = sizeof...(DIGITS); j --> i + 1; ) {
+            fractional += PSXFixed::from_integer(digits[j] - '0');
+            fractional /= PSXFixed::from_integer(10);
+        }
+        return integral + fractional;
     }
 
     constexpr PSXFixed operator"" _fx(unsigned long long int literal) {
