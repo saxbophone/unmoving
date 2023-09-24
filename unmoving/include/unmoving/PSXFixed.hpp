@@ -415,6 +415,11 @@ namespace unmoving {
             }
             return value;
         }
+        constexpr size_t count_bits(int32_t n) {
+            size_t bits = 0;
+            for (; n != 0; n /= 2) ++bits;
+            return bits;
+        }
     }
 
     template <char... DIGITS>
@@ -428,15 +433,16 @@ namespace unmoving {
         }
         // get the integral and fractional part as two integers
         auto integral = str_to_int(i, digits) << PSXFixed::FRACTION_BITS;
-        auto fractional = str_to_int(sizeof...(DIGITS) - i - 1, digits + i + 1) << PSXFixed::FRACTION_BITS;
-        PSXFixed::UnderlyingType remainder = 0;
-        for (size_t j = 0; j < (sizeof...(DIGITS) - i - 1); ++j) {
-            remainder = fractional % 10;
+        auto fraction_digits = sizeof...(DIGITS) - i - 1;
+        auto fractional = str_to_int(fraction_digits, digits + i + 1);
+        // we need to shift up by FRACTION_BITS then divide by 10^fraction_digits
+        // we distribute the shift into fraction_digits many stages
+        fractional <<= (PSXFixed::FRACTION_BITS % fraction_digits);
+        for (size_t j = 0; j < fraction_digits; ++j) {
+            fractional <<= (PSXFixed::FRACTION_BITS / fraction_digits);
             fractional /= 10;
         }
-        // TODO: count the number of bits in the fractional component and shift
-        // so that it takes up no more than FRACTION_BITS (12), this should do
-        return {integral + fractional + (remainder >= 5)};
+        return {integral + fractional};
     }
 
     constexpr PSXFixed operator"" _fx(unsigned long long int literal) {
